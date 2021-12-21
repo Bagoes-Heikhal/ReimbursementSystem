@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ReimbursementSystemAPI.Models;
+using ReimbursementSystemAPI.Repository.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,16 @@ namespace ReimbursementSystemAPI
         {
 
             services.AddControllers();
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<RoleRepository>();
+            services.AddScoped<DepartmentRepository>();
+            services.AddScoped<Employee_AttachmentRepository>();
+            services.AddScoped<ExpenseRepository>();
+            services.AddScoped<FormRepository>();
+            services.AddScoped<JobRepository>();
+            services.AddScoped<ReimbusmentRepository>();
+            services.AddScoped<ReligionRepository>();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
             services.AddSwaggerGen(c =>
             {
