@@ -6,13 +6,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Models
+namespace ReimbursementSystemAPI.Models
 {
     [Table("tb_m_Account")]
     public class Account
     {
         [Key]
-        public string NIK { get; set; }
+        public string EmployeeId { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -20,11 +20,9 @@ namespace API.Models
 
         [JsonIgnore]
         public virtual Employee Employee { get; set; }
-        [JsonIgnore]
-        public virtual Profiling Profiling { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<AccountRole> AccountRole { get; set; }
-
+        public virtual Role Roles { get; set; }
+        public int RoleId { get; set; }
     }
 }

@@ -1,12 +1,12 @@
-﻿using API.Models;
-using API.Repository.Interface;
+﻿using API.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
+using ReimbursementSystemAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Repository
+namespace ReimbursementSystemAPI.Repository
 {
     public class GeneralRepository<Context, Entity, Key> : IRepository<Entity, Key>
         where Entity : class

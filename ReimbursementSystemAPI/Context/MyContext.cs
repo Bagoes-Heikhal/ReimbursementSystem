@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ReimbursementSystemAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace API.Models
+namespace ReimbursementSystemAPI.Models
 {
     public class MyContext : DbContext
     {
@@ -16,47 +17,67 @@ namespace API.Models
 
         }
 
-        //public DbSet<Employee> Employees { get; set; }
-        //public DbSet<Account> Accounts { get; set; }
-        //public DbSet<Profiling> Profilings { get; set; }
-        //public DbSet<Education> Educations { get; set; }
-        //public DbSet<University> Universities { get; set; }
-        //public DbSet<Role> Roles { get; set; }
-        //public DbSet<AccountRole> AccountRoles { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Departement> Departements { get; set; }
+        public DbSet<Employee_Attachment> Employee_Attachment { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Form> Forms { get; set; }
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<Reimbusment> Reimbusments { get; set; }
+        public DbSet<Religion> Religions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            ////One to One
-            //modelBuilder.Entity<Employee>()
-            //    .HasOne(a => a.Account)
-            //    .WithOne(b => b.Employee)
-            //    .HasForeignKey<Account>(b => b.NIK);
+            //One to One
+            modelBuilder.Entity<Employee>()
+                .HasOne(a => a.Accounts)
+                .WithOne(b => b.Employee)
+                .HasForeignKey<Account>(b => b.EmployeeId);
 
-            ////One to One
-            //modelBuilder.Entity<Account>()
-            //    .HasOne(a => a.Profiling)
-            //    .WithOne(b => b.Account)
-            //    .HasForeignKey<Profiling>(b => b.NIK);
+            //One to One
+            modelBuilder.Entity<Employee>()
+                .HasOne(a => a.Employee_Attachments)
+                .WithOne(b => b.Employees)
+                .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
 
-            ////One to many
-            //modelBuilder.Entity<Education>()
-            //    .HasMany(c => c.Profilings)
-            //    .WithOne(e => e.Education);
+            //One to One
+            modelBuilder.Entity<Employee>()
+                .HasOne(a => a.Reimbusments)
+                .WithOne(b => b.Employees)
+                .HasForeignKey<Reimbusment>(b => b.EmployeeId);
 
-            ////One to many
-            //modelBuilder.Entity<University>()
-            //    .HasMany(c => c.Educations)
-            //    .WithOne(c => c.University);
+            //One to One
+            modelBuilder.Entity<Role>()
+                .HasOne(a => a.Accounts)
+                .WithOne(b => b.Roles)
+                .HasForeignKey<Account>(b => b.RoleId);
 
-            ////One to many
-            //modelBuilder.Entity<Account>()
-            //    .HasMany(c => c.AccountRole)
-            //    .WithOne(c => c.Account);
+            //One to many
+            modelBuilder.Entity<Expense>()
+                .HasMany(c => c.Reimbusments)
+                .WithOne(e => e.Expenses);
 
-            ////One to many
-            //modelBuilder.Entity<Role>()
-            //    .HasMany(c => c.AccountRole)
-            //    .WithOne(c => c.Role);
+            //One to many
+            modelBuilder.Entity<Form>()
+                .HasMany(c => c.Expenses)
+                .WithOne(c => c.Forms);
+
+            //One to many
+            modelBuilder.Entity<Departement>()
+                .HasMany(c => c.Employees)
+                .WithOne(c => c.Departements);
+
+            //One to many
+            modelBuilder.Entity<Job>()
+                .HasMany(c => c.Employees)
+                .WithOne(c => c.Jobs);
+
+            //One to many
+            modelBuilder.Entity<Religion>()
+                .HasMany(c => c.Employees)
+                .WithOne(c => c.Religions);
         }
 
     }
