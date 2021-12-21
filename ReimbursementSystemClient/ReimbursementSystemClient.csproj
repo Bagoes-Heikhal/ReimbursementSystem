@@ -12,4 +12,24 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Base\" />
+    <None Remove="Base\Controllers\" />
+    <None Remove="Repository\" />
+    <None Remove="Repository\Data\" />
+    <None Remove="Repository\Interface\" />
+    <None Remove="Views\Dashboard\" />
+    <None Remove="Views\Register\" />
+    <None Remove="Views\Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\" />
+    <Folder Include="Base\Controllers\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Repository\Data\" />
+    <Folder Include="Repository\Interface\" />
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Register\" />
+    <Folder Include="Views\Login\" />
+  </ItemGroup>
 </Project>
