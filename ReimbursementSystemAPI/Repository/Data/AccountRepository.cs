@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using API.Hash;
+using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
+using ReimbursementSystemAPI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,58 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             this.context = myContext;
             this._configuration = configuration;
+        }
+
+        public int Register(RegisterVM registerVM)
+        {
+            Employee employee = new Employee();
+            {
+                employee.EmployeeId = registerVM.EmployeeId;
+                //employee.FirstName = registerVM.FirstName;
+                //employee.LastName = registerVM.LastName;
+                //employee.Gender = (registerVM.Gender == "Male") ? Gender.Male : Gender.Female;
+                //employee.BirthDate = registerVM.BirthDate;
+                employee.Email = registerVM.Email;
+                //employee.Salary = registerVM.Salary;
+                //employee.Phone = registerVM.Phone;
+            }
+
+            Account account = new Account();
+            {
+                account.EmployeeId = registerVM.EmployeeId;
+                account.Password = Hashing.HashPassword(registerVM.Password);
+                account.RoleId = 1;
+            }
+
+            context.Employees.Add(employee);
+            context.Accounts.Add(account);
+            context.SaveChanges();
+            return 1;
+        }
+
+
+        public int Login(LoginVM loginVM)
+        {
+            var dataPass = (from a in context.Employees
+                            where a.Email == loginVM.Email
+                            join b in context.Accounts on a.EmployeeId equals b.EmployeeId
+                            select new { Account = b, Employee = a }).FirstOrDefault();
+
+            if (dataPass == null)
+            {
+                return 4;
+            }
+            else if (dataPass.Employee.Email != null)
+            {
+                var cekPassword = Hashing.ValidatePassword(loginVM.Password, dataPass.Account.Password);
+                if (cekPassword == true)
+                {
+                    return 1;
+                }
+                return 2;
+            }
+            return 3;
+
         }
     }
 }

@@ -13,14 +13,13 @@ namespace ReimbursementSystemAPI.Migrations
                 {
                     FormId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Receipt_Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Start_Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    End_Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Receipt_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
                     Payee = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<float>(type: "real", nullable: false),
                     Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -29,16 +28,16 @@ namespace ReimbursementSystemAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_t_Departement",
+                name: "tb_t_Department",
                 columns: table => new
                 {
-                    DepartementId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_t_Departement", x => x.DepartementId);
+                    table.PrimaryKey("PK_tb_t_Department", x => x.DepartmentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,11 +85,11 @@ namespace ReimbursementSystemAPI.Migrations
                 {
                     ExpenseId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     Approver = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<float>(type: "real", nullable: false),
                     FormId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -117,7 +116,7 @@ namespace ReimbursementSystemAPI.Migrations
                     Salary = table.Column<float>(type: "real", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    DepartementId = table.Column<int>(type: "int", nullable: false),
+                    DepartmentId = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false),
                     ReligionId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -125,10 +124,10 @@ namespace ReimbursementSystemAPI.Migrations
                 {
                     table.PrimaryKey("PK_tb_m_Employee", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_tb_m_Employee_tb_t_Departement_DepartementId",
-                        column: x => x.DepartementId,
-                        principalTable: "tb_t_Departement",
-                        principalColumn: "DepartementId",
+                        name: "FK_tb_m_Employee_tb_t_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "tb_t_Department",
+                        principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_tb_m_Employee_tb_t_Job_JobId",
@@ -219,9 +218,9 @@ namespace ReimbursementSystemAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_Employee_DepartementId",
+                name: "IX_tb_m_Employee_DepartmentId",
                 table: "tb_m_Employee",
-                column: "DepartementId");
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_m_Employee_JobId",
@@ -268,7 +267,7 @@ namespace ReimbursementSystemAPI.Migrations
                 name: "tb_m_Form");
 
             migrationBuilder.DropTable(
-                name: "tb_t_Departement");
+                name: "tb_t_Department");
 
             migrationBuilder.DropTable(
                 name: "tb_t_Job");

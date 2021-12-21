@@ -10,7 +10,7 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211221024849_init")]
+    [Migration("20211221191446_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,9 +41,9 @@ namespace ReimbursementSystemAPI.Migrations
                     b.ToTable("tb_m_Account");
                 });
 
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Departement", b =>
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Department", b =>
                 {
-                    b.Property<int>("DepartementId")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -51,9 +51,9 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DepartementId");
+                    b.HasKey("DepartmentId");
 
-                    b.ToTable("tb_t_Departement");
+                    b.ToTable("tb_t_Department");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
@@ -64,7 +64,7 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartementId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -101,7 +101,7 @@ namespace ReimbursementSystemAPI.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.HasIndex("DepartementId");
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("JobId");
 
@@ -142,11 +142,11 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<int>("FormId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Total")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("Total")
+                        .HasColumnType("real");
 
                     b.HasKey("ExpenseId");
 
@@ -165,29 +165,26 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<string>("Attachments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("End_Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("End_Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Payee")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Receipt_Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Receipt_Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Start_Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Start_Date")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Total")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<float>("Total")
+                        .HasColumnType("real");
 
                     b.HasKey("FormId");
 
@@ -278,9 +275,9 @@ namespace ReimbursementSystemAPI.Migrations
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
                 {
-                    b.HasOne("ReimbursementSystemAPI.Models.Departement", "Departements")
+                    b.HasOne("ReimbursementSystemAPI.Models.Department", "Departments")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartementId")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -296,7 +293,7 @@ namespace ReimbursementSystemAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Departements");
+                    b.Navigation("Departments");
 
                     b.Navigation("Jobs");
 
@@ -344,7 +341,7 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Navigation("Expenses");
                 });
 
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Departement", b =>
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Department", b =>
                 {
                     b.Navigation("Employees");
                 });

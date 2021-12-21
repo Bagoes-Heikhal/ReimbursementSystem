@@ -67,7 +67,7 @@ namespace ReimbursementSystemAPI.Models
             //One to many
             modelBuilder.Entity<Department>()
                 .HasMany(c => c.Employees)
-                .WithOne(c => c.Departements);
+                .WithOne(c => c.Departments);
 
             //One to many
             modelBuilder.Entity<Job>()
