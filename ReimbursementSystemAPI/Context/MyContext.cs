@@ -19,7 +19,7 @@ namespace ReimbursementSystemAPI.Models
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Departement> Departements { get; set; }
+        public DbSet<Department> Departements { get; set; }
         public DbSet<Employee_Attachment> Employee_Attachment { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -65,7 +65,7 @@ namespace ReimbursementSystemAPI.Models
                 .WithOne(c => c.Forms);
 
             //One to many
-            modelBuilder.Entity<Departement>()
+            modelBuilder.Entity<Department>()
                 .HasMany(c => c.Employees)
                 .WithOne(c => c.Departements);
 

@@ -13,11 +13,11 @@ namespace ReimbursementSystemAPI.Models
     {
         [Key]
         public int ExpenseId { get; set; }
-        public string Status { get; set; }
+        public Enum Status { get; set; }
         public string Approver { get; set; }
         public string Description { get; set; }
         public string Comment { get; set; }
-        public string Total { get; set; }
+        public float Total { get; set; }
 
         [JsonIgnore]
         public virtual Form Forms { get; set; }
@@ -25,4 +25,13 @@ namespace ReimbursementSystemAPI.Models
         public virtual ICollection<Reimbusment> Reimbusments { get; set; }
 
     }
+
+    public enum Status
+    {
+        Approved,
+        Rejected,
+        Canceled,
+        Posted
+    }
+
 }

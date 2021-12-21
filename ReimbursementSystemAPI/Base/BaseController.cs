@@ -1,13 +1,13 @@
-﻿using API.Repository.Interface;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReimbursementSystemAPI.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace API.Base
+namespace ReimbursementSystemAPI.Base
 {
     public class BaseController<Entity, Repository, Key> : ControllerBase
         where Entity : class

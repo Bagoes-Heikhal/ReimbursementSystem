@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Models
 {
-    [Table("tb_t_Departement")]
-    public class Departement
+    [Table("tb_t_Department")]
+    public class Department
     {
         [Key]
-        public int DepartementId { get; set; }
+        public int DepartmentId { get; set; }
 
         public string Name { get; set; }
 

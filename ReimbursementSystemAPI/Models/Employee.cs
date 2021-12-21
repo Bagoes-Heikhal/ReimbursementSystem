@@ -44,8 +44,8 @@ namespace ReimbursementSystemAPI.Models
         public virtual Employee_Attachment Employee_Attachments { get; set; }
 
         [JsonIgnore]
-        public virtual Departement Departements { get; set; }
-        public int DepartementId { get; set; }
+        public virtual Department Departments { get; set; }
+        public int DepartmentId { get; set; }
 
         [JsonIgnore]
         public virtual Job Jobs { get; set; }

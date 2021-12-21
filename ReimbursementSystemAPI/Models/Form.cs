@@ -13,17 +13,25 @@ namespace ReimbursementSystemAPI.Models
     {
         [Key]
         public int FormId { get; set; }
-        public string Receipt_Date { get; set; }
-        public string Start_Date { get; set; }
-        public string End_Date { get; set; }
-        public string Category { get; set; }
-        public string Type { get; set; }
+        public DateTime Receipt_Date { get; set; }
+        public DateTime Start_Date { get; set; }
+        public DateTime End_Date { get; set; }
+        public Enum Category { get; set; }
         public string Payee { get; set; }
         public string Description { get; set; }
-        public string Total { get; set; }
+        public float Total { get; set; }
         public string Attachments { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Expense> Expenses { get; set; }
     }
+
+    public enum Category
+    {
+        Transportation,
+        Parking,
+        Medical,
+        Lodging
+    }
+
 }
