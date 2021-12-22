@@ -49,8 +49,8 @@ namespace ReimbursementSystemClient
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name: "default", 
+                    pattern: "{controller=Reimbusment}/{action=Form}/{id?}");
             });
         }
     }

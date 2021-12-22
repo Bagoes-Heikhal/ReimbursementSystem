@@ -7,6 +7,17 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\Login\**" />
+    <Compile Remove="Views\Register\**" />
+    <Content Remove="Views\Login\**" />
+    <Content Remove="Views\Register\**" />
+    <EmbeddedResource Remove="Views\Login\**" />
+    <EmbeddedResource Remove="Views\Register\**" />
+    <None Remove="Views\Login\**" />
+    <None Remove="Views\Register\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
@@ -30,7 +41,5 @@
     <Folder Include="Repository\" />
     <Folder Include="Repository\Data\" />
     <Folder Include="Repository\Interface\" />
-    <Folder Include="Views\Register\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
 </Project>

@@ -26,7 +26,6 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
-        public DbSet<Reimbusment> Reimbusments { get; set; }
         public DbSet<Religion> Religions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,26 +43,20 @@ namespace ReimbursementSystemAPI.Models
                 .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
 
             //One to One
-            modelBuilder.Entity<Employee>()
-                .HasOne(a => a.Reimbusments)
-                .WithOne(b => b.Employees)
-                .HasForeignKey<Reimbusment>(b => b.EmployeeId);
-
-            //One to One
             modelBuilder.Entity<Role>()
                 .HasOne(a => a.Accounts)
                 .WithOne(b => b.Roles)
                 .HasForeignKey<Account>(b => b.RoleId);
 
             //One to many
-            modelBuilder.Entity<Expense>()
-                .HasMany(c => c.Reimbusments)
-                .WithOne(e => e.Expenses);
+            modelBuilder.Entity<Employee>()
+                .HasMany(c => c.Expenses)
+                .WithOne(c => c.Employees);
 
             //One to many
-            modelBuilder.Entity<Form>()
-                .HasMany(c => c.Expenses)
-                .WithOne(c => c.Forms);
+            modelBuilder.Entity<Expense>()
+                .HasMany(c => c.Forms)
+                .WithOne(c => c.Expenses);
 
             //One to many
             modelBuilder.Entity<Department>()
@@ -80,7 +73,6 @@ namespace ReimbursementSystemAPI.Models
                 .HasMany(c => c.Employees)
                 .WithOne(c => c.Religions);
         }
-
     }
 
     class CustomResolver : DefaultContractResolver

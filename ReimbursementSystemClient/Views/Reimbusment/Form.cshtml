@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_EmployeeLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Focus - Bootstrap Admin Dashboard </title>
+    <!-- Favicon icon -->
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <!-- row -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Request</h4>
+            </div>
+            <div class="card-body">
+                <form class="needs-validation" novalidate>
+
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            <label>Receipt Date</label>
+                            <input type="text" class="form-control" placeholder="2017-06-04" id="mdate" data-dtp="dtp_eLcuM">
+                        </div>
+
+                        <div class="form-group col-xl-6">
+                            <div class="example">
+                                <p class="mb-1">Date Range Pick</p>
+                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Transportation</label>
+                            <select id="inputState" class="form-control">
+                                <option disabled selected>Choose...</option>
+                                <option>Transportation</option>
+                                <option>Parking</option>
+                                <option>Medical</option>
+                                <option>Lodging</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Type</label>
+                            <input type="text" class="form-control input-default " placeholder="input-default">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Travel destination State</label>
+                            <input type="text" class="form-control input-default " placeholder="input-default">
+                        </div>
+
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Payee</label>
+                            <input type="text" class="form-control input-default " placeholder="input-default">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="basic-form form-group col-xl-12">
+                            <label for="inputState">Description</label>
+                            <div class="form-group">
+                                <textarea class="form-control" rows="4" id="comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Travel destination State</label>
+                            <input type="text" class="form-control input-default " placeholder="input-default">
+                        </div>
+
+                        <div class="form-group col-xl-6">
+                            <label for="inputState">Payee</label>
+                            <input type="text" class="form-control input-default " placeholder="input-default">
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="form-group col-xl-6">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Total Amount</span>
+                                </div>
+                                <input type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xl-6">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <button class="btn btn-primary" type="submit">Submit form</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

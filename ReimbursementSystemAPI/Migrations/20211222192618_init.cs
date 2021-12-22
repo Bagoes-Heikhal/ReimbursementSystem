@@ -8,26 +8,6 @@ namespace ReimbursementSystemAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "tb_m_Form",
-                columns: table => new
-                {
-                    FormId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Receipt_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Start_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Category = table.Column<int>(type: "int", nullable: false),
-                    Payee = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<float>(type: "real", nullable: false),
-                    Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_Form", x => x.FormId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tb_t_Department",
                 columns: table => new
                 {
@@ -77,30 +57,6 @@ namespace ReimbursementSystemAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_t_Role", x => x.RoleId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tb_m_Expense",
-                columns: table => new
-                {
-                    ExpenseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    Approver = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Total = table.Column<float>(type: "real", nullable: false),
-                    FormId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_Expense", x => x.ExpenseId);
-                    table.ForeignKey(
-                        name: "FK_tb_m_Expense_tb_m_Form_FormId",
-                        column: x => x.FormId,
-                        principalTable: "tb_m_Form",
-                        principalColumn: "FormId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -169,28 +125,27 @@ namespace ReimbursementSystemAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_m_Reimbusment",
+                name: "tb_m_Expense",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Submitted_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpenseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Approver = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<float>(type: "real", nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_Reimbusment", x => x.EmployeeId);
+                    table.PrimaryKey("PK_tb_m_Expense", x => x.ExpenseId);
                     table.ForeignKey(
-                        name: "FK_tb_m_Reimbusment_tb_m_Employee_EmployeeId",
+                        name: "FK_tb_m_Expense_tb_m_Employee_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "tb_m_Employee",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_m_Reimbusment_tb_m_Expense_ExpenseId",
-                        column: x => x.ExpenseId,
-                        principalTable: "tb_m_Expense",
-                        principalColumn: "ExpenseId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,6 +163,33 @@ namespace ReimbursementSystemAPI.Migrations
                         column: x => x.EmployeeId,
                         principalTable: "tb_m_Employee",
                         principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tb_m_Form",
+                columns: table => new
+                {
+                    FormId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Receipt_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Start_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    End_Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
+                    Payee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<float>(type: "real", nullable: false),
+                    Attachments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpenseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_Form", x => x.FormId);
+                    table.ForeignKey(
+                        name: "FK_tb_m_Form_tb_m_Expense_ExpenseId",
+                        column: x => x.ExpenseId,
+                        principalTable: "tb_m_Expense",
+                        principalColumn: "ExpenseId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -233,13 +215,13 @@ namespace ReimbursementSystemAPI.Migrations
                 column: "ReligionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_Expense_FormId",
+                name: "IX_tb_m_Expense_EmployeeId",
                 table: "tb_m_Expense",
-                column: "FormId");
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_Reimbusment_ExpenseId",
-                table: "tb_m_Reimbusment",
+                name: "IX_tb_m_Form_ExpenseId",
+                table: "tb_m_Form",
                 column: "ExpenseId");
         }
 
@@ -249,7 +231,7 @@ namespace ReimbursementSystemAPI.Migrations
                 name: "tb_m_Account");
 
             migrationBuilder.DropTable(
-                name: "tb_m_Reimbusment");
+                name: "tb_m_Form");
 
             migrationBuilder.DropTable(
                 name: "tb_t_EmployeeAttachment");
@@ -262,9 +244,6 @@ namespace ReimbursementSystemAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_m_Employee");
-
-            migrationBuilder.DropTable(
-                name: "tb_m_Form");
 
             migrationBuilder.DropTable(
                 name: "tb_t_Department");

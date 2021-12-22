@@ -24,7 +24,8 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Attachments { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Expense> Expenses { get; set; }
+        public virtual Expense Expenses { get; set; }
+        public int ExpenseId { get; set; }
     }
 
     public enum Category

@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ReimbursementSystemAPI.ViewModel;
 
 namespace ReimbursementSystemAPI.Models
 {
@@ -22,10 +21,11 @@ namespace ReimbursementSystemAPI.Models
         public float Total { get; set; }
 
         [JsonIgnore]
-        public virtual Form Forms { get; set; }
-        public int FormId { get; set; }
-        public virtual ICollection<Reimbusment> Reimbusments { get; set; }
+        public virtual Employee Employees { get; set; }
+        public string EmployeeId { get; set; }
 
+        [JsonIgnore]
+        public virtual ICollection<Form> Forms { get; set; }
     }
 
     public enum Status

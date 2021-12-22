@@ -13,15 +13,24 @@
     <link href="~/assets/vendor/jqvmap/css/jqvmap.min.css" rel="stylesheet">
     <link href="~/assets/css/style.css" rel="stylesheet">
 
+    <!-- Daterangepicker -->
+    <!-- Daterange picker -->
+    <link href="~/assets/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="~/assets/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="~/assets/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="~/assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="~/assets/vendor/pickadate/themes/default.date.css">
 
 
 </head>
 
 <body>
 
-    <!--*******************
-        Preloader start
-    ********************-->
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -29,17 +38,10 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
+
+
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
                 <img class="logo-abbr" src="~/assets/images/logo.png" alt="">
@@ -53,12 +55,7 @@
                 </div>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-        <!--**********************************
-            Header start
-        ***********************************-->
+
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
@@ -165,12 +162,7 @@
                 </nav>
             </div>
         </div>
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
+
         <div class="quixnav">
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
@@ -241,39 +233,16 @@
 
 
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
-        <!--**********************************
-            Content body start
-        ***********************************-->
+
         <div class="content-body">
-            <div class="main">
-                @RenderBody()
-            </div>
+            @RenderBody()
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        <!--**********************************
-            Footer start
-        ***********************************-->
+
         <div class="footer">
             <div class="copyright">
                 <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
     </div>
     <!--**********************************
         Main wrapper end
@@ -286,11 +255,9 @@
     <script src="~/assets/js/quixnav-init.js"></script>
     <script src="~/assets/js/custom.min.js"></script>
 
-
     <!-- Vectormap -->
     <script src="~/assets/vendor/raphael/raphael.min.js"></script>
     <script src="~/assets/vendor/morris/morris.min.js"></script>
-
 
     <script src="~/assets/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="~/assets/vendor/chart.js/Chart.bundle.min.js"></script>
@@ -309,8 +276,39 @@
     <script src="~/assets/vendor/jqvmap/js/jquery.vmap.usa.js"></script>
     <script src="~/assets/vendor/jquery.counterup/jquery.counterup.min.js"></script>
 
-
     <script src="~/assets/js/dashboard/dashboard-1.js"></script>
+
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="~/assets/vendor/moment/moment.min.js"></script>
+    <script src="~/assets/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- clockpicker -->
+    <script src="~/assets/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+    <!-- asColorPicker -->
+    <script src="~/assets/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="~/assets/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="~/assets/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+    <!-- Material color picker -->
+    <script src="~/assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- pickdate -->
+    <script src="~/assets/vendor/pickadate/picker.js"></script>
+    <script src="~/assets/vendor/pickadate/picker.time.js"></script>
+    <script src="~/assets/vendor/pickadate/picker.date.js"></script>
+
+
+
+    <!-- Daterangepicker -->
+    <script src="~/assets/js/plugins-init/bs-daterange-picker-init.js"></script>
+    <!-- Clockpicker init -->
+    <script src="~/assets/js/plugins-init/clock-picker-init.js"></script>
+    <!-- asColorPicker init -->
+    <script src="~/assets/js/plugins-init/jquery-asColorPicker.init.js"></script>
+    <!-- Material color picker init -->
+    <script src="~/assets/js/plugins-init/material-date-picker-init.js"></script>
+    <!-- Pickdate -->
+    <script src="~/assets/js/plugins-init/pickadate-init.js"></script>
+
+
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
