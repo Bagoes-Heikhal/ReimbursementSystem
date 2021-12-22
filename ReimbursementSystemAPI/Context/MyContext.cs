@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ReimbursementSystemAPI.Models;
+using ReimbursementSystemAPI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
