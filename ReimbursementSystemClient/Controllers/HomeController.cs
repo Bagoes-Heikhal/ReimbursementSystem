@@ -18,6 +18,10 @@ namespace ReimbursementSystemClient.Controllers
             _logger = logger;
         }
 
+        public IActionResult Index2()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
