@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Base;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.Repository.Data;
@@ -14,8 +15,15 @@ namespace ReimbursementSystemAPI.Controllers
     [ApiController]
     public class ExpensesController : BaseController<Expense, ExpenseRepository, int>
     {
-        public ExpensesController(ExpenseRepository repository) : base(repository)
+        private ExpenseRepository expenseRepository;
+        public IConfiguration _configuration;
+        private readonly MyContext context;
+
+        public ExpensesController(ExpenseRepository repository, IConfiguration configuration, MyContext context) : base(repository)
         {
+            this.expenseRepository = repository;
+            this._configuration = configuration;
+            this.context = context;
         }
     }
 }

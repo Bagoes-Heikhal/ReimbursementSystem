@@ -7,5 +7,7 @@ namespace ReimbursementSystemAPI.ViewModel
 {
     public class ReimbusmentVM
     {
+        public string EmployeeId { get; set; }
+        public DateTime Submitted_Date { get; set; }
     }
 }

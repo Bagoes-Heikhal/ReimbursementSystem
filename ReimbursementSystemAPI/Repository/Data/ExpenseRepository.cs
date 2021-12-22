@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using API.Hash;
+using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using System;
@@ -18,6 +19,6 @@ namespace ReimbursementSystemAPI.Repository.Data
             this._configuration = configuration;
         }
 
-
+        
     }
 }

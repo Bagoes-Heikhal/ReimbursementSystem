@@ -7,5 +7,11 @@ namespace ReimbursementSystemAPI.ViewModel
 {
     public class ExpenseVM
     {
+        public DateTime Receipt_Date { get; set; }
+        public string Status { get; set; }
+        public string Approver { get; set; }
+        public string Description { get; set; }
+        public string Comment { get; set; }
+        public float Total { get; set; }
     }
 }
