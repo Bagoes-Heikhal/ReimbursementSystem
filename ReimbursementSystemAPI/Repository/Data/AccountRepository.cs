@@ -25,13 +25,17 @@ namespace ReimbursementSystemAPI.Repository.Data
             Employee employee = new Employee();
             {
                 employee.EmployeeId = registerVM.EmployeeId;
-                //employee.FirstName = registerVM.FirstName;
-                //employee.LastName = registerVM.LastName;
-                //employee.Gender = (registerVM.Gender == "Male") ? Gender.Male : Gender.Female;
-                //employee.BirthDate = registerVM.BirthDate;
+                employee.NIK = registerVM.NIK;
+                employee.FirstName = registerVM.FirstName;
+                employee.LastName = registerVM.LastName;
+                employee.Gender = (registerVM.Gender == "Male") ? Gender.Male : Gender.Female;
+                employee.BirthDate = registerVM.BirthDate;
                 employee.Email = registerVM.Email;
-                //employee.Salary = registerVM.Salary;
-                //employee.Phone = registerVM.Phone;
+                employee.Salary = registerVM.Salary;
+                employee.Phone = registerVM.Phone;
+                employee.DepartmentId = 1;
+                employee.JobId = 1;
+                employee.ReligionId = 1;
             }
 
             Account account = new Account();

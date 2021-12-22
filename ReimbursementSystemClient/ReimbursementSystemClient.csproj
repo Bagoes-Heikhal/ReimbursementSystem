@@ -5,8 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Login\**" />
+    <Compile Remove="Views\Register\**" />
+    <Content Remove="Views\Login\**" />
+    <Content Remove="Views\Register\**" />
+    <EmbeddedResource Remove="Views\Login\**" />
+    <EmbeddedResource Remove="Views\Register\**" />
+    <None Remove="Views\Login\**" />
+    <None Remove="Views\Register\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -29,7 +41,5 @@
     <Folder Include="Repository\Data\" />
     <Folder Include="Repository\Interface\" />
     <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Register\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
 </Project>

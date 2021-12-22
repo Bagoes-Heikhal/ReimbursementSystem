@@ -18,10 +18,9 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Email { get; set; }
         public string Password { get; set; }
         public string Degree { get; set; }
-
-        //public int DepartmentId { get; set; }
-        //public int JobId { get; set; }
-        //public int ReligionId { get; set; }
+        public int DepartmentId { get; set; }
+        public int JobId { get; set; }
+        public int ReligionId { get; set; }
     }
 
 }
