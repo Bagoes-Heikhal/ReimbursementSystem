@@ -7,12 +7,24 @@
   <ItemGroup>
     <Compile Remove="Views\Login\**" />
     <Compile Remove="Views\Register\**" />
+    <Compile Remove="wwwroot\assets\css\**" />
+    <Compile Remove="wwwroot\assets\fonts\**" />
+    <Compile Remove="wwwroot\assets\js\**" />
     <Content Remove="Views\Login\**" />
     <Content Remove="Views\Register\**" />
+    <Content Remove="wwwroot\assets\css\**" />
+    <Content Remove="wwwroot\assets\fonts\**" />
+    <Content Remove="wwwroot\assets\js\**" />
     <EmbeddedResource Remove="Views\Login\**" />
     <EmbeddedResource Remove="Views\Register\**" />
+    <EmbeddedResource Remove="wwwroot\assets\css\**" />
+    <EmbeddedResource Remove="wwwroot\assets\fonts\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\**" />
     <None Remove="Views\Login\**" />
     <None Remove="Views\Register\**" />
+    <None Remove="wwwroot\assets\css\**" />
+    <None Remove="wwwroot\assets\fonts\**" />
+    <None Remove="wwwroot\assets\js\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,5 +53,7 @@
     <Folder Include="Repository\Data\" />
     <Folder Include="Repository\Interface\" />
     <Folder Include="Views\Dashboard\" />
+    <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 </Project>
