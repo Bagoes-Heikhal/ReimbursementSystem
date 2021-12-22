@@ -5,6 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Login\**" />
+    <Compile Remove="Views\Register\**" />
+    <Compile Remove="wwwroot\assets\css\**" />
+    <Compile Remove="wwwroot\assets\fonts\**" />
+    <Compile Remove="wwwroot\assets\js\**" />
+    <Content Remove="Views\Login\**" />
+    <Content Remove="Views\Register\**" />
+    <Content Remove="wwwroot\assets\css\**" />
+    <Content Remove="wwwroot\assets\fonts\**" />
+    <Content Remove="wwwroot\assets\js\**" />
+    <EmbeddedResource Remove="Views\Login\**" />
+    <EmbeddedResource Remove="Views\Register\**" />
+    <EmbeddedResource Remove="wwwroot\assets\css\**" />
+    <EmbeddedResource Remove="wwwroot\assets\fonts\**" />
+    <EmbeddedResource Remove="wwwroot\assets\js\**" />
+    <None Remove="Views\Login\**" />
+    <None Remove="Views\Register\**" />
+    <None Remove="wwwroot\assets\css\**" />
+    <None Remove="wwwroot\assets\fonts\**" />
+    <None Remove="wwwroot\assets\js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
@@ -29,7 +52,7 @@
     <Folder Include="Repository\Data\" />
     <Folder Include="Repository\Interface\" />
     <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Register\" />
-    <Folder Include="Views\Login\" />
+    <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 </Project>
