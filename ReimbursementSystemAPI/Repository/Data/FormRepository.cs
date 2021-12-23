@@ -20,7 +20,6 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         public int Form(FormVM fromVM)
         {
-
             Form form = new Form();
             {
                 form.Receipt_Date = fromVM.Receipt_Date;

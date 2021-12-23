@@ -37,8 +37,8 @@ namespace ReimbursementSystemAPI.Models
         //[JsonIgnore]
         //public virtual Account Accounts { get; set; }
 
-        //[JsonIgnore]
-        //public virtual ICollection<Expense> Expenses { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Expense> Expenses { get; set; }
 
         //[JsonIgnore]
         //public virtual Employee_Attachment Employee_Attachments { get; set; }

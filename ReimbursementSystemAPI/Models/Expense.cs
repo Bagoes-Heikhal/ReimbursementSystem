@@ -18,14 +18,14 @@ namespace ReimbursementSystemAPI.Models
         public string Approver { get; set; }
         public string Description { get; set; }
         public string Comment { get; set; }
-        public float Total { get; set; }
+        public float? Total { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Employee Employees { get; set; }
-        //public string EmployeeId { get; set; }
+        [JsonIgnore]
+        public virtual Employee Employees { get; set; }
+        public string EmployeeId { get; set; }
 
-        //[JsonIgnore]
-        //public virtual ICollection<Form> Forms { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Form> Forms { get; set; }
     }
 
     public enum Status
@@ -33,7 +33,8 @@ namespace ReimbursementSystemAPI.Models
         Approved,
         Rejected,
         Canceled,
-        Posted
+        Posted,
+        Draft
     }
 
 }

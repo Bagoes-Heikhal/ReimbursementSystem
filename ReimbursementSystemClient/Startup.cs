@@ -29,6 +29,7 @@ namespace ReimbursementSystemClient
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<FormRepository>();
+            services.AddScoped<ExpenseRepository>();
             services.AddScoped<Address>();
 
         }
@@ -57,7 +58,7 @@ namespace ReimbursementSystemClient
             {
                 endpoints.MapControllerRoute(
                     name: "default", 
-                    pattern: "{controller=Reimbusment}/{action=Form}/{id?}");
+                    pattern: "{controller=Reimbusment}/{action=Index}/{id?}");
             });
         }
     }

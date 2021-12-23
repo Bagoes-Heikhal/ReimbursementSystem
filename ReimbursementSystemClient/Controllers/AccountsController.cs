@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         // GET: /<controller>/
         public IActionResult Index()

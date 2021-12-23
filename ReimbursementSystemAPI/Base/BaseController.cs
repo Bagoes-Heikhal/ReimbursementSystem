@@ -26,11 +26,9 @@ namespace ReimbursementSystemAPI.Base
             var result = repository.Get();
             if (result.Count() != 0)
             {
-                //return Ok(new { status = HttpStatusCode.OK, result = result, Message = "Data ditampilkan" });
-                return Ok(result);
-
+                return Ok();
             }
-            return NotFound(new { status = HttpStatusCode.NotFound, Message = $"Data belum tersedia" });
+            return NotFound();
         }
 
         [HttpGet("{Key}")]
@@ -41,7 +39,7 @@ namespace ReimbursementSystemAPI.Base
             {
                 return Ok(result);
             }
-            return NotFound(new { status = HttpStatusCode.NotFound, Message = $"Data tidak ditemukan 11" });
+            return NotFound();
         }
 
         [HttpDelete("{Key}")]
@@ -50,11 +48,11 @@ namespace ReimbursementSystemAPI.Base
             var result = repository.Delete(key);
             try
             {
-                return Ok(new { status = HttpStatusCode.OK, result = result, Message = "Data telah dihaspus" });
+                return Ok();
             }
             catch (NullReferenceException)
             {
-                return NotFound(new { status = HttpStatusCode.NotFound, result = result, Message = $"Data tidak ditemukan" });
+                return NotFound();
             }
         }
 
@@ -64,11 +62,11 @@ namespace ReimbursementSystemAPI.Base
                 var result = repository.Update(entity, key);
                 try
                 {
-                    return Ok(new { status = HttpStatusCode.OK, result = result, Message = "Data terupdate" });
+                    return Ok();
                 }
                 catch (Exception)
                 {
-                    return BadRequest(new { status = HttpStatusCode.BadRequest, Message = "Gagal update" });
+                    return BadRequest();
                 }
             }
 
@@ -77,11 +75,11 @@ namespace ReimbursementSystemAPI.Base
         {
             try {
                 var result = repository.Insert(entity);
-                return Ok(new { status = HttpStatusCode.OK, result = result, Message = "Data telah berhasil di buat" });
+                return Ok();
             }
             catch (Exception)
             {
-                return BadRequest(new { status = HttpStatusCode.BadRequest, Message = "Gagal memasukan data" });
+                return BadRequest();
             }
         }
     }

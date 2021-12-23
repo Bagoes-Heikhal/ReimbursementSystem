@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
@@ -9,15 +10,13 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-   
-    public class FormsController : BaseController<Form, FormRepository, string>
+    public class ExpensesController : BaseController<Expense, ExpenseRepository, string>
     {
+        private readonly ExpenseRepository expensesRepository;
 
-        private readonly FormRepository formRepository;
-
-        public FormsController(FormRepository repository) : base(repository)
+        public ExpensesController(ExpenseRepository repository) : base(repository)
         {
-            this.formRepository = repository;
+            this.expensesRepository = repository;
         }
 
         public IActionResult Index()
@@ -25,11 +24,12 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
-        [HttpPost]
-        public JsonResult InsertForm(FormVM formVM)
+        [HttpGet]
+        public async Task<JsonResult> GetID()
         {
-            var result = formRepository.InsertForm(formVM);
+            var result = await expensesRepository.GetID();
             return Json(result);
         }
+
     }
 }

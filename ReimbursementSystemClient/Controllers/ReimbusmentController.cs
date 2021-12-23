@@ -17,5 +17,10 @@ namespace ReimbursementSystemClient.Controllers
         {
             return View();
         }
+
+        public IActionResult Expense()
+        {
+            return View();
+        }
     }
 }

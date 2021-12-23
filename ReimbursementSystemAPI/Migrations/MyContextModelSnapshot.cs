@@ -116,13 +116,18 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<float>("Total")
+                    b.Property<float?>("Total")
                         .HasColumnType("real");
 
                     b.HasKey("ExpenseId");
+
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("tb_m_Expense");
                 });
@@ -191,6 +196,9 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ExpenseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Payee")
                         .HasColumnType("nvarchar(max)");
 
@@ -205,7 +213,39 @@ namespace ReimbursementSystemAPI.Migrations
 
                     b.HasKey("FormId");
 
+                    b.HasIndex("ExpenseId");
+
                     b.ToTable("tb_m_Form");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employees")
+                        .WithMany("Expenses")
+                        .HasForeignKey("EmployeeId");
+
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.ViewModel.Form", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
+                        .WithMany("Forms")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Expenses");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
+                {
+                    b.Navigation("Expenses");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
+                {
+                    b.Navigation("Forms");
                 });
 #pragma warning restore 612, 618
         }

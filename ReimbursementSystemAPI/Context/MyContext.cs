@@ -53,10 +53,10 @@ namespace ReimbursementSystemAPI.Models
             //    .HasMany(c => c.Expenses)
             //    .WithOne(c => c.Employees);
 
-            ////One to many
-            //modelBuilder.Entity<Expense>()
-            //    .HasMany(c => c.Forms)
-            //    .WithOne(c => c.Expenses);
+            //One to many
+            modelBuilder.Entity<Expense>()
+                .HasMany(c => c.Forms)
+                .WithOne(c => c.Expenses);
 
             ////One to many
             //modelBuilder.Entity<Department>()
