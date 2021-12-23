@@ -31,47 +31,47 @@ namespace ReimbursementSystemAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //One to One
-            modelBuilder.Entity<Employee>()
-                .HasOne(a => a.Accounts)
-                .WithOne(b => b.Employee)
-                .HasForeignKey<Account>(b => b.EmployeeId);
+            //modelBuilder.Entity<Employee>()
+            //    .HasOne(a => a.Accounts)
+            //    .WithOne(b => b.Employee)
+            //    .HasForeignKey<Account>(b => b.EmployeeId);
+
+            ////One to One
+            //modelBuilder.Entity<Employee>()
+            //    .HasOne(a => a.Employee_Attachments)
+            //    .WithOne(b => b.Employees)
+            //    .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
 
             //One to One
-            modelBuilder.Entity<Employee>()
-                .HasOne(a => a.Employee_Attachments)
-                .WithOne(b => b.Employees)
-                .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
+            //modelBuilder.Entity<Role>()
+            //    .HasOne(a => a.Accounts)
+            //    .WithOne(b => b.Roles)
+            //    .HasForeignKey<Account>(b => b.RoleId);
 
-            //One to One
-            modelBuilder.Entity<Role>()
-                .HasOne(a => a.Accounts)
-                .WithOne(b => b.Roles)
-                .HasForeignKey<Account>(b => b.RoleId);
+            ////One to many
+            //modelBuilder.Entity<Employee>()
+            //    .HasMany(c => c.Expenses)
+            //    .WithOne(c => c.Employees);
 
-            //One to many
-            modelBuilder.Entity<Employee>()
-                .HasMany(c => c.Expenses)
-                .WithOne(c => c.Employees);
+            ////One to many
+            //modelBuilder.Entity<Expense>()
+            //    .HasMany(c => c.Forms)
+            //    .WithOne(c => c.Expenses);
 
-            //One to many
-            modelBuilder.Entity<Expense>()
-                .HasMany(c => c.Forms)
-                .WithOne(c => c.Expenses);
+            ////One to many
+            //modelBuilder.Entity<Department>()
+            //    .HasMany(c => c.Employees)
+            //    .WithOne(c => c.Departments);
 
-            //One to many
-            modelBuilder.Entity<Department>()
-                .HasMany(c => c.Employees)
-                .WithOne(c => c.Departments);
+            ////One to many
+            //modelBuilder.Entity<Job>()
+            //    .HasMany(c => c.Employees)
+            //    .WithOne(c => c.Jobs);
 
-            //One to many
-            modelBuilder.Entity<Job>()
-                .HasMany(c => c.Employees)
-                .WithOne(c => c.Jobs);
-
-            //One to many
-            modelBuilder.Entity<Religion>()
-                .HasMany(c => c.Employees)
-                .WithOne(c => c.Religions);
+            ////One to many
+            //modelBuilder.Entity<Religion>()
+            //    .HasMany(c => c.Employees)
+            //    .WithOne(c => c.Religions);
         }
     }
 

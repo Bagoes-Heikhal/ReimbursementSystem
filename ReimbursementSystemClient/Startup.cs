@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ReimbursementSystemClient.Base.Urls;
+using ReimbursementSystemClient.Repository.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,11 @@ namespace ReimbursementSystemClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<FormRepository>();
+            services.AddScoped<Address>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

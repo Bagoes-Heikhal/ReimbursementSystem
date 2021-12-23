@@ -15,7 +15,7 @@ namespace ReimbursementSystemAPI.Models
         public int ReligionId { get; set; }
         public string Name { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<Employee> Employees { get; set; }
+        //[JsonIgnore]
+        //public virtual ICollection<Employee> Employees { get; set; }
     }
 }

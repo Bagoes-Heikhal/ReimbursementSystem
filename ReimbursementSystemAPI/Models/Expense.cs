@@ -20,12 +20,12 @@ namespace ReimbursementSystemAPI.Models
         public string Comment { get; set; }
         public float Total { get; set; }
 
-        [JsonIgnore]
-        public virtual Employee Employees { get; set; }
-        public string EmployeeId { get; set; }
+        //[JsonIgnore]
+        //public virtual Employee Employees { get; set; }
+        //public string EmployeeId { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<Form> Forms { get; set; }
+        //[JsonIgnore]
+        //public virtual ICollection<Form> Forms { get; set; }
     }
 
     public enum Status

@@ -34,26 +34,26 @@ namespace ReimbursementSystemAPI.Models
         public string Email { get; set; }
         public Gender Gender { get; set; }
 
-        [JsonIgnore]
-        public virtual Account Accounts { get; set; }
+        //[JsonIgnore]
+        //public virtual Account Accounts { get; set; }
 
-        [JsonIgnore]
-        public virtual ICollection<Expense> Expenses { get; set; }
+        //[JsonIgnore]
+        //public virtual ICollection<Expense> Expenses { get; set; }
 
-        [JsonIgnore]
-        public virtual Employee_Attachment Employee_Attachments { get; set; }
+        //[JsonIgnore]
+        //public virtual Employee_Attachment Employee_Attachments { get; set; }
 
-        [JsonIgnore]
-        public virtual Department Departments { get; set; }
-        public int DepartmentId { get; set; }
+        //[JsonIgnore]
+        //public virtual Department Departments { get; set; }
+        //public int DepartmentId { get; set; }
 
-        [JsonIgnore]
-        public virtual Job Jobs { get; set; }
-        public int JobId { get; set; }
+        //[JsonIgnore]
+        //public virtual Job Jobs { get; set; }
+        //public int JobId { get; set; }
 
-        [JsonIgnore]
-        public virtual Religion Religions { get; set; }
-        public int ReligionId { get; set; }
+        //[JsonIgnore]
+        //public virtual Religion Religions { get; set; }
+        //public int ReligionId { get; set; }
     }
 
     public enum Gender

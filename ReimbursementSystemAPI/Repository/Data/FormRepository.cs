@@ -23,7 +23,6 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             Form form = new Form();
             {
-                form.FormId = fromVM.FormId;
                 form.Receipt_Date = fromVM.Receipt_Date;
                 form.Start_Date = fromVM.Start_Date;
                 form.End_Date = fromVM.End_Date;

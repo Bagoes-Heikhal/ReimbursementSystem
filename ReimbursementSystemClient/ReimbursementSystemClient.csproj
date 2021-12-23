@@ -36,10 +36,10 @@
     <None Remove="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Base\" />
     <Folder Include="Base\Controllers\" />
-    <Folder Include="Repository\" />
-    <Folder Include="Repository\Data\" />
     <Folder Include="Repository\Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ReimbursementSystemAPI\ReimbursementSystemAPI.csproj" />
   </ItemGroup>
 </Project>

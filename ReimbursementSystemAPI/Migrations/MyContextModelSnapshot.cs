@@ -28,13 +28,7 @@ namespace ReimbursementSystemAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.HasKey("EmployeeId");
-
-                    b.HasIndex("RoleId")
-                        .IsUnique();
 
                     b.ToTable("tb_m_Account");
                 });
@@ -62,9 +56,6 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -74,9 +65,6 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JobId")
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -91,19 +79,10 @@ namespace ReimbursementSystemAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReligionId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Salary")
                         .HasColumnType("real");
 
                     b.HasKey("EmployeeId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("JobId");
-
-                    b.HasIndex("ReligionId");
 
                     b.ToTable("tb_m_Employee");
                 });
@@ -137,9 +116,6 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -147,8 +123,6 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("ExpenseId");
-
-                    b.HasIndex("EmployeeId");
 
                     b.ToTable("tb_m_Expense");
                 });
@@ -217,9 +191,6 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<DateTime>("End_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ExpenseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Payee")
                         .HasColumnType("nvarchar(max)");
 
@@ -234,120 +205,7 @@ namespace ReimbursementSystemAPI.Migrations
 
                     b.HasKey("FormId");
 
-                    b.HasIndex("ExpenseId");
-
                     b.ToTable("tb_m_Form");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Account", b =>
-                {
-                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employee")
-                        .WithOne("Accounts")
-                        .HasForeignKey("ReimbursementSystemAPI.Models.Account", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReimbursementSystemAPI.Models.Role", "Roles")
-                        .WithOne("Accounts")
-                        .HasForeignKey("ReimbursementSystemAPI.Models.Account", "RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Roles");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
-                {
-                    b.HasOne("ReimbursementSystemAPI.Models.Department", "Departments")
-                        .WithMany("Employees")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReimbursementSystemAPI.Models.Job", "Jobs")
-                        .WithMany("Employees")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReimbursementSystemAPI.Models.Religion", "Religions")
-                        .WithMany("Employees")
-                        .HasForeignKey("ReligionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Departments");
-
-                    b.Navigation("Jobs");
-
-                    b.Navigation("Religions");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee_Attachment", b =>
-                {
-                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employees")
-                        .WithOne("Employee_Attachments")
-                        .HasForeignKey("ReimbursementSystemAPI.Models.Employee_Attachment", "EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
-                {
-                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employees")
-                        .WithMany("Expenses")
-                        .HasForeignKey("EmployeeId");
-
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.ViewModel.Form", b =>
-                {
-                    b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
-                        .WithMany("Forms")
-                        .HasForeignKey("ExpenseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Expenses");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Department", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
-                {
-                    b.Navigation("Accounts");
-
-                    b.Navigation("Employee_Attachments");
-
-                    b.Navigation("Expenses");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
-                {
-                    b.Navigation("Forms");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Job", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Religion", b =>
-                {
-                    b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Role", b =>
-                {
-                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

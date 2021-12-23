@@ -16,7 +16,7 @@ namespace ReimbursementSystemAPI.Models
 
         public string STNK { get; set; }
 
-        [JsonIgnore]
-        public virtual Employee Employees { get; set; }
+        //[JsonIgnore]
+        //public virtual Employee Employees { get; set; }
     }
 }
