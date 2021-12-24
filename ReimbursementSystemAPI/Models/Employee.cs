@@ -34,8 +34,8 @@ namespace ReimbursementSystemAPI.Models
         public string Email { get; set; }
         public Gender Gender { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Account Accounts { get; set; }
+        [JsonIgnore]
+        public virtual Account Accounts { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Expense> Expenses { get; set; }

@@ -31,6 +31,29 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpGet("Notfound/")]
+        public IActionResult Page_404()
+        {
+            return View();
+        }
+
+        [HttpGet("Forbidden/")]
+        public IActionResult Page_403()
+        {
+            return View("Page_403");
+        }
+
+        [HttpGet("Unauthorized/")]
+        public IActionResult Page_401()
+        {
+            return View("Page_401");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
