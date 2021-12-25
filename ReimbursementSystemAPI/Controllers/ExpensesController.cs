@@ -34,23 +34,23 @@ namespace ReimbursementSystemAPI.Controllers
             switch (result)
             {
                 case 1:
-                    return Ok();
+                    return Ok(); 
                 default:
                     return BadRequest();
             }
         }
 
 
-        [HttpPost("ExpenseInsert2")]
-        public ActionResult ExpenseForm2(LoginVM loginVM)
+        [HttpGet("GetID/{email}")]
+        public ActionResult ExpesnseID(string email)
         {
-            var result = expenseRepository.ExpesnseID(loginVM);
+            var result = expenseRepository.ExpesnseID(email);
 
             if (result != null)
             {
-                return Ok( new { result = result });
+                return Ok(result);
             }
-            return NotFound(new { result = result });
+            return NotFound(result);
         }
 
     }

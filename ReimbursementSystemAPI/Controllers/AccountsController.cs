@@ -42,17 +42,17 @@ namespace ReimbursementSystemAPI.Controllers
                     var getUserData = (from a in context.Employees
                                        where a.Email == loginVM.Email
                                        join b in context.Accounts on a.EmployeeId equals b.EmployeeId
-                                       join c in context.Roles on b.RoleId equals c.RoleId
+                                       //join c in context.Roles on b.RoleId equals c.RoleId
                                        select new
                                        {
                                            Employee = a.Email,
-                                           Role = c.Name
+                                           Id = a.EmployeeId
                                        }).ToList();
 
                     var claims = new List<Claim>
                     {
                         new Claim(JwtRegisteredClaimNames.Email, getUserData[0].Employee),
-                        new Claim(ClaimTypes.Role, getUserData[0].Role)
+                        //new Claim(ClaimTypes.Role, getUserData[0].Role)
                     };
 
                     //foreach (var userRole in getUserData)
@@ -72,7 +72,7 @@ namespace ReimbursementSystemAPI.Controllers
 
                     var idtoken = new JwtSecurityTokenHandler().WriteToken(token);
                     claims.Add(new Claim("TokenSecurity", idtoken.ToString()));
-                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Sucsses", Email = loginVM.Email});
+                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Sucsses", Email = loginVM.Email, EmployeeId = getUserData[0].Id});
                 case 2:
                     return BadRequest();
                 case 3:
@@ -89,25 +89,11 @@ namespace ReimbursementSystemAPI.Controllers
             switch (result)
             {
                 case 1:
-                    return Ok(new { Status = HttpStatusCode.BadRequest, Messages = "Register Sucsses" });
+                    return Ok(new { Status = HttpStatusCode.OK, Messages = "Register Sucsses" });
                 default:
                     return BadRequest(new { Status = HttpStatusCode.BadRequest, Message = "Register Fail" });
             }
             
-        }
-
-        [HttpPost("Insert")]
-        public ActionResult Insert(RegisterVM registerVM)
-        {
-            var result = accountRepository.Register(registerVM);
-            switch (result)
-            {
-                case 1:
-                    return Ok(new { Status = HttpStatusCode.BadRequest, Messages = "Register Sucsses" });
-                default:
-                    return BadRequest(new { Status = HttpStatusCode.BadRequest, Message = "Register Fail" });
-            }
-
         }
     }
 }

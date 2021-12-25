@@ -30,18 +30,26 @@ namespace ReimbursementSystemClient.Controllers
             var jwtToken = await accountRepository.Auth(login);
             var token = jwtToken.Token;
             var email = jwtToken.Email;
+            var id = jwtToken.EmployeeId;
 
             if (token == null)
             {
-                //return RedirectToAction("Dashboard", "Employees");
-                return Json(Url.Action("login", "Employees"));
+                return Json(Url.Action("login", "Home"));
             }
 
             HttpContext.Session.SetString("JWToken", token);
             HttpContext.Session.SetString("Email", email);
+            HttpContext.Session.SetString("EmployeeId", id);
 
-            return Json(Url.Action("Dashboard", "Employees"));
-            //return RedirectToAction("Dashboard", "Employees");
+            return Json(Url.Action("Reimbusment", "Reimbusments"));
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("login", "Home");
+        }
+
+
     }
 }

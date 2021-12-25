@@ -42,7 +42,11 @@ namespace ReimbursementSystemAPI.Repository.Data
                     default:
                         break;
                 }
+                expense.EmployeeId = expenseVM.EmployeeId;
             }
+
+            context.Expenses.Add(expense);    
+            context.SaveChanges();
             return 1;
         }
 
@@ -55,10 +59,10 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 1;
         }
 
-        public ExpenseIDVM ExpesnseID(LoginVM loginVM)
+        public ExpenseIDVM ExpesnseID(string email)
         {
             var data = (from a in context.Employees
-                        where a.Email == loginVM.Email
+                        where a.Email == email
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
                         select new ExpenseIDVM()
                         { ExpenseID = b.ExpenseId }).ToList().LastOrDefault();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    public class ReimbusmentController : Controller
+    
+    public class ReimbusmentsController : Controller
     {
+        
         public IActionResult Index()
         {
             return View();
@@ -19,6 +22,12 @@ namespace ReimbursementSystemClient.Controllers
         }
 
         public IActionResult Expense()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Reimbusment()
         {
             return View();
         }

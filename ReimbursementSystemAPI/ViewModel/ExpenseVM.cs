@@ -13,5 +13,7 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Description { get; set; }
         public string Comment { get; set; }
         public float Total { get; set; }
+
+        public string EmployeeId { get; set; }
     }
 }
