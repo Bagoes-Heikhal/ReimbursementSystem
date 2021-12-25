@@ -27,6 +27,8 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Religion> Religions { get; set; }
+        //public DbSet<Category> Categories1 { get; set; }
+        //public DbSet<Type> Types { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

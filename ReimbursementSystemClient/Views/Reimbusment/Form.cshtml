@@ -11,6 +11,21 @@
     <title>Focus - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
 
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <!-- Daterange picker -->
+    <link href="~assets/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="~assets/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="~assets/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="~assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="~assets/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="~assets/vendor/pickadate/themes/default.date.css">
+    <!-- Custom Stylesheet -->
+    <link href="~assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -27,13 +42,20 @@
                     <div class="row">
                         <div class="form-group col-xl-6">
                             <label>Receipt Date</label>
-                            <input type="datetime" class="form-control" placeholder="2017-06-04" id="Receipt_Date" >
+
+                            <input name="datepicker" class="datepicker-default form-control" id="datepicker" placeholder="Receipt Date">
                         </div>
 
-                        <div class="form-group col-xl-6">
+                        <div class="form-group col-xl-3">
                             <div class="example">
-                                <p class="mb-1">Date Range Pick</p>
-                                <input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015" id="Start_Date">
+                                <p class="mb-1">From </p>
+                                <input name="datepicker1" class="datepicker-default form-control" id="datepicker" placeholder="Date From">
+                            </div>
+                        </div>
+                        <div class="form-group col-xl-3">
+                            <div class="example">
+                                <p class="mb-1">To</p>
+                                <input name="datepicker2" class="datepicker-default form-control" id="datepicker" placeholder="Date To">
                             </div>
                         </div>
                     </div>
@@ -52,19 +74,31 @@
 
                         <div class="form-group col-xl-6">
                             <label for="inputState">Type</label>
-                            <input type="text" class="form-control input-default " placeholder="input-default" id="Type">
+                             <select id="Type" class="form-control">
+                                <option disabled selected>Choose...</option>
+                                <option>Transportation</option>
+                                <option>Parking</option>
+                                <option>Medical</option>
+                                <option>Lodging</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-xl-6">
                             <label for="inputState">Travel destination State</label>
-                            <input type="text" class="form-control input-default " placeholder="input-default" id="Destination">
+                            <input type="text" class="form-control input-default " placeholder="Travel destination State" id="Destination">
                         </div>
 
                         <div class="form-group col-xl-6">
                             <label for="inputState">Payee</label>
-                            <input type="text" class="form-control input-default " placeholder="input-default" id="Payee">
+                             <select id="Payee" class="form-control">
+                                <option disabled selected>Choose...</option>
+                                <option>Transportation</option>
+                                <option>Parking</option>
+                                <option>Medical</option>
+                                <option>Lodging</option>
+                            </select>
                         </div>
                     </div>
 
@@ -103,7 +137,41 @@
             </div>
         </div>
     </div>
+    <script src="~assets/vendor/global/global.min.js"></script>
+    <script src="~assets/js/quixnav-init.js"></script>
+    <script src="~assets/js/custom.min.js"></script>
 
+
+
+    <!-- Daterangepicker -->
+    <!-- momment js is must -->
+    <script src="~assets/vendor/moment/moment.min.js"></script>
+    <script src="~assets/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- clockpicker -->
+    <script src="~assets/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+    <!-- asColorPicker -->
+    <script src="~assets/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+    <script src="~assets/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+    <script src="~assets/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+    <!-- Material color picker -->
+    <script src="~assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- pickdate -->
+    <script src="~assets/vendor/pickadate/picker.js"></script>
+    <script src="~assets/vendor/pickadate/picker.time.js"></script>
+    <script src="~assets/vendor/pickadate/picker.date.js"></script>
+
+
+
+    <!-- Daterangepicker -->
+    <script src="~assets/js/plugins-init/bs-daterange-picker-init.js"></script>
+    <!-- Clockpicker init -->
+    <script src="~assets/js/plugins-init/clock-picker-init.js"></script>
+    <!-- asColorPicker init -->
+    <script src="~assets/js/plugins-init/jquery-asColorPicker.init.js"></script>
+    <!-- Material color picker init -->
+    <script src="~assets/js/plugins-init/material-date-picker-init.js"></script>
+    <!-- Pickdate -->
+    <script src="~assets/js/plugins-init/pickadate-init.js"></script>
 </body>
 
 </html>
