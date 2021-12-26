@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_EmployeeLayout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manager Dashboard</title>
+</head>
+<body>
+    <div>
+        <table class="table table-striped" id="tabelExpense">
+
+            <thead>
+                <tr class="bg-primary">
+                    <th scope="col" class="text-light text-center">ID Employee</th>
+                    <th scope="col" class="text-light text-center">Status</th>
+                    <th scope="col" class="text-light text-center">Approver</th>
+                    <th scope="col" class="text-light text-center">Description</th>
+                    <th scope="col" class="text-light text-center">Status</th>
+                    <th scope="col" class="text-light text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="listExpense">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+@section Scripts
+    {
+
+    <script src="~/js/GetAllExpense.js"></script>
+}

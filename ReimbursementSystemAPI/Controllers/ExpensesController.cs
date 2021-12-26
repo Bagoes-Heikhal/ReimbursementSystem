@@ -8,6 +8,7 @@ using ReimbursementSystemAPI.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Controllers
@@ -64,5 +65,12 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet("Get")]
+        public ActionResult GetAll()
+        {
+
+            var result = expenseRepository.GetAllExpense();
+            return Ok(new { status = HttpStatusCode.OK, result, Message = "Data berhasil di tembak" });
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -79,7 +80,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
                            select new ExpenseVM()
                            {
-                               dateTime = DateTime.Now,
+                               DateTime = DateTime.Now,
                                ExpenseId = b.ExpenseId,
                                Status = 5,
                                Total = b.Total,
@@ -87,5 +88,39 @@ namespace ReimbursementSystemAPI.Repository.Data
                            };
             return register.ToList();
         }
+
+        //public IEnumerable<ExpenseVM> ExpenseAllData()
+        //{
+        //    var data = from a in context.Employees
+        //                   where a.EmployeeId == employeeid
+        //                   join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+        //                   select new ExpenseVM()
+        //                   {
+        //                       dateTime = DateTime.Now,
+        //                       ExpenseId = b.ExpenseId,
+        //                       Status = 5,
+        //                       Total = b.Total,
+        //                       Description = b.Description,
+        //                   };
+        //    return data.ToList();
+        //}
+
+        public IEnumerable GetAllExpense()
+        {
+            var data = from e in context.Set<Expense>()
+                        select new
+
+                        {
+                            e.EmployeeId,
+                            e.Status,
+                            e.Approver,
+                            e.Description,
+                            e.Comment,
+                            e.Total
+
+                        };
+            return data.ToList();
+        }
+
     }
 }

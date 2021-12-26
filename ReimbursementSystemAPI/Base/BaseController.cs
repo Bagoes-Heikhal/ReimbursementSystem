@@ -32,6 +32,7 @@ namespace ReimbursementSystemAPI.Base
             return NotFound(new { status = HttpStatusCode.NotFound, Message = $"Data belum tersedia" });
         }
 
+
         [HttpGet("{Key}")]
         public ActionResult Get(Key key)
         {
