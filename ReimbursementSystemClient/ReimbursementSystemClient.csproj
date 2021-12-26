@@ -11,12 +11,16 @@
   <ItemGroup>
     <Compile Remove="Views\Login\**" />
     <Compile Remove="Views\Register\**" />
+    <Compile Remove="Views\Reimbusment\**" />
     <Content Remove="Views\Login\**" />
     <Content Remove="Views\Register\**" />
+    <Content Remove="Views\Reimbusment\**" />
     <EmbeddedResource Remove="Views\Login\**" />
     <EmbeddedResource Remove="Views\Register\**" />
+    <EmbeddedResource Remove="Views\Reimbusment\**" />
     <None Remove="Views\Login\**" />
     <None Remove="Views\Register\**" />
+    <None Remove="Views\Reimbusment\**" />
     <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
   </ItemGroup>
   <ItemGroup>
