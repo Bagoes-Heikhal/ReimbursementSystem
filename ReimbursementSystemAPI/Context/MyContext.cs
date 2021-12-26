@@ -37,10 +37,10 @@ namespace ReimbursementSystemAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //One to One
-            //modelBuilder.Entity<Employee>()
-            //    .HasOne(a => a.Accounts)
-            //    .WithOne(b => b.Employee)
-            //    .HasForeignKey<Account>(b => b.EmployeeId);
+            modelBuilder.Entity<Employee>()
+                .HasOne(a => a.Accounts)
+                .WithOne(b => b.Employee)
+                .HasForeignKey<Account>(b => b.EmployeeId);
 
             ////One to One
             //modelBuilder.Entity<Employee>()
@@ -49,15 +49,15 @@ namespace ReimbursementSystemAPI.Models
             //    .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
 
             //One to One
-            //modelBuilder.Entity<Role>()
-            //    .HasOne(a => a.Accounts)
-            //    .WithOne(b => b.Roles)
-            //    .HasForeignKey<Account>(b => b.RoleId);
+            modelBuilder.Entity<Role>()
+                .HasOne(a => a.Accounts)
+                .WithOne(b => b.Roles)
+                .HasForeignKey<Account>(b => b.RoleId);
 
             ////One to many
-            //modelBuilder.Entity<Employee>()
-            //    .HasMany(c => c.Expenses)
-            //    .WithOne(c => c.Employees);
+            modelBuilder.Entity<Employee>()
+                .HasMany(c => c.Expenses)
+                .WithOne(c => c.Employees);
 
             //One to many
             modelBuilder.Entity<Expense>()

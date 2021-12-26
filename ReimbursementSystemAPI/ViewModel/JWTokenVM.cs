@@ -1,8 +1,14 @@
-﻿namespace ReimbursementSystemAPI.ViewModel
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ReimbursementSystemAPI.ViewModel
 {
-    internal class JWTokenVM
+    public class JWTokenVM
     {
         public string Token { get; set; }
         public string Messages { get; set; }
+        public string Email { get; set; }
     }
 }
