@@ -40,6 +40,7 @@
   <ItemGroup>
     <Folder Include="Base\Controllers\" />
     <Folder Include="Repository\Interface\" />
+    <Folder Include="Views\Reimbusment\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReimbursementSystemAPI\ReimbursementSystemAPI.csproj" />
