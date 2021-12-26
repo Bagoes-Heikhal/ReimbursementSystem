@@ -39,18 +39,19 @@ namespace ReimbursementSystemAPI.Repository.Data
                         break;
                     case 4:
                         form.Category = Category.Lodging;
-                    case "Transportation":
-                        form.Category = ViewModel.Category.Transportation;
                         break;
-                    case "Parking":
-                        form.Category = ViewModel.Category.Parking;
-                        break;
-                    case "Medical":
-                        form.Category = ViewModel.Category.Medical;
-                        break;
-                    case "Lodging":
-                        form.Category = ViewModel.Category.Lodging;
-                        break;
+                    //case "Transportation":
+                    //    form.Category = ViewModel.Category.Transportation;
+                    //    break;
+                    //case "Parking":
+                    //    form.Category = ViewModel.Category.Parking;
+                    //    break;
+                    //case "Medical":
+                    //    form.Category = ViewModel.Category.Medical;
+                    //    break;
+                    //case "Lodging":
+                    //    form.Category = ViewModel.Category.Lodging;
+                    //    break;
                     default:
                         break;
                 }

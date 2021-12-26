@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using Category = ReimbursementSystemAPI.Models.Category;
-using Type = ReimbursementSystemAPI.Models.Type;
 
 namespace ReimbursementSystemClient.Controllers
 {
@@ -30,20 +28,20 @@ namespace ReimbursementSystemClient.Controllers
         }
 
         
-        public IActionResult Index()
-        {
+        //public IActionResult Index()
+        //{
            
-            List<Category> CategoryList = context.Categories1.ToList();
-            ViewBag.CategoryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
-            return View();
-        }
-        public JsonResult GetTypeList(int CategoryId)
-        {
-            //context._iconfiguration.ProxyCreationEnabled = false;
-            List<Type> TypeList = context.Types.Where(x => x.CategoryId == CategoryId).ToList();
-            return Json(TypeList);
+        //    List<Category> CategoryList = context.Categories1.ToList();
+        //    ViewBag.CategoryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
+        //    return View();
+        //}
+        //public JsonResult GetTypeList(int CategoryId)
+        //{
+        //    //context._iconfiguration.ProxyCreationEnabled = false;
+        //    List<Type> TypeList = context.Types.Where(x => x.CategoryId == CategoryId).ToList();
+        //    return Json(TypeList);
 
-        }
+        //}
 
 
         [HttpGet("{expenseid}")]
