@@ -40,6 +40,17 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        [HttpGet("ExpenseData/{employeeid}")]
+        public ActionResult GetExpense(string employeeid)
+        {
+            var result = expenseRepository.GetExpense(employeeid);
+           
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
 
         [HttpGet("GetID/{email}")]
         public ActionResult ExpesnseID(string email)

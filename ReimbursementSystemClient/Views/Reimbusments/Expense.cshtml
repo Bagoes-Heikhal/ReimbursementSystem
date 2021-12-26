@@ -21,7 +21,7 @@
         <!-- row -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title expense-title">Expense Request </h4>
+                <h4 class="card-title expense-title">Expense Request <span></span></h4>
             </div>
             <div class="card-body">
                 <form class="needs-validation" novalidate>
@@ -29,19 +29,19 @@
                     <div class="row">
                         <div class="form-group col-xl-6">
                             <label for="inputState">Approver</label>
-                            <input type="text" class="form-control input-default" placeholder="input-default" id="Approver" value="">
+                            <input type="text" class="form-control input-default" placeholder="" id="Approver" value="" disabled>
                         </div>
 
                         <div class="form-group col-xl-6">
                             <label for="inputState">Status</label>
-                            <input type="text" class="form-control input-default" placeholder="input-default" id="Status" value="">
+                            <input type="text" class="form-control input-default" placeholder="" id="Status" value="" disabled>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-xl-12">
                             <label for="inputState">Purpose</label>
-                            <input type="text" class="form-control input-default" placeholder="input-default" id="Purpose" value="">
+                            <input type="text" class="form-control input-default" placeholder="" id="Purpose" value="">
                         </div>
                     </div>
 
@@ -55,6 +55,7 @@
                     </div>
 
                     <button class="btn btn-primary" type="button" onclick="return Insert()">Submit form</button>
+
                 </form>
 
             </div>
@@ -63,10 +64,7 @@
         <!-- Table -->
         <div class="card">
             <div class="card-body">
-                <!-- Button trigger modal Register -->
-                @*<button type="button" class="btn btn-primary btn-insert" data-toggle="modal" data-target="#CreateModal" onclick="return resetValidate()" title="Insert" data-placement="top">
-                        <i class="fas fa-plus-square"></i>
-                    </button>*@
+                <button class="btn btn-primary mb-3" type="button" onclick="return InsertForm()">Add Expense</button>
                 <table id="Formtable" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
                     <thead class="table-info head-table text-center">
                         <tr>
@@ -84,10 +82,11 @@
     </div>
 
 </body>
-
+    
 </html>
 
 @section Scripts
     {
-    <script src="~/js/ExpenseJS.js"></script>
+
+    <script src="~/js/ExpenseJS.js" > </script>
 }

@@ -28,9 +28,9 @@ namespace ReimbursementSystemAPI.Controllers
         }
 
         [HttpPost("FormInsert")]
-        public ActionResult Register(FormVM fromVM)
+        public ActionResult NewForm(FormVM fromVM)
         {
-            var result = formRepository.Form(fromVM);
+            var result = formRepository.NewForm(fromVM);
             switch (result)
             {
                 case 1:
@@ -38,6 +38,18 @@ namespace ReimbursementSystemAPI.Controllers
                 default:
                     return BadRequest();
             }
+        }
+
+        [HttpGet("FormData/{expenseid}")]
+        public ActionResult GetForm(int expenseid)
+        {
+            var result = formRepository.GetForm(expenseid);
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
         }
     }
 }

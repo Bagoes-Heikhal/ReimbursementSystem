@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using ReimbursementSystemAPI.ViewModel;
 using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
@@ -23,6 +24,14 @@ namespace ReimbursementSystemClient.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        [HttpGet("{expenseid}")]
+        public async Task<JsonResult> GetForm(int expenseid)
+        {
+            var result = await formRepository.GetForm(expenseid);
+            return Json(result);
         }
 
         [HttpPost]

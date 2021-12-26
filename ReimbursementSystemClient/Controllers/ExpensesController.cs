@@ -50,6 +50,14 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetExpense()
+        {
+            var sessionId = HttpContext.Session.GetString("EmployeeId");
+            var result = await expensesRepository.GetExpense(sessionId);
+            return Json(result);
+        }
+
         [HttpPost]
         public JsonResult NewExpense(ExpenseVM entity)
         {

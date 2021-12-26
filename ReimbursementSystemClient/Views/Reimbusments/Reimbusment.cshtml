@@ -21,7 +21,7 @@
                 <h4 class="card-title">EXPENSE REIMBUSMENTS</h4>
             </div>
             <div class="card-body">
-                <button type="button" onclick="return InsertExpense()" class="btn btn-primary add-expense"> Expense </button>
+                <button type="button" onclick="return InsertExpense()" class="btn btn-primary add-expense"> New Expense </button>
             </div>
         </div>
 
@@ -32,6 +32,25 @@
             <div class="card-body">
             </div>
         </div>
+
+        <!-- Table -->
+        <div class="card">
+            <div class="card-body">
+                @*<button class="btn btn-primary mb-3" type="button" onclick="return InsertForm()">Add Expense</button>*@
+                <table id="Expense-table" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
+                    <thead class="table-info head-table text-center">
+                        <tr>
+                            <td> Submitted </td>
+                            <td> Request # ID </td>
+                            <td> Total Expense </td>
+                            <td> Purpose </td>
+                            <td> status </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
     </div>
 
 </body>

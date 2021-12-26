@@ -12,15 +12,6 @@
 //    }
 //})
 
-$.ajax({
-    "url": "/Forms/getall",
-    success: function (result) {
-        console.log(result)
-    },
-    error: function (error) {
-        console.log(error)
-    }
-})
 
 function Insert() {
     var obj = new Object();

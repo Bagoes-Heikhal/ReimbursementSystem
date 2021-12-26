@@ -40,6 +40,18 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
+        public async Task<List<ExpenseVM>> GetExpense(string employeeid)
+        {
+            List<ExpenseVM> entities = new List<ExpenseVM>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseData/" + employeeid))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<List<ExpenseVM>>(apiResponse);
+            }
+            return entities;
+        }
+
         public async Task<ExpenseIDVM> GetID(string email)
         {
             ExpenseIDVM entities = new ExpenseIDVM();
