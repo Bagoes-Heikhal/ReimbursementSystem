@@ -16,7 +16,7 @@ namespace ReimbursementSystemAPI.Models
 
 
         [JsonIgnore]
-        public virtual Category Categories { get; set; }
+        public virtual CategoryTable Categories { get; set; }
         public int CategoryId { get; set; }
 
         //[JsonIgnore]

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ReimbursementSystemAPI.Models
 {
     [Table("tb_m_Category")]
-    public class Category
+    public class CategoryTable
     {
         [Key]
         public int CategoryId { get; set; }

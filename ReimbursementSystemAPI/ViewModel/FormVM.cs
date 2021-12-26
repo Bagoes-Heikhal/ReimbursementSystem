@@ -19,4 +19,5 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Attachments { get; set; }
         public int ExpenseId { get; set; }
     }
+
 }
