@@ -29,16 +29,16 @@ namespace ReimbursementSystemAPI.Repository.Data
                 switch (fromVM.Category)
                 {
                     case "Transportation":
-                        form.Category = Category.Transportation;
+                        form.Category = ViewModel.Category.Transportation;
                         break;
                     case "Parking":
-                        form.Category = Category.Parking;
+                        form.Category = ViewModel.Category.Parking;
                         break;
                     case "Medical":
-                        form.Category = Category.Medical;
+                        form.Category = ViewModel.Category.Medical;
                         break;
                     case "Lodging":
-                        form.Category = Category.Lodging;
+                        form.Category = ViewModel.Category.Lodging;
                         break;
                     default:
                         break;
