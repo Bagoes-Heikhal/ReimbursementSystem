@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using ReimbursementSystemClient.Base.Controllers;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using Category = ReimbursementSystemAPI.Models.Category;
 using Type = ReimbursementSystemAPI.Models.Type;
 
 namespace ReimbursementSystemClient.Controllers
@@ -18,26 +20,30 @@ namespace ReimbursementSystemClient.Controllers
     {
 
         private readonly FormRepository formRepository;
-
-        public FormsController(FormRepository repository) : base(repository)
+        private readonly MyContext context;
+        public IConfiguration _iconfiguration;
+        public FormsController(FormRepository repository, MyContext context, IConfiguration configuration) : base(repository)
         {
+            this.context = context;
             this.formRepository = repository;
+            this._iconfiguration = configuration;
         }
 
         
         public IActionResult Index()
         {
-            //List<Category> CategoryList = Categories.ToList();
-            //ViewBag.CountryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
+           
+            List<Category> CategoryList = context.Categories1.ToList();
+            ViewBag.CategoryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
             return View();
         }
-        //public JsonResult GetTypeList(int CategoryId)
-        //{
-        //    Configuration.ProxyCreationEnabled = false;
-        //    List<Type> StateList = Types.Where(x => x.CountryId == CategoryId).ToList();
-        //    return Json(StateList, JsonRequestBehavior.AllowGet);
+        public JsonResult GetTypeList(int CategoryId)
+        {
+            //context._iconfiguration.ProxyCreationEnabled = false;
+            List<Type> TypeList = context.Types.Where(x => x.CategoryId == CategoryId).ToList();
+            return Json(TypeList);
 
-        //}
+        }
 
         [HttpPost]
         public JsonResult InsertForm(FormVM formVM)

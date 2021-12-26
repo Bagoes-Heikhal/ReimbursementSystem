@@ -14,9 +14,10 @@ namespace ReimbursementSystemAPI.Models
         public int TypeId { get; set; }
         public string TypeName { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Category Categories { get; set; }
-        //public string CategoryId { get; set; }
+
+        [JsonIgnore]
+        public virtual Category Categories { get; set; }
+        public int CategoryId { get; set; }
 
         //[JsonIgnore]
         //public virtual ICollection<Category> Categories1 { get; set; }

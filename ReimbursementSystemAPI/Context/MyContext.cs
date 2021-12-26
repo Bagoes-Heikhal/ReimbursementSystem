@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ReimbursementSystemAPI.Models;
@@ -13,9 +14,11 @@ namespace ReimbursementSystemAPI.Models
 {
     public class MyContext : DbContext
     {
-        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        public IConfiguration _iconfiguration;
+        public MyContext(DbContextOptions<MyContext> options, IConfiguration configuration) : base(options)
         {
-
+        
+            this._iconfiguration = configuration;
         }
 
         public DbSet<Employee> Employees { get; set; }
@@ -27,8 +30,9 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Religion> Religions { get; set; }
-        //public DbSet<Category> Categories1 { get; set; }
-        //public DbSet<Type> Types { get; set; }
+
+        public DbSet<Category> Categories1 { get; set; }
+        public DbSet<Type> Types { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +79,12 @@ namespace ReimbursementSystemAPI.Models
             //    .HasMany(c => c.Employees)
             //    .WithOne(c => c.Religions);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 
     class CustomResolver : DefaultContractResolver
@@ -102,6 +112,8 @@ namespace ReimbursementSystemAPI.Models
             }
             return prop;
         }
+
+
     }
 }
 
