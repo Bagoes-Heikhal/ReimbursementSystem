@@ -18,7 +18,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             this._configuration = configuration;
         }
 
-        public int Form(FormVM fromVM)
+        public int NewForm(FormVM fromVM)
         {
             Form form = new Form();
             {
@@ -28,6 +28,17 @@ namespace ReimbursementSystemAPI.Repository.Data
 
                 switch (fromVM.Category)
                 {
+                    case 1:
+                        form.Category = Category.Transportation;
+                        break;
+                    case 2:
+                        form.Category = Category.Parking;
+                        break;
+                    case 3:
+                        form.Category = Category.Medical;
+                        break;
+                    case 4:
+                        form.Category = Category.Lodging;
                     case "Transportation":
                         form.Category = ViewModel.Category.Transportation;
                         break;
@@ -47,9 +58,26 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Description = fromVM.Description;
                 form.Total = fromVM.Total;
                 form.Attachments = fromVM.Attachments;
+                form.ExpenseId = fromVM.ExpenseId;
             }
-
             return 1;
+        }
+
+        public IEnumerable<FormVM> GetForm(int expenseid)
+        {
+            var register = from a in context.Expenses where a.ExpenseId == expenseid
+                           join b in context.Forms on a.ExpenseId equals b.ExpenseId
+                           select new FormVM()
+                           {
+                               Receipt_Date = b.Receipt_Date,
+                               Total = b.Total,
+                               Payee = b.Payee,
+                               Type = b.Type,
+                               Category = 3,
+                               Description = b.Description,
+                           };
+
+            return register.ToList();
         }
     }
 }

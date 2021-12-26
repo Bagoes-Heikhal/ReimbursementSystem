@@ -27,22 +27,29 @@ namespace ReimbursementSystemAPI.Repository.Data
                 expense.Total = expenseVM.Total;
                 switch (expenseVM.Status)
                 {
-                    case "Approved":
+                    case 1:
                         expense.Status = Status.Approved;
                         break;
-                    case "Rejected":
+                    case 2:
                         expense.Status = Status.Rejected;
                         break;
-                    case "Canceled":
+                    case 3:
                         expense.Status = Status.Canceled;
                         break;
-                    case "Posted":
+                    case 4:
+                        expense.Status = Status.Posted;
+                        break;
+                    case 5:
                         expense.Status = Status.Posted;
                         break;
                     default:
                         break;
                 }
+                expense.EmployeeId = expenseVM.EmployeeId;
             }
+
+            context.Expenses.Add(expense);    
+            context.SaveChanges();
             return 1;
         }
 
@@ -55,15 +62,30 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 1;
         }
 
-        public ExpenseIDVM ExpesnseID(LoginVM loginVM)
+        public ExpenseIDVM ExpesnseID(string email)
         {
             var data = (from a in context.Employees
-                        where a.Email == loginVM.Email
+                        where a.Email == email
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
                         select new ExpenseIDVM()
                         { ExpenseID = b.ExpenseId }).ToList().LastOrDefault();
 
             return data;
+        }
+
+        public IEnumerable<ExpenseVM> GetExpense(string employeeid)
+        {
+            var register = from a in context.Employees where a.EmployeeId == employeeid
+                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                           select new ExpenseVM()
+                           {
+                               dateTime = DateTime.Now,
+                               ExpenseId = b.ExpenseId,
+                               Status = 5,
+                               Total = b.Total,
+                               Description = b.Description,
+                           };
+            return register.ToList();
         }
     }
 }

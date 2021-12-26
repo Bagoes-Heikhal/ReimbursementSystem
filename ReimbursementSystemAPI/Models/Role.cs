@@ -16,7 +16,7 @@ namespace ReimbursementSystemAPI.Models
 
         public string Name { get; set; }
 
-        [JsonIgnore]
-        public virtual Account Accounts { get; set; }
+        //[JsonIgnore]
+        //public virtual Account Accounts { get; set; }
     }
 }

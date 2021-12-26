@@ -32,21 +32,34 @@ namespace ReimbursementSystemClient.Repository.Data
             };
         }
 
-        public HttpStatusCode InsertForm(ExpenseVM entity)
+        public HttpStatusCode NewExpense(ExpenseVM entity, string employeeId)
         {
+            entity.EmployeeId = employeeId;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(address.link + request + "ExpenseInsert", content).Result;
             return result.StatusCode;
         }
 
-        public async Task<List<ExpenseIDVM>> GetID()
+        public async Task<List<ExpenseVM>> GetExpense(string employeeid)
         {
-            List<ExpenseIDVM> entities = new List<ExpenseIDVM>();
+            List<ExpenseVM> entities = new List<ExpenseVM>();
 
-            using (var response = await httpClient.GetAsync(request + "ExpesnseID"))
+            using (var response = await httpClient.GetAsync(request + "ExpenseData/" + employeeid))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<List<ExpenseIDVM>>(apiResponse);
+                entities = JsonConvert.DeserializeObject<List<ExpenseVM>>(apiResponse);
+            }
+            return entities;
+        }
+
+        public async Task<ExpenseIDVM> GetID(string email)
+        {
+            ExpenseIDVM entities = new ExpenseIDVM();
+
+            using (var response = await httpClient.GetAsync(request + "GetID/" + email))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<ExpenseIDVM>(apiResponse);
             }
             return entities;
         }

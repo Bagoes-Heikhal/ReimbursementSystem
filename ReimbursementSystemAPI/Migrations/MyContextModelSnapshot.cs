@@ -28,13 +28,7 @@ namespace ReimbursementSystemAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
                     b.HasKey("EmployeeId");
-
-                    b.HasIndex("RoleId")
-                        .IsUnique();
 
                     b.ToTable("tb_m_Account");
                 });
@@ -232,15 +226,7 @@ namespace ReimbursementSystemAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ReimbursementSystemAPI.Models.Role", "Roles")
-                        .WithOne("Accounts")
-                        .HasForeignKey("ReimbursementSystemAPI.Models.Account", "RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Employee");
-
-                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
@@ -273,11 +259,6 @@ namespace ReimbursementSystemAPI.Migrations
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
                 {
                     b.Navigation("Forms");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Role", b =>
-                {
-                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

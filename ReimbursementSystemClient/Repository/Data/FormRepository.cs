@@ -31,6 +31,18 @@ namespace ReimbursementSystemClient.Repository.Data
             };
         }
 
+        public async Task<List<FormVM>> GetForm(int expenseid)
+        {
+            List<FormVM> entities = new List<FormVM>();
+
+            using (var response = await httpClient.GetAsync(request + "FormData/" + expenseid))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<List<FormVM>>(apiResponse);
+            }
+            return entities;
+        }
+
         public HttpStatusCode InsertForm(FormVM entity)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");

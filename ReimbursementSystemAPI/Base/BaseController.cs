@@ -26,9 +26,10 @@ namespace ReimbursementSystemAPI.Base
             var result = repository.Get();
             if (result.Count() != 0)
             {
-                return Ok();
+                return Ok(result);
+
             }
-            return NotFound();
+            return NotFound(new { status = HttpStatusCode.NotFound, Message = $"Data belum tersedia" });
         }
 
         [HttpGet("{Key}")]
@@ -56,19 +57,19 @@ namespace ReimbursementSystemAPI.Base
             }
         }
 
-            [HttpPut]
-            public ActionResult Update(Entity entity, Key key)
+        [HttpPut]
+        public ActionResult Update(Entity entity, Key key)
+        {
+            var result = repository.Update(entity, key);
+            try
             {
-                var result = repository.Update(entity, key);
-                try
-                {
-                    return Ok();
-                }
-                catch (Exception)
-                {
-                    return BadRequest();
-                }
+                return Ok();
             }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpPost]
         public ActionResult Post(Entity entity)

@@ -1,18 +1,66 @@
-﻿$.ajax({
-    "url": "/Forms/getall",
+﻿////$.ajax({
+////    "url": "/Forms/getall",
+////    success: function (result) {
+////        console.log(result)
+////    },
+////    error: function (error) {
+////        console.log(error)
+////    }
+////})
+
+
+
+
+$.ajax({
+    url: "/Expenses/GetID",
     success: function (result) {
-        console.log(result)
+        $(".expense-title span").html(result.expenseID);
     },
     error: function (error) {
         console.log(error)
     }
 })
 
+
+function InsertForm() {
+    var obj = new Object();
+    obj.expenseID = $(".expense-title span").text(); 
+    $.ajax({
+        url: "/Forms/Post",
+        type: "Post",
+        'data': obj,
+        'dataType': 'json',
+        success: function (result) {
+            window.location.href = "/Reimbusments/Form";
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+    return false;
+}
+
+//var a = $(".expense-title span").text();
+//console.log("/Forms/GetForm/" + a);
+//$.ajax({
+//    "ajax": {
+//        "url": "/Forms/GetForm/" + $(".expense-title span").text(),
+//    },
+//    success: function (result) {
+//        //console.log(result)
+//    },
+//    error: function (error) {
+//        //console.log(error)
+//    }
+//})
+
+
 $(document).ready(function () {
+    var expenseID = $(".expense-title span").text();
     table = $("#Formtable").DataTable({
         responsive: true,
         "ajax": {
-            "url": "/Forms/getall",
+            "url": "/Forms/GetForm/" + expenseID,
             dataSrc: ""
         },
         "columns": [

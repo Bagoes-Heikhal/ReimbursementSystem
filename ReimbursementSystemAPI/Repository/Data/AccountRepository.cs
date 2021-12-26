@@ -53,8 +53,7 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         public int Login(LoginVM loginVM)
         {
-            var dataPass = (from a in context.Employees
-                            where a.Email == loginVM.Email
+            var dataPass = (from a in context.Employees where a.Email == loginVM.Email
                             join b in context.Accounts on a.EmployeeId equals b.EmployeeId
                             select new { Account = b, Employee = a }).FirstOrDefault();
 

@@ -45,6 +45,14 @@ namespace ReimbursementSystemClient.Controllers
 
         }
 
+
+        [HttpGet("{expenseid}")]
+        public async Task<JsonResult> GetForm(int expenseid)
+        {
+            var result = await formRepository.GetForm(expenseid);
+            return Json(result);
+        }
+
         [HttpPost]
         public JsonResult InsertForm(FormVM formVM)
         {

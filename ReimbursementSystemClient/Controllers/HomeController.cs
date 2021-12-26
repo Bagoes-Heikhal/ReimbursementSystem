@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ReimbursementSystemClient.Models;
 using System;
@@ -33,6 +34,7 @@ namespace ReimbursementSystemClient.Controllers
 
         public IActionResult Login()
         {
+            HttpContext.Session.SetString("Test", "Ben Rules!");
             return View();
         }
 

@@ -48,11 +48,11 @@ namespace ReimbursementSystemAPI.Models
             //    .WithOne(b => b.Employees)
             //    .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
 
-            //One to One
-            modelBuilder.Entity<Role>()
-                .HasOne(a => a.Accounts)
-                .WithOne(b => b.Roles)
-                .HasForeignKey<Account>(b => b.RoleId);
+            ////One to One
+            //modelBuilder.Entity<Role>()
+            //    .HasOne(a => a.Accounts)
+            //    .WithOne(b => b.Roles)
+            //    .HasForeignKey<Account>(b => b.RoleId);
 
             ////One to many
             modelBuilder.Entity<Employee>()

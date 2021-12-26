@@ -21,8 +21,8 @@ namespace ReimbursementSystemAPI.Models
         [JsonIgnore]
         public virtual Employee Employee { get; set; }
 
-        [JsonIgnore]
-        public virtual Role Roles { get; set; }
-        public int RoleId { get; set; }
+        //[JsonIgnore]
+        //public virtual Role Roles { get; set; }
+        //public int RoleId { get; set; }
     }
 }

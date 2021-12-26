@@ -98,7 +98,6 @@ namespace ReimbursementSystemClient
                 }
             });
 
-
             app.UseSession();
 
             app.Use(async (context, next) =>
@@ -119,7 +118,7 @@ namespace ReimbursementSystemClient
             {
                 endpoints.MapControllerRoute(
                     name: "default", 
-                    pattern: "{controller=Reimbusment}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }
