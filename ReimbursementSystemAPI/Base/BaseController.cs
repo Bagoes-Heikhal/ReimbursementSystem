@@ -29,13 +29,13 @@ namespace ReimbursementSystemAPI.Base
                 return Ok(result);
 
             }
-            return NotFound(new { status = HttpStatusCode.NotFound, Message = $"Data belum tersedia" });
+            return NotFound();
         }
 
         [HttpGet("{Key}")]
-        public ActionResult Get(Key key)
+        public ActionResult Get(Key Key)
         {
-            var result = repository.Get(key);
+            var result = repository.Get(Key);
             if(result != null)
             {
                 return Ok(result);

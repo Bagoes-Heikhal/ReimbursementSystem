@@ -32,16 +32,8 @@ namespace ReimbursementSystemClient.Repository.Data
             };
         }
 
-        public HttpStatusCode NewExpense(ExpenseVM entity, string employeeId)
-        {
-            entity.EmployeeId = employeeId;
-            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PostAsync(address.link + request + "ExpenseInsert", content).Result;
-            return result.StatusCode;
-        }
-
         public async Task<List<ExpenseVM>> GetExpense(string employeeid)
-        {
+        {  
             List<ExpenseVM> entities = new List<ExpenseVM>();
 
             using (var response = await httpClient.GetAsync(request + "ExpenseData/" + employeeid))
@@ -54,7 +46,7 @@ namespace ReimbursementSystemClient.Repository.Data
 
         public async Task<ExpenseIDVM> GetID(string email)
         {
-            ExpenseIDVM entities = new ExpenseIDVM();
+            ExpenseIDVM entities = null;
 
             using (var response = await httpClient.GetAsync(request + "GetID/" + email))
             {
@@ -63,5 +55,22 @@ namespace ReimbursementSystemClient.Repository.Data
             }
             return entities;
         }
+
+        public HttpStatusCode NewExpense(ExpenseVM entity, string employeeId)
+        {
+            entity.EmployeeId = employeeId;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(address.link + request + "ExpenseInsert", content).Result;
+            return result.StatusCode;
+        }
+
+        public HttpStatusCode Submit(ExpenseVM entity, string employeeId)
+        {
+            entity.EmployeeId = employeeId;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "ExpenseUpdate", content).Result;
+            return result.StatusCode;
+        }
+
     }
 }

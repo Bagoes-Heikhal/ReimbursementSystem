@@ -21,7 +21,7 @@
         <!-- row -->
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title expense-title">Expense Request <span></span></h4>
+                <h4 class="card-title expense-title">Expense Request <span value=""></span></h4>
             </div>
             <div class="card-body">
                 <form class="needs-validation" novalidate>
@@ -47,14 +47,15 @@
 
                     <div class="row">
                         <div class="basic-form form-group col-xl-12">
-                            <label for="inputState">Comment</label>
+                            <label for="inputState">Description</label>
                             <div class="form-group">
-                                <textarea class="form-control" rows="4" id="Comment"></textarea>
+                                <textarea class="form-control" rows="4" id="Description"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="button" onclick="return Insert()">Submit form</button>
+                    <button class="btn btn-primary" type="button" onclick="return Submit()">Submit form</button>
+                    <button class="btn btn-primary" type="button" onclick="return SaveExit()">Save & Exit</button>
 
                 </form>
 
@@ -68,19 +69,45 @@
                 <table id="Formtable" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
                     <thead class="table-info head-table text-center">
                         <tr>
-                            <td> Date </td>
-                            <td> Category </td>
-                            <td> Type </td>
-                            <td> Payee </td>
-                            <td> Description </td>
-                            <td> Amount </td>
+                            <th> Date </th>
+                            <th> Category </th>
+                            <th> Type </th>
+                            <th> Payee </th>
+                            <th> Description </th>
+                            <th> Amount </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
-    </div>
 
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Total Expense</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Total Expense Rp.</span>
+                                </div>
+                                <input id="Total" type="number" class="form-control" placeholder="Rp.0" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" disabled>
+                                @*<input type="text" class="form-control input-default"  id="Total" value="" disabled>*@
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            </div>
+        </div>
 </body>
     
 </html>

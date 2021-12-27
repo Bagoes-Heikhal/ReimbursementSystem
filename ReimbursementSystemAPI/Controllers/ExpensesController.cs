@@ -40,11 +40,24 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        [HttpPut("ExpenseUpdate")]
+        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM)
+        {
+            var result = expenseRepository.ExpenseFormUpdate(expenseVM);
+            switch (result)
+            {
+                case 1:
+                    return Ok();
+                default:
+                    return BadRequest();
+            }
+        }
+
         [HttpGet("ExpenseData/{employeeid}")]
         public ActionResult GetExpense(string employeeid)
         {
             var result = expenseRepository.GetExpense(employeeid);
-           
+            
             if (result.Count() != 0)
             {
                 return Ok(result);
@@ -63,6 +76,8 @@ namespace ReimbursementSystemAPI.Controllers
             }
             return NotFound(result);
         }
+
+
 
     }
 }

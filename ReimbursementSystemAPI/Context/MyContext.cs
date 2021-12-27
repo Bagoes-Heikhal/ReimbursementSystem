@@ -80,11 +80,12 @@ namespace ReimbursementSystemAPI.Models
             //    .WithOne(c => c.Religions);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-            base.OnConfiguring(optionsBuilder);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseLazyLoadingProxies();
+        //    base.OnConfiguring(optionsBuilder);
+        //}
+
     }
 
     class CustomResolver : DefaultContractResolver

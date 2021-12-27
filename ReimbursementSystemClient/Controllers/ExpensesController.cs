@@ -47,6 +47,7 @@ namespace ReimbursementSystemClient.Controllers
         {
             var sessionEmail = HttpContext.Session.GetString("Email");
             var result = await expensesRepository.GetID(sessionEmail);
+            HttpContext.Session.SetString("ExpenseID", result.ExpenseID.ToString());
             return Json(result);
         }
 
@@ -63,6 +64,14 @@ namespace ReimbursementSystemClient.Controllers
         {
             var sessionId = HttpContext.Session.GetString("EmployeeId");
             var result = expensesRepository.NewExpense(entity, sessionId);
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult Submit(ExpenseVM entity)
+        {
+            var sessionId = HttpContext.Session.GetString("EmployeeId");
+            var result = expensesRepository.Submit(entity, sessionId);
             return Json(result);
         }
 

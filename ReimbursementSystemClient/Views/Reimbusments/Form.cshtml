@@ -3,33 +3,10 @@
 }
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
-    <!-- Favicon icon -->
-
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <!-- Daterange picker -->
-    <link href="~assets/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- Clockpicker -->
-    <link href="~assets/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
-    <!-- asColorpicker -->
-    <link href="~assets/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
-    <!-- Material color picker -->
-    <link href="~assets/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
-    <!-- Pick date -->
-    <link rel="stylesheet" href="~assets/vendor/pickadate/themes/default.css">
-    <link rel="stylesheet" href="~assets/vendor/pickadate/themes/default.date.css">
-    <!-- Custom Stylesheet -->
-    <link href="~assets/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
-
     <div class="container-fluid">
         <!-- row -->
         <div class="card">
@@ -38,24 +15,23 @@
             </div>
             <div class="card-body">
                 <form class="needs-validation" novalidate>
-
                     <div class="row">
                         <div class="form-group col-xl-6">
                             <label>Receipt Date</label>
 
-                            <input name="datepicker" class="datepicker-default form-control" id="datepicker" placeholder="Receipt Date">
+                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date">
                         </div>
 
                         <div class="form-group col-xl-3">
                             <div class="example">
                                 <p class="mb-1">From </p>
-                                <input name="datepicker1" class="datepicker-default form-control" id="datepicker" placeholder="Date From">
+                                <input type="date" name="datepicker1" class="form-control" id="Start_Date" placeholder="Date From">
                             </div>
                         </div>
                         <div class="form-group col-xl-3">
                             <div class="example">
                                 <p class="mb-1">To</p>
-                                <input name="datepicker2" class="datepicker-default form-control" id="datepicker" placeholder="Date To">
+                                <input type="date" name="datepicker2" class="form-control" id="End_Date" placeholder="Date To">
                             </div>
                         </div>
                     </div>
@@ -131,80 +107,19 @@
 
                     </div>
 
-                    <button class="btn btn-primary" type="button" onclick="return Insert()">Submit form</button>
+                    <button class="btn btn-primary" type="button" onclick="return Insert()">Save and Exit</button>
+                    <button class="btn btn-primary" type="button" onclick="return AddAnother()">Add Another</button>
+                    <button class="btn btn-primary" type="button" onclick="return Cancel()">Cancel</button>
                 </form>
 
             </div>
         </div>
     </div>
-
-
-    @model ReimbursementSystemAPI.ViewModel.CategoryType
-
-    <br /><br />
-    <div class="container">
-        <div class="form-group">
-            @if (ViewBag.CategoryList != null)
-            {
-                @Html.DropDownListFor(model => model.CategoryId, ViewBag.CategoryList as SelectList, "--Select Country--", new { @class = "form-control" })
-            }
-        </div>
-        <div class="form-group">
-            @Html.DropDownListFor(model => model.TypeId, new SelectList(" "), "--Select State--", new { @class = "form-control" })
-        </div>
-    </div>
-
-
-
-    <script src="~assets/vendor/global/global.min.js"></script>
-    <script src="~assets/js/quixnav-init.js"></script>
-    <script src="~assets/js/custom.min.js"></script>
-
-
-
-    <!-- Daterangepicker -->
-    <!-- momment js is must -->
-    <script src="~assets/vendor/moment/moment.min.js"></script>
-    <script src="~assets/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- clockpicker -->
-    <script src="~assets/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
-    <!-- asColorPicker -->
-    <script src="~assets/vendor/jquery-asColor/jquery-asColor.min.js"></script>
-    <script src="~assets/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
-    <script src="~assets/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
-    <!-- Material color picker -->
-    <script src="~assets/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-    <!-- pickdate -->
-    <script src="~assets/vendor/pickadate/picker.js"></script>
-    <script src="~assets/vendor/pickadate/picker.time.js"></script>
-    <script src="~assets/vendor/pickadate/picker.date.js"></script>
-
-
-
-    <!-- Daterangepicker -->
-    <script src="~assets/js/plugins-init/bs-daterange-picker-init.js"></script>
-    <!-- Clockpicker init -->
-    <script src="~assets/js/plugins-init/clock-picker-init.js"></script>
-    <!-- asColorPicker init -->
-    <script src="~assets/js/plugins-init/jquery-asColorPicker.init.js"></script>
-    <!-- Material color picker init -->
-    <script src="~assets/js/plugins-init/material-date-picker-init.js"></script>
-    <!-- Pickdate -->
-    <script src="~assets/js/plugins-init/pickadate-init.js"></script>
 </body>
 
 </html>
 
-@*<script>$(document).ready(function () {
-        $("#CategoryId").change(function () {
-            $.get("/Forms/GetTypeList", { CategoryId: $("#CategoryId").val() }, function (data) {
-                $("#TypeId").empty();
-                $.each(data, function (index, row) {
-                    $("#TypeId").append("<option value='" + row.TypeName + "'>" + row.TypeName + "</option>")
-                });
-            });
-        })
-    });</script>*@
+
 
 @section Scripts
     {

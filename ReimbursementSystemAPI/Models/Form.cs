@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ReimbursementSystemAPI.ViewModel
+namespace ReimbursementSystemAPI.Models
 {
     [Table("tb_m_Form")]
     public class Form
     {
         [Key]
         public int FormId { get; set; }
-        public DateTime Receipt_Date { get; set; }
-        public DateTime Start_Date { get; set; }
-        public DateTime End_Date { get; set; }
-        public Category Category { get; set; }
+        public DateTime? Receipt_Date { get; set; }
+        public DateTime? Start_Date { get; set; }
+        public DateTime? End_Date { get; set; }
+        public Category? Category { get; set; }
         public string Payee { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
-        public float Total { get; set; }
+        public float? Total { get; set; }
         public string Attachments { get; set; }
 
         [JsonIgnore]
