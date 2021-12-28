@@ -66,7 +66,6 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    console.log(row["purpose"])
                     if (row["purpose"] == null) {
                         return "No Purpose"
                     }
@@ -76,7 +75,6 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    console.log(row["status"])
                     switch (row["status"]) {
                         case 0:
                             return "Approved";
@@ -98,7 +96,7 @@ $(document).ready(function () {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                    onclick="getData('${row['nik']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                    onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                     <i class="fas fa-info-circle"></i> 
                     </button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
@@ -125,25 +123,6 @@ function dateConversion(dates) {
     var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
     return newDate
 }
-
-//function statusConversion(stat) {
-//    console.log(stat)
-//    switch (stat) {
-//        case 1:
-//            return "Approved";
-//        case 2:
-//            return "Rejected";
-//        case 3:
-//            return "Canceled";
-//        case 4:
-//            return "Posted";
-//        case 5:
-//            return "Draft";
-//        default:
-//            return "Draft";
-//            break;
-//    }
-//}
 
 function Delete(id) {
     console.log(id)
@@ -183,7 +162,7 @@ function getDataUpdate(id) {
         type: "Get",
         success: function (result) {
             console.log(result)
-/*            var data = result*/
+            /*var data = result*/
             //$("#updatenik").attr("value", data.nik)
             //$("#updatefirstName").attr("value", data.firstName)
             //$("#updatelastName").attr("value", data.lastName)
@@ -192,6 +171,31 @@ function getDataUpdate(id) {
             //$("#updatesalary").attr("value", data.salary)
             //$("#updatedateBirth").attr("value", data.birthDate)
             //$("#updategender").attr("value", data.gender)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+function getData(id) {
+    $.ajax({
+        url: "/Expenses/Get/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `<tr>
+                <td> Total </td>
+                <td> : </td>
+                <td> ${result.total}</td>
+                </tr>
+                <tr>
+                    <td> Description </td>
+                    <td> : </td>
+                    <td>${result.description}</td>
+                </tr>`
+            $(".data-employ").html(text);
         },
         error: function (error) {
             console.log(error)

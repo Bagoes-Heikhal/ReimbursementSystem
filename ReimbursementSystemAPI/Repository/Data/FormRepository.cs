@@ -73,6 +73,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                            join b in context.Forms on a.ExpenseId equals b.ExpenseId
                            select new FormVM()
                            {
+                               FormId = b.FormId,
                                Receipt_Date = b.Receipt_Date,
                                Total = b.Total,
                                Payee = b.Payee,

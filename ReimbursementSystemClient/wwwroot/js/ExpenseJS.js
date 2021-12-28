@@ -18,6 +18,18 @@ $(document).ready(function () {
         url: "/Expenses/GetID",
         success: function (result) {
             $(".expense-title span").html(result.expenseID);
+
+            //$.ajax({
+            //    "url" : "/forms/getform/" + result.expenseID,
+            //    type: "Get",
+            //    success: function (result) {
+            //        console.log(result)
+            //    },
+            //    error: function (error) {
+            //        console.log(error)
+            //    }
+            //})
+
             table = $("#Formtable").DataTable({
                 responsive: true,
                 "ajax": {
@@ -25,24 +37,77 @@ $(document).ready(function () {
                     type: "Get",
                     dataSrc: ""
                 },
+                "columnDefs": [
+                    { "className": "dt-center", "targets": "_all" }
+                ],
                 "columns": [
                     {
-                        "data": "receipt_Date",
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return dateConversion(row["receipt_Date"])
+                        }
                     },
                     {
                         "data": "category",
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (row["description"] == null) {
+                                return "~Empty~"
+                            }
+                            return row["description"];
+                        }
                     },
                     {
-                        "data": "receipt_Date",
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (row["type"] == null) {
+                                return "~Empty~"
+                            }
+                            return row["type"];
+                        }
                     },
                     {
-                        "data": "payee"
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (row["payee"] == null) {
+                                return "~Empty~"
+                            }
+                            return row["payee"];
+                        }
                     },
                     {
-                        "data": "payee",
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (row["description"] == null) {
+                                return "No Description"
+                            }
+                            return row["description"];
+                        }
                     },
                     {
-                        "data": "total",
+                        "data": null,
+                        "render": function (data, type, row) {
+                            if (row["total"] == null) {
+                                return "Rp. " + 0
+                            }
+                            return "Rp." + row["total"];
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            <i class="fas fa-info-circle"></i> 
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
+                            <i class="fas fa-trash-alt"></i> 
+                            </button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            onclick="getDataUpdate('${row['formId']}')" title="Edit" data-target="#UpdateModals">
+                            <i class="fas fa-edit"></i>
+                            </button>`;
+                        }
                     }
                 ]
             });
@@ -71,9 +136,8 @@ function Submit() {
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
+    obj.total = $("#Total").val();
     obj.status = 3;
-
-    //console.log(obj)
     $.ajax({
         url: "/Expenses/Submit",
         type: "Put",
@@ -107,8 +171,8 @@ function SaveExit() {
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
+    obj.total = $("#Total").val();
     obj.status = 4;
-    /*     console.log(obj)*/
     $.ajax({
         url: "/Expenses/Submit",
         type: "Put",
@@ -132,6 +196,69 @@ function SaveExit() {
                 title: 'Oops...',
                 text: 'Submit Fail!'
             })
+        }
+    })
+}
+
+function dateConversion(dates) {
+    var date = new Date(dates)
+    var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    return newDate
+}
+
+function Delete(id) {
+    console.log(id)
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: "/Forms/Delete/" + id,
+                type: "Delete",
+                success: function (result) {
+                    console.log(result)
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    table.ajax.reload()
+                },
+                error: function (error) {
+                    alert("Delete Fail");
+                }
+            });
+        }
+    })
+}
+
+function getData(id) {
+    $.ajax({
+        url: "/Forms/Get/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `<tr>
+                <td> Total </td>
+                <td> : </td>
+                <td> ${result.total}</td>
+                </tr>
+                <tr>
+                    <td> Description </td>
+                    <td> : </td>
+                    <td>${result.description}</td>
+                </tr>`
+            $(".data-employ").html(text);
+        },
+        error: function (error) {
+            console.log(error)
         }
     })
 }
