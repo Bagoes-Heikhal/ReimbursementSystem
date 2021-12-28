@@ -10,8 +10,8 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211227142843_init")]
-    partial class init
+    [Migration("20211228041700_newDB")]
+    partial class newDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

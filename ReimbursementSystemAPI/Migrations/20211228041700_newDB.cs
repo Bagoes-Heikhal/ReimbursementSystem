@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReimbursementSystemAPI.Migrations
 {
-    public partial class init : Migration
+    public partial class newDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
