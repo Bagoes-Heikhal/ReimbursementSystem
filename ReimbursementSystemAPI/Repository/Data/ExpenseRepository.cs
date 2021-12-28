@@ -89,6 +89,32 @@ namespace ReimbursementSystemAPI.Repository.Data
             return register.ToList();
         }
 
+        public IEnumerable<ExpenseManager> GetExpenseModified(string employeeid)
+        {
+            var expense = from a in context.Employees
+                       
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where a.EmployeeId == employeeid && b.Status == Status.Posted
+                          select new ExpenseManager()
+                           {
+                               //DateTime = DateTime.Now,
+                               //ExpenseId = b.ExpenseId,
+                               //Status = 5,
+                               //Total = b.Total,
+                               //Description = b.Description,
+
+                               EmployeeId = b.EmployeeId,
+                               FirstName = a.FirstName,
+                               DateTime = DateTime.Now,
+                               Total = b.Total,
+                               Description = b.Description,
+
+
+
+                           };
+            return expense.ToList();
+        }
+
         //public IEnumerable<ExpenseVM> ExpenseAllData()
         //{
         //    var data = from a in context.Employees
@@ -105,22 +131,22 @@ namespace ReimbursementSystemAPI.Repository.Data
         //    return data.ToList();
         //}
 
-        public IEnumerable GetAllExpense()
-        {
-            var data = from e in context.Set<Expense>()
-                        select new
+        //public IEnumerable GetAllExpense()
+        //{
+        //    var data = from e in context.Set<Expense>()
+        //                select new
 
-                        {
-                            e.EmployeeId,
-                            e.Status,
-                            e.Approver,
-                            e.Description,
-                            e.Comment,
-                            e.Total
+        //                {
+        //                    e.EmployeeId,
+        //                    e.Status,
+        //                    e.Approver,
+        //                    e.Description,
+        //                    e.Comment,
+        //                    e.Total
 
-                        };
-            return data.ToList();
-        }
+        //                };
+        //    return data.ToList();
+        //}
 
     }
 }

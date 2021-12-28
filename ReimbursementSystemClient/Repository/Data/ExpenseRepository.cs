@@ -52,6 +52,19 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
+        //manggil modified table Manager
+        public async Task<List<ExpenseManager>> GetExpenseModified(string employeeid)
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataa/" + employeeid))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+            }
+            return entitiesNew;
+        }
+
         public async Task<ExpenseIDVM> GetID(string email)
         {
             ExpenseIDVM entities = new ExpenseIDVM();

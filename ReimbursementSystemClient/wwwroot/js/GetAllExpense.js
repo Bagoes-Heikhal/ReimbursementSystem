@@ -3,29 +3,39 @@
     table = $("#tabelExpense").DataTable({
         responsive: true,
         "ajax": {
-            "url": "/Expense/GetAll/",
+            "url": "/Expenses/GetExpenseModified",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
         },
         "columns": [
             {
-                "data": "EmployeeId"
+                "data": "employeeId"
             },
             {
-                "data": "Status"
+                "data": "firstName"
             },
             {
-                "data": "Approver"
-            },
-            { "data": "Description" },
-            {
-                "data": "Comment"
+                "data": "dateTime"
             },
             {
-                "data": "Total"
-            }
+                "data": "total"
+            },
+            {
+                "data": "status"
+            },
+          
            
         ]
     });
 });
+
+$.ajax({
+    "url": "/Expenses/GetAll",
+    success: function (result) {
+        console.log(result)
+    },
+    error: function (error) {
+        console.log(error)
+    }
+})

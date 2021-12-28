@@ -41,11 +41,24 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        //get datatables
         [HttpGet("ExpenseData/{employeeid}")]
         public ActionResult GetExpense(string employeeid)
         {
             var result = expenseRepository.GetExpense(employeeid);
            
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpGet("ExpenseDataa/{employeeid}")]
+        public ActionResult GetExpenseModified(string employeeid)
+        {
+            var result = expenseRepository.GetExpenseModified(employeeid);
+
             if (result.Count() != 0)
             {
                 return Ok(result);
@@ -65,12 +78,12 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("Get")]
-        public ActionResult GetAll()
-        {
+        //[HttpGet("Get")]
+        //public ActionResult GetAll()
+        //{
 
-            var result = expenseRepository.GetAllExpense();
-            return Ok(new { status = HttpStatusCode.OK, result, Message = "Data berhasil di tembak" });
-        }
+        //    var result = expenseRepository.GetAllExpense();
+        //    return Ok(new { status = HttpStatusCode.OK, result, Message = "Data berhasil di tembak" });
+        //}
     }
 }

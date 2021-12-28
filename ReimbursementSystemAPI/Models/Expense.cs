@@ -24,6 +24,7 @@ namespace ReimbursementSystemAPI.Models
         public virtual Employee Employees { get; set; }
         public string EmployeeId { get; set; }
 
+
         [JsonIgnore]
         public virtual ICollection<Form> Forms { get; set; }
     }
@@ -34,7 +35,9 @@ namespace ReimbursementSystemAPI.Models
         Rejected,
         Canceled,
         Posted,
-        Draft
+        Draft,
+        ApprovedByManager,
+        ApprovedByFinance
     }
 
 }
