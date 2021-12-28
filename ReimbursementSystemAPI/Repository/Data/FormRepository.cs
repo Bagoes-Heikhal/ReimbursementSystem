@@ -61,6 +61,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Attachments = fromVM.Attachments;
                 form.ExpenseId = fromVM.ExpenseId;
             }
+
+            context.Forms.Add(form);
+            context.SaveChanges();
             return 1;
         }
 
@@ -70,6 +73,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                            join b in context.Forms on a.ExpenseId equals b.ExpenseId
                            select new FormVM()
                            {
+                               FormId = b.FormId,
                                Receipt_Date = b.Receipt_Date,
                                Total = b.Total,
                                Payee = b.Payee,
@@ -80,5 +84,41 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             return register.ToList();
         }
+
+        public TotalVM TotalExpenseForm(int expenseid)
+        {
+            //var sum = (from a in context.Expenses
+            //           where a.ExpenseId == expenseid
+            //           join b in context.Forms on a.ExpenseId equals b.ExpenseId
+            //           select new TotalVM()
+            //           {
+            //               Total = b.Total
+            //           }).ToList();
+
+
+            var sum = (from a in context.Expenses
+                       where a.ExpenseId == expenseid
+                       join b in context.Forms on a.ExpenseId equals b.ExpenseId
+                       select b.Total.Value).Sum();
+
+            TotalVM total = new TotalVM();
+            total.Total = sum;
+            return total;
+        }
+
+
+
+        //public ExpenseIDVM FormID(string email, int expenseid)
+        //{
+        //    var data = (from a in context.Employees
+        //                where a.Email == email
+        //                join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+        //                select new ExpenseIDVM()
+        //                { ExpenseID = b.ExpenseId }).ToList().LastOrDefault();
+
+        //    return data;
+        //}
+
+
     }
 }

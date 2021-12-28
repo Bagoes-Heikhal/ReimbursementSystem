@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using ReimbursementSystemClient.Base.Urls;
 using ReimbursementSystemClient.Repositories;
@@ -30,7 +31,6 @@ namespace ReimbursementSystemClient.Repository.Data
                 BaseAddress = new Uri(address.link)
             };
         }
-
         public async Task<List<FormVM>> GetForm(int expenseid)
         {
             List<FormVM> entities = new List<FormVM>();
@@ -43,12 +43,24 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
-        public HttpStatusCode InsertForm(FormVM entity)
+        public HttpStatusCode InsertForm(FormVM entity, string expenseid)
         {
+            entity.ExpenseId = Int32.Parse(expenseid);
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(address.link + request + "FormInsert", content).Result;
             return result.StatusCode;
         }
 
+        public async Task<TotalVM> TotalExpenseForm(int expenseid)
+        {
+            TotalVM entities = null;
+
+            using (var response = await httpClient.GetAsync(request + "TotalExpense/" + expenseid))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entities = JsonConvert.DeserializeObject<TotalVM>(apiResponse);
+            }
+            return entities;
+        }
     }
 }

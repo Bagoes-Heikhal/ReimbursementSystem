@@ -1,4 +1,6 @@
-﻿function Login() {
+﻿
+
+function Login() {
     var obj = new Object();
         obj.email = $("#email").val(),
         obj.password = $("#password").val(),

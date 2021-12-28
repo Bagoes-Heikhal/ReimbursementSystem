@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
@@ -7,30 +7,25 @@ using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-   
     public class FormsController : BaseController<Form, FormRepository, string>
     {
 
         private readonly FormRepository formRepository;
-        private readonly MyContext context;
         public IConfiguration _iconfiguration;
-        public FormsController(FormRepository repository, MyContext context, IConfiguration configuration) : base(repository)
+        public FormsController(FormRepository repository,  IConfiguration configuration) : base(repository)
         {
-            this.context = context;
             this.formRepository = repository;
             this._iconfiguration = configuration;
         }
 
-        
         //public IActionResult Index()
         //{
-           
+
         //    List<Category> CategoryList = context.Categories1.ToList();
         //    ViewBag.CategoryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
         //    return View();
@@ -43,10 +38,10 @@ namespace ReimbursementSystemClient.Controllers
 
         //}
 
-
-        [HttpGet("{expenseid}")]
+        [Route("~/forms/getform/{expenseid}")]
         public async Task<JsonResult> GetForm(int expenseid)
         {
+
             var result = await formRepository.GetForm(expenseid);
             return Json(result);
         }
@@ -54,13 +49,16 @@ namespace ReimbursementSystemClient.Controllers
         [HttpPost]
         public JsonResult InsertForm(FormVM formVM)
         {
-            var result = formRepository.InsertForm(formVM);
+            var sessionExpense = HttpContext.Session.GetString("ExpenseID");
+            var result = formRepository.InsertForm(formVM, sessionExpense);
             return Json(result);
         }
 
-    
-
-       
-
+        [Route("~/forms/TotalExpenseForm/{expenseid}")]
+        public async Task<JsonResult> TotalExpenseForm(int expenseid)
+        {
+            var result = await formRepository.TotalExpenseForm(expenseid);
+            return Json(result);
+        }
     }
 }

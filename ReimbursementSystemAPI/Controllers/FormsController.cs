@@ -51,5 +51,30 @@ namespace ReimbursementSystemAPI.Controllers
             }
             return NotFound(result);
         }
+
+        [HttpGet("TotalExpense/{expenseid}")]
+        public ActionResult TotalExpenseForm(int expenseid)
+        {
+            var result = formRepository.TotalExpenseForm(expenseid);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
+
+        //[HttpGet("GetFormID/{email}/{expenseid}")]
+        //public ActionResult FormID(string email, int expenseid)
+        //{
+        //    var result = formRepository.FormID(email, expenseid);
+
+        //    if (result != null)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return NotFound(result);
+        //}
     }
+
 }

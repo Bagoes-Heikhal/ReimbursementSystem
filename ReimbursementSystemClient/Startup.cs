@@ -38,6 +38,9 @@ namespace ReimbursementSystemClient
             services.AddScoped<FormRepository>();
             services.AddScoped<ExpenseRepository>();
             services.AddScoped<Address>();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddAuthentication(auth =>
             {

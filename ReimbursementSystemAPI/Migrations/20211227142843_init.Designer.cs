@@ -10,8 +10,8 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211223032036_db3")]
-    partial class db3
+    [Migration("20211227142843_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,21 @@ namespace ReimbursementSystemAPI.Migrations
                     b.HasKey("EmployeeId");
 
                     b.ToTable("tb_m_Account");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.CategoryTable", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("tb_m_Category");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Department", b =>
@@ -112,21 +127,76 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<string>("Approver")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Comment")
+                    b.Property<string>("CommentFinace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommentManager")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Purpose")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<float>("Total")
+                    b.Property<float?>("Total")
                         .HasColumnType("real");
 
                     b.HasKey("ExpenseId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("tb_m_Expense");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
+                {
+                    b.Property<int>("FormId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Attachments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("End_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Payee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Receipt_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Start_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float?>("Total")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FormId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.ToTable("tb_m_Form");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Job", b =>
@@ -174,40 +244,79 @@ namespace ReimbursementSystemAPI.Migrations
                     b.ToTable("tb_t_Role");
                 });
 
-            modelBuilder.Entity("ReimbursementSystemAPI.ViewModel.Form", b =>
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Type", b =>
                 {
-                    b.Property<int>("FormId")
+                    b.Property<int>("TypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Attachments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Category")
+                    b.Property<int?>("CategoriesCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("End_Date")
-                        .HasColumnType("datetime2");
+                    b.HasKey("TypeId");
 
-                    b.Property<string>("Payee")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("CategoriesCategoryId");
 
-                    b.Property<DateTime>("Receipt_Date")
-                        .HasColumnType("datetime2");
+                    b.ToTable("tb_m_Type");
+                });
 
-                    b.Property<DateTime>("Start_Date")
-                        .HasColumnType("datetime2");
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Account", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employee")
+                        .WithOne("Accounts")
+                        .HasForeignKey("ReimbursementSystemAPI.Models.Account", "EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
+                    b.Navigation("Employee");
+                });
 
-                    b.HasKey("FormId");
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employees")
+                        .WithMany("Expenses")
+                        .HasForeignKey("EmployeeId");
 
-                    b.ToTable("tb_m_Form");
+                    b.Navigation("Employees");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
+                        .WithMany("Forms")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Expenses");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Type", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.CategoryTable", "Categories")
+                        .WithMany()
+                        .HasForeignKey("CategoriesCategoryId");
+
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
+                {
+                    b.Navigation("Accounts");
+
+                    b.Navigation("Expenses");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
+                {
+                    b.Navigation("Forms");
                 });
 #pragma warning restore 612, 618
         }
