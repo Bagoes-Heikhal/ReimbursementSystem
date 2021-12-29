@@ -103,5 +103,37 @@ namespace ReimbursementSystemClient.Controllers
             return Json(expenseSession);
         }
 
+
+        //<!----------------- Finances ------------------->
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseFinance()
+        {
+            var result = await expensesRepository.GetExpenseFinance();
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseFinanceReject()
+        {
+            var result = await expensesRepository.GetExpenseFinanceReject();
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseFinanceAll()
+        {
+            var result = await expensesRepository.GetExpenseFinanceAll();
+            return Json(result);
+        }
+
+        [HttpPut]
+        public JsonResult NonSessionSubmit(ExpenseVM entity)
+        {
+            var result = expensesRepository.NonSessionSubmit(entity);
+            return Json(result);
+        }
+
+
     }
 }

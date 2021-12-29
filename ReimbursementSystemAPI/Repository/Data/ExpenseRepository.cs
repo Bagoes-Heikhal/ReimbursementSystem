@@ -159,38 +159,98 @@ namespace ReimbursementSystemAPI.Repository.Data
             return expense.ToList();
         }
 
-        //public IEnumerable<ExpenseVM> ExpenseAllData()
-        //{
-        //    var data = from a in context.Employees
-        //                   where a.EmployeeId == employeeid
-        //                   join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-        //                   select new ExpenseVM()
-        //                   {
-        //                       dateTime = DateTime.Now,
-        //                       ExpenseId = b.ExpenseId,
-        //                       Status = 5,
-        //                       Total = b.Total,
-        //                       Description = b.Description,
-        //                   };
-        //    return data.ToList();
-        //}
+        //<!----------------- Finances -------------------> 
+        public IEnumerable<ExpenseManager> GetExpenseFinance()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.ApprovedByManager
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+        public IEnumerable<ExpenseManager> GetExpenseFinanceReject()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.RejectedByFinance
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+        public IEnumerable<ExpenseManager> GetExpenseFinanceAll()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status != Status.Draft
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+        public int NonSessionSubmit(ExpenseVM expenseVM)
+        {
+            var data = (from a in context.Employees
+                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                        where b.ExpenseId == expenseVM.ExpenseId
+                        select new { expenses = b }).Single();
 
-        //public IEnumerable GetAllExpense()
-        //{
-        //    var data = from e in context.Set<Expense>()
-        //                select new
+            var expense = data.expenses;
 
-        //                {
-        //                    e.EmployeeId,
-        //                    e.Status,
-        //                    e.Approver,
-        //                    e.Description,
-        //                    e.Comment,
-        //                    e.Total
-
-        //                };
-        //    return data.ToList();
-        //}
-
+            expense.Approver = expenseVM.Approver;
+            expense.Purpose = expenseVM.Purpose;
+            expense.Description = expenseVM.Description;
+            expense.Total = expenseVM.Total;
+            switch (expenseVM.Status)
+            {
+                case 0:
+                    expense.Status = Status.Approved;
+                    break;
+                case 1:
+                    expense.Status = Status.Rejected;
+                    break;
+                case 2:
+                    expense.Status = Status.Canceled;
+                    break;
+                case 3:
+                    expense.Status = Status.Posted;
+                    break;
+                case 4:
+                    expense.Status = Status.Draft;
+                    break;
+                default:
+                    break;
+            }
+            expense.EmployeeId = expenseVM.EmployeeId;
+            var expensess = expense;
+            context.SaveChanges();
+            return 1;
+        }
     }
 }
