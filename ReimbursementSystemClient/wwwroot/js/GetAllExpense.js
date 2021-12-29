@@ -24,6 +24,22 @@
             {
                 "data": "status"
             },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            <i class="fas fa-info-circle"></i> 
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
+                            <i class="far fa-times-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            onclick="getDataUpdate('${row['formId']}')" title="Edit" data-target="#UpdateModals">
+                            <i class="far fa-check-circle"></i>
+                            </button>`;
+                }
+            }
           
            
         ]
