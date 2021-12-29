@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    
+    [Authorize]
     public class ReimbusmentsController : Controller
     {
         
@@ -26,7 +26,6 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
-        [Authorize]
         public IActionResult Reimbusment()
         {
             return View();

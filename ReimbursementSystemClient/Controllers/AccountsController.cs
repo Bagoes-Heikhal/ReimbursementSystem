@@ -6,6 +6,7 @@ using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,16 +29,17 @@ namespace ReimbursementSystemClient.Controllers
         public async Task<IActionResult> Auth(LoginVM login)
         {
             var jwtToken = await accountRepository.Auth(login);
-            var token = jwtToken.Token;
-            var email = jwtToken.Email;
-            var id = jwtToken.EmployeeId;
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(jwtToken.Token);
+            var email = token.Claims.First(c => c.Type == "email").Value;
+            var id = token.Claims.First(c => c.Type == "nameid").Value;
+            
 
-            if (token == null)
+            if (jwtToken.Token == null)
             {
                 return Json(Url.Action("login", "Home"));
             }
 
-            HttpContext.Session.SetString("JWToken", token);
+            HttpContext.Session.SetString("JWToken", jwtToken.Token);
             HttpContext.Session.SetString("Email", email);
             HttpContext.Session.SetString("EmployeeId", id);
 
@@ -47,7 +49,7 @@ namespace ReimbursementSystemClient.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("login", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
 

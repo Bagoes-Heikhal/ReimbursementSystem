@@ -42,14 +42,14 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<JsonResult> GetID()
-        {
-            var sessionEmail = HttpContext.Session.GetString("Email");
-            var result = await expensesRepository.GetID(sessionEmail);
-            HttpContext.Session.SetString("ExpenseID", result.ExpenseID.ToString());
-            return Json(result);
-        }
+        //[HttpGet]
+        //public async Task<JsonResult> GetID()
+        //{
+        //    var sessionEmail = HttpContext.Session.GetString("Email");
+        //    var result = await expensesRepository.GetID(sessionEmail);
+        //    HttpContext.Session.SetString("ExpenseID", result.ExpenseID.ToString());
+        //    return Json(result);
+        //}
 
         [HttpGet]
         public async Task<JsonResult> GetExpense()
@@ -68,10 +68,15 @@ namespace ReimbursementSystemClient.Controllers
         }
 
         [HttpPost]
-        public JsonResult NewExpense(ExpenseVM entity)
+        public async Task<JsonResult> NewExpense(ExpenseVM entity)
         {
             var sessionId = HttpContext.Session.GetString("EmployeeId");
             var result = expensesRepository.NewExpense(entity, sessionId);
+
+            var sessionEmail = HttpContext.Session.GetString("Email");
+            var result2 = await expensesRepository.GetID(sessionEmail);
+            HttpContext.Session.SetString("ExpenseID", result2.ExpenseID.ToString());
+
             return Json(result);
         }
 
@@ -81,6 +86,21 @@ namespace ReimbursementSystemClient.Controllers
             var sessionId = HttpContext.Session.GetString("EmployeeId");
             var result = expensesRepository.Submit(entity, sessionId);
             return Json(result);
+        }
+
+        [Route("~/Expenses/EditExpense/{expenseid}")]
+        public JsonResult EditExpense(int expenseid)
+        {
+            HttpContext.Session.SetString("ExpenseID", expenseid.ToString());
+            return Json(expenseid);
+        }
+
+        [Route("~/Expenses/ExpenseCall/")]
+        public JsonResult EditExpenseCall()
+        {
+            var expenseSession = HttpContext.Session.GetString("ExpenseID");
+            HttpContext.Session.SetString("ExpenseID", expenseSession);
+            return Json(expenseSession);
         }
 
     }

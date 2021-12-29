@@ -45,15 +45,17 @@ namespace ReimbursementSystemAPI.Controllers
                                        //join c in context.Roles on b.RoleId equals c.RoleId
                                        select new
                                        {
-                                           Employee = a.Email,
+                                           Email = a.Email,
                                            Id = a.EmployeeId
                                        }).ToList();
 
                     var claims = new List<Claim>
                     {
-                        new Claim(JwtRegisteredClaimNames.Email, getUserData[0].Employee),
+                        new Claim(JwtRegisteredClaimNames.Email, getUserData[0].Email),
+                        new Claim(JwtRegisteredClaimNames.NameId, getUserData[0].Id),
                         //new Claim(ClaimTypes.Role, getUserData[0].Role)
                     };
+
 
                     //foreach (var userRole in getUserData)
                     //{
@@ -66,13 +68,13 @@ namespace ReimbursementSystemAPI.Controllers
                         _configuration["Jwt:Issuer"],
                         _configuration["Jwt:Audience"],
                         claims,
-                        expires: DateTime.UtcNow.AddMinutes(10),
+                        expires: DateTime.UtcNow.AddMinutes(120),
                         signingCredentials: signIn
                         );
 
                     var idtoken = new JwtSecurityTokenHandler().WriteToken(token);
                     claims.Add(new Claim("TokenSecurity", idtoken.ToString()));
-                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Sucsses", Email = loginVM.Email, EmployeeId = getUserData[0].Id});
+                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Sucsses"});
                 case 2:
                     return BadRequest();
                 case 3:

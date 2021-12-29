@@ -28,30 +28,18 @@ namespace ReimbursementSystemAPI.Repository.Data
 
                 switch (fromVM.Category)
                 {
-                    case 1:
+                    case 0:
                         form.Category = Category.Transportation;
                         break;
-                    case 2:
+                    case 1:
                         form.Category = Category.Parking;
                         break;
-                    case 3:
+                    case 2:
                         form.Category = Category.Medical;
                         break;
-                    case 4:
+                    case 3:
                         form.Category = Category.Lodging;
                         break;
-                    //case "Transportation":
-                    //    form.Category = ViewModel.Category.Transportation;
-                    //    break;
-                    //case "Parking":
-                    //    form.Category = ViewModel.Category.Parking;
-                    //    break;
-                    //case "Medical":
-                    //    form.Category = ViewModel.Category.Medical;
-                    //    break;
-                    //case "Lodging":
-                    //    form.Category = ViewModel.Category.Lodging;
-                    //    break;
                     default:
                         break;
                 }
@@ -78,7 +66,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Total = b.Total,
                                Payee = b.Payee,
                                Type = b.Type,
-                               Category = 3,
+                               Category = (int)b.Category,
                                Description = b.Description,
                            };
 
@@ -87,15 +75,6 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         public TotalVM TotalExpenseForm(int expenseid)
         {
-            //var sum = (from a in context.Expenses
-            //           where a.ExpenseId == expenseid
-            //           join b in context.Forms on a.ExpenseId equals b.ExpenseId
-            //           select new TotalVM()
-            //           {
-            //               Total = b.Total
-            //           }).ToList();
-
-
             var sum = (from a in context.Expenses
                        where a.ExpenseId == expenseid
                        join b in context.Forms on a.ExpenseId equals b.ExpenseId
@@ -107,6 +86,57 @@ namespace ReimbursementSystemAPI.Repository.Data
         }
 
 
+        public int FormUpdate(FormVM fromVM)
+        {
+            var data = (from a in context.Forms where a.FormId == fromVM.FormId
+                        select new { form = a}).Single();
+            var form = data.form;
+            form.Receipt_Date = fromVM.Receipt_Date;
+            form.Start_Date = fromVM.Start_Date;
+            form.End_Date = fromVM.End_Date;
+            switch (fromVM.Category)
+            {
+                case 0:
+                    form.Category = Category.Transportation;
+                    break;
+                case 1:
+                    form.Category = Category.Parking;
+                    break;
+                case 2:
+                    form.Category = Category.Medical;
+                    break;
+                case 3:
+                    form.Category = Category.Lodging;
+                    break;
+                default:
+                    break;
+            }
+            form.Payee = fromVM.Payee;
+            form.Description = fromVM.Description;
+            form.Total = fromVM.Total;
+            form.Attachments = fromVM.Attachments;
+            //form.ExpenseId = fromVM.ExpenseId;
+
+            context.SaveChanges();
+            return 1;
+        }
+        //private int CategoryHandler(int category)
+        //{
+        //    switch (category)
+        //    {
+        //        case Category.Transportation:
+        //            return 0;
+        //        case Category.Parking:
+        //            return 1;
+        //        case Category.Medical:
+        //            return 3;
+        //        case Category.Lodging:
+        //            return 4;
+        //        default:
+        //            return 5;
+        //    }
+
+        //}
 
         //public ExpenseIDVM FormID(string email, int expenseid)
         //{

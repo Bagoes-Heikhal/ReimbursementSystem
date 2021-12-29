@@ -62,5 +62,13 @@ namespace ReimbursementSystemClient.Repository.Data
             }
             return entities;
         }
+
+        public HttpStatusCode PutEditFrom(FormVM entity, int formid)
+        {
+            entity.FormId = formid;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "FormUpdate", content).Result;
+            return result.StatusCode;
+        }
     }
 }
