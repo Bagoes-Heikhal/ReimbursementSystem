@@ -19,6 +19,7 @@ namespace ReimbursementSystemAPI.Models
         public DateTime? End_Date { get; set; }
         public Category? Category { get; set; }
         public string Payee { get; set; }
+        public string Destination { get; set; }
         public string Type { get; set; }
         public string Description { get; set; }
         public float? Total { get; set; }

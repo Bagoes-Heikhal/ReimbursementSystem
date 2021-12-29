@@ -103,7 +103,7 @@ $(document).ready(function () {
                     <i class="fas fa-trash-alt"></i> 
                     </button>
                     <button type="button" class="btn btn-info" data-toggle="modal" 
-                    onclick="getDataUpdate('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
+                    onclick="EditExpense('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
                     <i class="fas fa-edit"></i>
                     </button>`;
                 }
@@ -196,6 +196,21 @@ function getData(id) {
                     <td>${result.description}</td>
                 </tr>`
             $(".data-employ").html(text);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+function EditExpense(expenseid) {
+    console.log(expenseid)
+    $.ajax({
+        url: "/Expenses/EditExpense/" + expenseid,
+        success: function (result) {
+            console.log(result)
+            window.location.href = "/Reimbusments/Expense";
+            
         },
         error: function (error) {
             console.log(error)

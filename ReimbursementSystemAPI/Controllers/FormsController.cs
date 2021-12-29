@@ -64,6 +64,20 @@ namespace ReimbursementSystemAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPut("FormUpdate")]
+        public ActionResult FormUpdate(FormVM fromVM)
+        {
+            var result = formRepository.FormUpdate(fromVM);
+            switch (result)
+            {
+                case 1:
+                    return Ok();
+                default:
+                    return BadRequest();
+            }
+        }
+
+
         //[HttpGet("GetFormID/{email}/{expenseid}")]
         //public ActionResult FormID(string email, int expenseid)
         //{

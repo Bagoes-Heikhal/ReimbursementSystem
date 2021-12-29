@@ -74,6 +74,7 @@ namespace ReimbursementSystemClient.Repository.Data
             entity.EmployeeId = employeeId;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
             var result = httpClient.PostAsync(address.link + request + "ExpenseInsert", content).Result;
+
             return result.StatusCode;
         }
 

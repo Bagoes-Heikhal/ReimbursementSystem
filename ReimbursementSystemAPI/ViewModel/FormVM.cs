@@ -18,6 +18,8 @@ namespace ReimbursementSystemAPI.ViewModel
         public float? Total { get; set; }
         public string Attachments { get; set; }
         public int ExpenseId { get; set; }
+
+        //add destination
     }
 
 }

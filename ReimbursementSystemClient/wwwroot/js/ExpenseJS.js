@@ -1,39 +1,27 @@
-﻿////$.ajax({
-////    url: "/Expenses/GetID/" ,
-////    success: function (result) {
-////        $(".expense-title span").html(result.expenseID)
-////    },
-////    error: function (error) {
-////        console.log(error)
-////    }
-////})
-
+﻿
 function InsertForm() {
-    window.location.href = "/Reimbusments/Form"
+    $.ajax({
+        url: "/Forms/NewForm/",
+        success: function (result) {
+            window.location.href = result;
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
 }
 
 $(document).ready(function () {
-
     $.ajax({
-        url: "/Expenses/GetID",
+        url: "/Expenses/ExpenseCall",
         success: function (result) {
-            $(".expense-title span").html(result.expenseID);
-
-            //$.ajax({
-            //    "url" : "/forms/getform/" + result.expenseID,
-            //    type: "Get",
-            //    success: function (result) {
-            //        console.log(result)
-            //    },
-            //    error: function (error) {
-            //        console.log(error)
-            //    }
-            //})
+            console.log(result)
+            $(".expense-title span").html(result);
 
             table = $("#Formtable").DataTable({
                 responsive: true,
                 "ajax": {
-                    "url": "/forms/getform/" + result.expenseID,
+                    "url": "/forms/getform/" + result,
                     type: "Get",
                     dataSrc: ""
                 },
@@ -48,13 +36,21 @@ $(document).ready(function () {
                         }
                     },
                     {
-                        "data": "category",
                         "data": null,
                         "render": function (data, type, row) {
-                            if (row["description"] == null) {
-                                return "~Empty~"
+                            switch (row["category"]) {
+                                case 0:
+                                    return "Transportation";
+                                case 1:
+                                    return "Parking";
+                                case 2:
+                                    return "Medical";
+                                case 3:
+                                    return "Lodging";                               
+                                default:
+                                    return "~Empty~";
+                                    break;
                             }
-                            return row["description"];
                         }
                     },
                     {
@@ -104,7 +100,7 @@ $(document).ready(function () {
                             <i class="fas fa-trash-alt"></i> 
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 
-                            onclick="getDataUpdate('${row['formId']}')" title="Edit" data-target="#UpdateModals">
+                            onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
                             <i class="fas fa-edit"></i>
                             </button>`;
                         }
@@ -113,7 +109,20 @@ $(document).ready(function () {
             });
 
             $.ajax({
-                url: "/forms/TotalExpenseForm/" + result.expenseID,
+                url: "/Expenses/Get/" + result,
+                type: "Get",
+                data: "",
+                success: function (result) {
+                    $("#Description").html(result.description)
+                    $("#Purpose").attr("value", result.purpose)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+
+            $.ajax({
+                url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
                 success: function (result) {
                     $("#Total").val(result.total)
@@ -127,8 +136,6 @@ $(document).ready(function () {
             console.log(error)
         }
     })
-
-
 });
 
 function Submit() {
@@ -166,7 +173,6 @@ function Submit() {
 }
 
 function SaveExit() {
-
     var obj = new Object();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
@@ -262,3 +268,29 @@ function getData(id) {
         }
     })
 }
+
+function EditForm(formid) {
+    console.log(formid)
+    $.ajax({
+        url: "/Forms/EditForm/" + formid,
+        success: function (result) {
+            console.log(result)
+            window.location.href = "/Reimbusments/Form";
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+////$.ajax({
+////    url: "/Expenses/GetID/" ,
+////    success: function (result) {
+////        $(".expense-title span").html(result.expenseID)
+////    },
+////    error: function (error) {
+////        console.log(error)
+////    }
+////})
+
