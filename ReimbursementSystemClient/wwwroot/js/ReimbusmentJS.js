@@ -86,6 +86,14 @@ $(document).ready(function () {
                             return "Posted";
                         case 4:
                             return "Draft";
+                        case 5:
+                            return "Approved By Manager";
+                        case 6:
+                            return "Approved By Finance";
+                        case 7:
+                            return "Rejected By Manager";
+                        case 8:
+                            return "Rejected By Finance";
                         default:
                             return "Draft";
                             break;

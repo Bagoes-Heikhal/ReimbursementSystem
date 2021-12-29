@@ -91,6 +91,55 @@ namespace ReimbursementSystemAPI.Controllers
         }
 
 
+        //<!----------------- Finances ------------------->
 
+        [HttpGet("ExpenseDataFinances")]
+        public ActionResult GetExpenseFinances()
+        {
+            var result = expenseRepository.GetExpenseFinance();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpGet("ExpenseDataFinancesReject")]
+        public ActionResult GetExpenseFinancesReject()
+        {
+            var result = expenseRepository.GetExpenseFinanceReject();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpGet("ExpenseDataFinancesAll")]
+        public ActionResult GetExpenseFinancesAll()
+        {
+            var result = expenseRepository.GetExpenseFinanceAll();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpPut("ExpenseUpdateNonSession")]
+        public ActionResult NonSessionSubmit(ExpenseVM expenseVM)
+        {
+            var result = expenseRepository.NonSessionSubmit(expenseVM);
+            switch (result)
+            {
+                case 1:
+                    return Ok();
+                default:
+                    return BadRequest();
+            }
+        }
     }
 }

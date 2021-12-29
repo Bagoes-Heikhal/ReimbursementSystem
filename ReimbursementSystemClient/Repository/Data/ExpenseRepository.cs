@@ -86,5 +86,53 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
+
+
+        //<!----------------- Finances ------------------->
+        public async Task<List<ExpenseManager>> GetExpenseFinance()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataFinances/" ))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
+
+        public async Task<List<ExpenseManager>> GetExpenseFinanceReject()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataFinancesReject/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
+
+        public async Task<List<ExpenseManager>> GetExpenseFinanceAll()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataFinancesAll/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
+
+        public HttpStatusCode NonSessionSubmit(ExpenseVM entity)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "ExpenseUpdateNonSession", content).Result;
+            return result.StatusCode;
+        }
     }
 }

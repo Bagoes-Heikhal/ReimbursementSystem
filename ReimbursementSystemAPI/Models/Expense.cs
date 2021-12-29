@@ -39,7 +39,9 @@ namespace ReimbursementSystemAPI.Models
         Posted,
         Draft,
         ApprovedByManager,
-        ApprovedByFinance
+        ApprovedByFinance,
+        RejectedByManager,
+        RejectedByFinance
     }
 
 }
