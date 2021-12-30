@@ -6,6 +6,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Repository.Data
@@ -251,6 +254,212 @@ namespace ReimbursementSystemAPI.Repository.Data
             var expensess = expense;
             context.SaveChanges();
             return 1;
+        }
+
+
+        //<!----------------- Notif -------------------> 
+        public int NotifRequest(string email, int expenseid)
+        {
+            var OlddPass = (from a in context.Employees
+                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                            where a.Email == email && b.ExpenseId == expenseid
+                            select new { Employee = a, Expense = b }).Single();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<p> You have made a Reimbursment Request with <p>");
+            sb.Append("<p> Your Request Id is  <p>");
+            sb.Append($"<h1> # {expenseid} <h1>");
+
+            if (OlddPass != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = $"Reimbursment {DateTime.Now}";
+                    mail.Body = sb.ToString();
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new
+                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
+        }
+
+
+        //<!----------------- Notif Finances -------------------> 
+        public int NotifApproveF(string email, int expenseid)
+        {
+            var OlddPass = (from a in context.Employees
+                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                            where a.Email == email && b.ExpenseId == expenseid
+                            select new { Employee = a, Expense = b }).Single();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<p> Your Reimbursment Have been approved by Finances <p>");
+            sb.Append("<p> Your Request Id is  <p>");
+            sb.Append($"<h1> # {expenseid} approved  <h1>");
+
+            if (OlddPass != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = $"Finances Approve {DateTime.Now}";
+                    mail.Body = sb.ToString();
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new
+                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
+        }
+
+        public int NotifRejectF(string email, int expenseid)
+        {
+            var OlddPass = (from a in context.Employees
+                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                            where a.Email == email && b.ExpenseId == expenseid
+                            select new { Employee = a, Expense = b }).Single();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<p> Your Reimbursment Have been rejected by Finances<p>");
+            sb.Append("<p> Your Request Id is  <p>");
+            sb.Append($"<h1> # {expenseid} Rejected<h1>");
+
+            if (OlddPass != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = $"Reject Finances {DateTime.Now}";
+                    mail.Body = sb.ToString();
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new
+                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
+        }
+
+        //<!----------------- Notif Manager -------------------> 
+
+        public int NotifApproveM(string email, int expenseid)
+        {
+            var OlddPass = (from a in context.Employees
+                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                            where a.Email == email && b.ExpenseId == expenseid
+                            select new { Employee = a, Expense = b }).Single();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<p> Your Reimbursment Have been approved by Manager <p>");
+            sb.Append("<p> Your Request Id is  <p>");
+            sb.Append($"<h1> # {expenseid} approved  <h1>");
+
+            if (OlddPass != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = $"Manager Approve {DateTime.Now}";
+                    mail.Body = sb.ToString();
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new
+                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
+        }
+
+        public int NotifRejectM(string email, int expenseid)
+        {
+            var OlddPass = (from a in context.Employees
+                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                            where a.Email == email && b.ExpenseId == expenseid
+                            select new { Employee = a, Expense = b }).Single();
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<p> Your Reimbursment Have been rejected by Manager<p>");
+            sb.Append("<p> Your Request Id is  <p>");
+            sb.Append($"<h1> # {expenseid} Rejected<h1>");
+
+            if (OlddPass != null)
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.To.Add(email);
+                    mail.Subject = $"Manager Reject {DateTime.Now}";
+                    mail.Body = sb.ToString();
+                    mail.IsBodyHtml = true;
+
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.Credentials = new
+                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
+                catch (Exception)
+                {
+                    return 2;
+                }
+                return 1;
+            }
+            return 3;
         }
     }
 }

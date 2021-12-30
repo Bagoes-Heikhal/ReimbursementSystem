@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,14 +10,12 @@ using System.Threading.Tasks;
 namespace ReimbursementSystemAPI.Models
 {
     [Table("tb_t_EmployeeAttachment")]
+    
     public class Employee_Attachment
     {
         [Key]
-        public string EmployeeId { get; set; }
-
-        public string STNK { get; set; }
-
-        //[JsonIgnore]
-        //public virtual Employee Employees { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string FilePath { get; set; }
     }
 }

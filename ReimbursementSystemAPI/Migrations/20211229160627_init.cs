@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReimbursementSystemAPI.Migrations
 {
-    public partial class newDB : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,12 +56,14 @@ namespace ReimbursementSystemAPI.Migrations
                 name: "tb_t_EmployeeAttachment",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    STNK = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_t_EmployeeAttachment", x => x.EmployeeId);
+                    table.PrimaryKey("PK_tb_t_EmployeeAttachment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +181,7 @@ namespace ReimbursementSystemAPI.Migrations
                     End_Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Category = table.Column<int>(type: "int", nullable: true),
                     Payee = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Destination = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Total = table.Column<float>(type: "real", nullable: true),

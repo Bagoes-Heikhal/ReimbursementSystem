@@ -1,9 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using API.Hash;
+using Microsoft.Extensions.Configuration;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Repository.Data
@@ -46,12 +51,31 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Payee = fromVM.Payee;
                 form.Description = fromVM.Description;
                 form.Total = fromVM.Total;
-                form.Attachments = fromVM.Attachments;
                 form.ExpenseId = fromVM.ExpenseId;
             }
-
             context.Forms.Add(form);
+
             context.SaveChanges();
+            var image = fromVM.Attachments;
+            if (image != null)
+            {
+                Employee_Attachment atc = new Employee_Attachment();
+                var filePath = Path.Combine("C:/Users/Gigabyte/source/repos/ReimbursementSystem/ReimbursementSystemAPI/Images/", image.FileName);
+
+                if (image.Length > 0)
+                {
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        image.CopyTo(fileStream);
+                    }
+                }
+                atc.FilePath = filePath;
+                context.Employee_Attachments.Add(atc);
+
+            }
+
+
+
             return 1;
         }
 
@@ -114,41 +138,14 @@ namespace ReimbursementSystemAPI.Repository.Data
             form.Payee = fromVM.Payee;
             form.Description = fromVM.Description;
             form.Total = fromVM.Total;
-            form.Attachments = fromVM.Attachments;
+            //form.Attachments = fromVM.Attachments;
             //form.ExpenseId = fromVM.ExpenseId;
 
             context.SaveChanges();
             return 1;
         }
-        //private int CategoryHandler(int category)
-        //{
-        //    switch (category)
-        //    {
-        //        case Category.Transportation:
-        //            return 0;
-        //        case Category.Parking:
-        //            return 1;
-        //        case Category.Medical:
-        //            return 3;
-        //        case Category.Lodging:
-        //            return 4;
-        //        default:
-        //            return 5;
-        //    }
-
-        //}
-
-        //public ExpenseIDVM FormID(string email, int expenseid)
-        //{
-        //    var data = (from a in context.Employees
-        //                where a.Email == email
-        //                join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-        //                select new ExpenseIDVM()
-        //                { ExpenseID = b.ExpenseId }).ToList().LastOrDefault();
-
-        //    return data;
-        //}
 
 
+        
     }
 }

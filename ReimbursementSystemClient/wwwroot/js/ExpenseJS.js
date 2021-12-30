@@ -1,5 +1,4 @@
-﻿
-function InsertForm() {
+﻿function InsertForm() {
     $.ajax({
         url: "/Forms/NewForm/",
         success: function (result) {
