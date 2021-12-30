@@ -29,7 +29,7 @@ namespace ReimbursementSystemAPI.Controllers
         }
 
         [HttpPost("FormInsert")]
-        public ActionResult NewForm([FromForm] FormVM fromVM)
+        public ActionResult NewForm(FormVM fromVM)
         {
             var result = formRepository.NewForm(fromVM);
             switch (result)

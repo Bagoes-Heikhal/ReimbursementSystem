@@ -7,7 +7,10 @@ using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Web;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
@@ -148,5 +151,6 @@ namespace ReimbursementSystemClient.Controllers
             var result = expensesRepository.NonSessionSubmit(entity);
             return Json(result);
         }
+
     }
 }
