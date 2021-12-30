@@ -45,46 +45,45 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
-        //public HttpStatusCode InsertForm(FormVM entity, string expenseid)
-        //{
-        //    entity.ExpenseId = Int32.Parse(expenseid);
-        //    StringContent content = new StringContent(JsonConvert.SerializeObject(entity));
-        //    var result = httpClient.PostAsync(address.link + request + "FormInsert", content).Result;
-        //    return result.StatusCode;
-        //}
-
         public HttpStatusCode InsertForm(FormVM entity, string expenseid)
         {
             entity.ExpenseId = Int32.Parse(expenseid);
-
-            using (var client = new HttpClient())
-            {
-                try
-                {
-                    client.BaseAddress = new Uri(request);
-
-                    byte[] data;
-                    using (var br = new BinaryReader(entity.Attachments.OpenReadStream()))
-                    data = br.ReadBytes((int)entity.Attachments.OpenReadStream().Length);
-
-                    ByteArrayContent bytes = new ByteArrayContent(data);
-
-                    MultipartFormDataContent multiContent = new MultipartFormDataContent();
-
-                    multiContent.Add(bytes, "file", entity.Attachments.FileName);
-
-                    var result = client.PostAsync(address.link + request + "FormInsert", multiContent).Result;
-
-                    return result.StatusCode; //201 Created the request has been fulfilled, resulting in the creation of a new resource.
-                }
-                catch (Exception)
-                {
-                    return HttpStatusCode.InternalServerError; // 500 is generic server error
-                }
-            }
-            //StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            //var result = httpClient.PostAsync(address.link + request + "FormInsert", entity.Attachments).Result;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "multipart/form-data");
+            var result = httpClient.PostAsync(address.link + request + "FormInsert", content).Result;
+            return result.StatusCode;
         }
+
+
+        //public HttpStatusCode InsertForm(FormVM entity, string expenseid)
+        //{
+        //    entity.ExpenseId = Int32.Parse(expenseid);
+
+        //    using (var client = new HttpClient())
+        //    {
+        //        try
+        //        {
+        //            client.BaseAddress = new Uri(request);
+
+        //            byte[] data;
+        //            using (var br = new BinaryReader(entity.Attachments.OpenReadStream()))
+        //                data = br.ReadBytes((int)entity.Attachments.OpenReadStream().Length);
+
+        //            ByteArrayContent bytes = new ByteArrayContent(data);
+
+        //            MultipartFormDataContent multiContent = new MultipartFormDataContent();
+
+        //            multiContent.Add(bytes, "file", entity.Attachments.FileName);
+
+        //            var result = client.PostAsync(address.link + request + "FormInsert", multiContent).Result;
+
+        //            return result.StatusCode; 
+        //        }
+        //        catch (Exception)
+        //        {
+        //            return HttpStatusCode.InternalServerError; 
+        //        }
+        //    }
+        //}
 
         public async Task<TotalVM> TotalExpenseForm(int expenseid)
         {
