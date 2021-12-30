@@ -44,19 +44,6 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
-        //manggil modified table Manager
-        public async Task<List<ExpenseManager>> GetExpenseModified(string employeeid)
-        {
-            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
-
-            using (var response = await httpClient.GetAsync(request + "ExpenseDataa/" + employeeid))
-            {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
-            }
-            return entitiesNew;
-        }
-
         public async Task<ExpenseIDVM> GetID(string email)
         {
             ExpenseIDVM entities = null;
@@ -78,14 +65,13 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
-        public HttpStatusCode Submit(ExpenseVM entity, string employeeId, string email)
+        public HttpStatusCode Submit(ExpenseVM entity, string employeeId, string email, int code)
         {
             entity.EmployeeId = employeeId;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + "ExpenseUpdate/" + email, content).Result;
+            var result = httpClient.PutAsync(request + "ExpenseUpdate/" + email + "/" + code, content).Result;
             return result.StatusCode;
         }
-
 
 
         //<!----------------- Finances ------------------->
@@ -115,11 +101,42 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        public async Task<List<ExpenseManager>> GetExpenseFinanceAll()
+
+        //<!----------------- Manager ------------------->
+
+        public async Task<List<ExpenseManager>> GetExpenseManager()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
 
-            using (var response = await httpClient.GetAsync(request + "ExpenseDataFinancesAll/"))
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataManager/" ))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+            }
+            return entitiesNew;
+        }
+
+        public async Task<List<ExpenseManager>> GetExpenseManagerReject()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataManagerReject/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
+
+
+        //<!----------------- Manager & Finances -------------------> 
+
+        public async Task<List<ExpenseManager>> GetExpensePosted()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "GetExpensePosted/"))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);

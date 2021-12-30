@@ -41,12 +41,15 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
-        [HttpPut("ExpenseUpdate/{email}")]
-        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, string email)
+        [HttpPut("ExpenseUpdate/{email}/{code}")]
+        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, string email, int code)
         {
+            if (code == 1)
+            {
+                expenseRepository.NotifRequest(email, expenseVM.ExpenseId);
+            }
             var result = expenseRepository.ExpenseFormUpdate(expenseVM);
-            var notif = expenseRepository.NotifRequest(email, expenseVM.ExpenseId);
-            switch (notif)
+            switch (result)
             {
                 case 1:
                     return Ok();
@@ -118,10 +121,40 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("ExpenseDataFinancesAll")]
-        public ActionResult GetExpenseFinancesAll()
+
+        //<!----------------- Finances ------------------->
+
+        [HttpGet("ExpenseDataManager")]
+        public ActionResult GetExpenseManager()
         {
-            var result = expenseRepository.GetExpenseFinanceAll();
+            var result = expenseRepository.GetExpenseManager();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpGet("ExpenseDataManagerReject")]
+        public ActionResult GetExpenseManagerReject()
+        {
+            var result = expenseRepository.GetExpenseManagerReject();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+
+        //<!----------------- Manager & Finances -------------------> 
+
+        [HttpGet("GetExpensePosted")]
+        public ActionResult GetExpensePosted()
+        {
+            var result = expenseRepository.GetExpensePosted();
 
             if (result.Count() != 0)
             {

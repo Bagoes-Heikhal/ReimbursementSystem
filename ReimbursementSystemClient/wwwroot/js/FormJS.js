@@ -33,7 +33,7 @@ function SaveExit() {
         type: "Post",
         'data': data,
         'dataType': 'json',
-        //processData: false,
+        processData: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Expense"
         },
@@ -43,6 +43,27 @@ function SaveExit() {
     })
     return false;
 }
+
+//function SaveExit() {
+//    var formData = new FormData();
+//    //formData.append("Total", $("#Total").val());
+//    formData.append("Attachments", $('[name="file"]')[0].files[0]);
+
+//    $.ajax({
+//        url: "/Forms/InsertForm",
+//        type: "Post",
+//        data: formData,
+//        processData: false,
+//        contentType: false,
+//        success: function (result) {
+//            window.location.href = "/Reimbusments/Expense"
+//        },
+//        error: function (error) {
+//            console.log(error)
+//        }
+//    })
+//    return false;
+//}
 
 function Update() {
     $.ajax({
