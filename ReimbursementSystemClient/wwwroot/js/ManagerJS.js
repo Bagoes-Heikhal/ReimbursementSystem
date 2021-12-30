@@ -6,23 +6,13 @@
             <th scope="col" class="text-light text-center status">Action</th>`
 }
 
-$.ajax({
-    url: "/Expenses/GetExpenseFinanceReject",
-    type: "GET",
-    success: function (result) {
-        console.log(result)
-    },
-    error: function (error) {
-        console.log(error)
-    }
-});
-
 $(document).ready(function () {
-
+   
     table = $("#tabelExpense").DataTable({
-        responsive: true,
+        "processing": true,
+        "responsive": true,
         "ajax": {
-            "url": "/Expenses/GetExpenseFinance",
+            "url": "/Expenses/GetExpenseManager",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -80,6 +70,42 @@ function dateConversion(dates) {
     return newDate
 }
 
+function getData(id) {
+    $.ajax({
+        url: "/Expenses/GetExpenseModified/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `<tr>
+                <td> Total </td>
+                <td> : </td>
+                <td> ${result.total}</td>
+                </tr>
+                <tr>
+                    <td> Description </td>
+                    <td> : </td>
+                    <td>${result.description}</td>
+                </tr>`
+            $(".data-employ").html(text);
+            console.log(result)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+$.ajax({
+    "url": "/Expenses/GetAll",
+    success: function (result) {
+        console.log(result)
+    },
+    error: function (error) {
+        console.log(error)
+    }
+})
+
 function Reject(expenseid) {
     Swal.fire({
         title: 'Are you sure?',
@@ -103,7 +129,7 @@ function Reject(expenseid) {
                     obj.description = result2.description;
                     obj.total = result2.total;
                     obj.employeeId = result2.employeeId;
-                    obj.status = 8;
+                    obj.status = 7;
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Put",
@@ -127,31 +153,6 @@ function Reject(expenseid) {
     })
 }
 
-function getData(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
 function Approve(expenseid) {
     $.ajax({
         url: "/Expenses/Get/" + expenseid,
@@ -166,7 +167,7 @@ function Approve(expenseid) {
             obj.description = result.description;
             obj.total = result.total;
             obj.employeeId = result.employeeId;
-            obj.status = 6;
+            obj.status = 5;
             console.log(obj)
             $.ajax({
                 url: "/Expenses/Put",
@@ -201,7 +202,7 @@ function RejectTable() {
     $("#tabelExpense").DataTable({
         responsive: true,
         "ajax": {
-            "url": "/Expenses/GetExpenseFinanceReject",
+            "url": "/Expenses/GetExpenseManagerReject",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -237,11 +238,11 @@ function RejectTable() {
             }
         ]
     });
-    
+
 }
 
 function RequestTable() {
-    
+
     $('.status').html("Action");
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();
@@ -250,12 +251,10 @@ function RequestTable() {
 
     $(".column-tab").html(column());
 
-
-
     $("#tabelExpense").DataTable({
         responsive: true,
         "ajax": {
-            "url": "/Expenses/GetExpenseFinance",
+            "url": "/Expenses/GetExpenseManager",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -322,7 +321,7 @@ function AllTable() {
     $("#tabelExpense").DataTable({
         responsive: true,
         "ajax": {
-            "url": "/Expenses/GetExpensePosted/",
+            "url": "/Expenses/GetExpensePosted",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -368,12 +367,12 @@ function AllTable() {
 }
 
 function remove(str) {
-        // Get target th with the name you want to remove.
-        var target = $('table').find('th[data-name="' + str + '"]');
-        // Find its index among other ths 
-        var index = (target).index();
-        // For each tr, remove all th and td that match the index.
-        $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
+    // Get target th with the name you want to remove.
+    var target = $('table').find('th[data-name="' + str + '"]');
+    // Find its index among other ths 
+    var index = (target).index();
+    // For each tr, remove all th and td that match the index.
+    $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
 }
 
 function status(stat) {

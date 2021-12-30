@@ -10,7 +10,7 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211229160627_init")]
+    [Migration("20211230034530_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -71,11 +71,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 }
                 atc.FilePath = filePath;
                 context.Employee_Attachments.Add(atc);
+                context.SaveChanges();
 
             }
-
-
-
             return 1;
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ReimbursementSystemAPI.Models;
 using ReimbursementSystemAPI.ViewModel;
@@ -43,10 +44,11 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
-        public HttpStatusCode InsertForm(FormVM entity, string expenseid)
+        public HttpStatusCode InsertForm([FromForm] FormVM entity, string expenseid)
         {
             entity.ExpenseId = Int32.Parse(expenseid);
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+
             var result = httpClient.PostAsync(address.link + request + "FormInsert", content).Result;
             return result.StatusCode;
         }

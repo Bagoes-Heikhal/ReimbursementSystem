@@ -11,29 +11,50 @@
 //    }
 //})
 
+//function SaveExit() {
+
+//    //var GetImages = $('[name="file"]');
+//    //console.log(GetImages[0].files[0])
+//    var data = {
+//        Receipt_Date : $("#Receipt_Date").val(),
+//        Start_Date: $("#Start_Date").val(),
+//        End_Date: $("#End_Date").val(),
+//        Category: $("#Category").val(),
+//        Payee: $("#Payee").val(),
+//        Description: $("#Description").val(),
+//        Total: $("#Total").val(),
+//        //Attachments : GetImages[0].files[0]
+//    };
+
+//    console.log(data)
+
+//    $.ajax({
+//        url: "/Forms/InsertForm",
+//        type: "Post",
+//        'data': data,
+//        'dataType': 'json',
+//        //processData: false,
+//        success: function (result) {
+//            window.location.href = "/Reimbusments/Expense"
+//        },
+//        error: function (error) {
+//            console.log(error)
+//        }
+//    })
+//    return false;
+//}
+
 function SaveExit() {
-
-    //var GetImages = $('[name="file"]');
-    //console.log(GetImages[0].files[0])
-    var data = {
-        Receipt_Date : $("#Receipt_Date").val(),
-        Start_Date: $("#Start_Date").val(),
-        End_Date: $("#End_Date").val(),
-        Category: $("#Category").val(),
-        Payee: $("#Payee").val(),
-        Description: $("#Description").val(),
-        Total: $("#Total").val(),
-        //Attachments : GetImages[0].files[0]
-    };
-
-    console.log(data)
+    var formData = new FormData();
+    formData.append("Total", $("#Total").val());
+    formData.append("Attachments", $('[name="file"]')[0].files[0]);
 
     $.ajax({
         url: "/Forms/InsertForm",
         type: "Post",
-        'data': data,
-        'dataType': 'json',
-        //processData: false,
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Expense"
         },

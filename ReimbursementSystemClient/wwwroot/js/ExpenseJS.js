@@ -145,7 +145,7 @@ function Submit() {
     obj.total = $("#Total").val();
     obj.status = 3;
     $.ajax({
-        url: "/Expenses/Submit",
+        url: "/Expenses/Submit/" + 1,
         type: "Put",
         'data': obj,
         'dataType': 'json',
@@ -179,7 +179,7 @@ function SaveExit() {
     obj.total = $("#Total").val();
     obj.status = 4;
     $.ajax({
-        url: "/Expenses/Submit",
+        url: "/Expenses/Submit/" + 2,
         type: "Put",
         'data': obj,
         'dataType': 'json',

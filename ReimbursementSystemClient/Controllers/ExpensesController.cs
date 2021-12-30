@@ -59,14 +59,6 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpGet]
-        public async Task<JsonResult> GetExpenseModified()
-        {
-            var sessionId = HttpContext.Session.GetString("EmployeeId");
-            var result = await expensesRepository.GetExpenseModified(sessionId);
-            return Json(result);
-        }
-
         [HttpPost]
         public async Task<JsonResult> NewExpense(ExpenseVM entity)
         {
@@ -80,12 +72,12 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpPut]
-        public JsonResult Submit(ExpenseVM entity)
+        [Route("~/Expenses/Submit/{code}")]
+        public JsonResult Submit(ExpenseVM entity, int code)
         {
             var sessionId = HttpContext.Session.GetString("EmployeeId");
             var sessionEmail = HttpContext.Session.GetString("Email");
-            var result = expensesRepository.Submit(entity, sessionId, sessionEmail);
+            var result = expensesRepository.Submit(entity, sessionId, sessionEmail, code);
             return Json(result);
         }
 
@@ -121,10 +113,32 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+
+
+        //<!----------------- Manager ------------------->
+
         [HttpGet]
-        public async Task<JsonResult> GetExpenseFinanceAll()
+        public async Task<JsonResult> GetExpenseManager()
         {
-            var result = await expensesRepository.GetExpenseFinanceAll();
+            var result = await expensesRepository.GetExpenseManager();
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseManagerReject()
+        {
+            var result = await expensesRepository.GetExpenseManagerReject();
+            return Json(result);
+        }
+
+
+
+        //<!----------------- Manager & Finances -------------------> 
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpensePosted()
+        {
+            var result = await expensesRepository.GetExpensePosted();
             return Json(result);
         }
 
@@ -134,7 +148,5 @@ namespace ReimbursementSystemClient.Controllers
             var result = expensesRepository.NonSessionSubmit(entity);
             return Json(result);
         }
-
-
     }
 }

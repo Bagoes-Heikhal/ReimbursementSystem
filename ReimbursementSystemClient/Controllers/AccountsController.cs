@@ -29,6 +29,7 @@ namespace ReimbursementSystemClient.Controllers
         public async Task<IActionResult> Auth(LoginVM login)
         {
             var jwtToken = await accountRepository.Auth(login);
+
             var token = new JwtSecurityTokenHandler().ReadJwtToken(jwtToken.Token);
             var email = token.Claims.First(c => c.Type == "email").Value;
             var id = token.Claims.First(c => c.Type == "nameid").Value;

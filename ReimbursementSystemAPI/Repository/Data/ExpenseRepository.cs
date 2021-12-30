@@ -199,7 +199,51 @@ namespace ReimbursementSystemAPI.Repository.Data
                           };
             return expense.ToList();
         }
-        public IEnumerable<ExpenseManager> GetExpenseFinanceAll()
+
+
+        //<!----------------- Manager -------------------> 
+
+        public IEnumerable<ExpenseManager> GetExpenseManager()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.Posted
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+        public IEnumerable<ExpenseManager> GetExpenseManagerReject()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.RejectedByManager
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+
+
+        //<!----------------- Manager & Finances -------------------> 
+
+        public IEnumerable<ExpenseManager> GetExpensePosted()
         {
             var expense = from a in context.Employees
                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -257,7 +301,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         }
 
 
-        //<!----------------- Notif -------------------> 
+        //<!-------------------- Notif ------------------------> 
         public int NotifRequest(string email, int expenseid)
         {
             var OlddPass = (from a in context.Employees
@@ -379,6 +423,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             }
             return 3;
         }
+
 
         //<!----------------- Notif Manager -------------------> 
 
