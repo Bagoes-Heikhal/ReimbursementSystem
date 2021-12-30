@@ -47,7 +47,7 @@ namespace ReimbursementSystemAPI.Controllers
             if (code == 1)
             {
                 expenseRepository.NotifRequest(email, expenseVM.ExpenseId);
-            }
+            }  
             var result = expenseRepository.ExpenseFormUpdate(expenseVM);
             switch (result)
             {
@@ -121,8 +121,27 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpPut("ApprovalF/{Email}/{code}")]
+        public ActionResult ApprovalF(ExpenseVM expenseVM, string email, int code)
+        {
+            var result = expenseRepository.NotifApproveF(email, expenseVM.ExpenseId);
+            if (code == 1)
+            {
+                expenseRepository.NotifRejectF(email, expenseVM.ExpenseId);
+            }
+            else if (code == 2)
+            {
+                expenseRepository.NotifApproveF(email, expenseVM.ExpenseId);
+            }
+            else
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
 
-        //<!----------------- Finances ------------------->
+
+        //<!----------------- Manager ------------------->
 
         [HttpGet("ExpenseDataManager")]
         public ActionResult GetExpenseManager()
@@ -142,6 +161,23 @@ namespace ReimbursementSystemAPI.Controllers
             var result = expenseRepository.GetExpenseManagerReject();
 
             if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpPut("Approval/{Email}/{code}")]
+        public ActionResult Approval(ExpenseVM expenseVM, string email, int code)
+        {
+            var result = expenseRepository.NotifApproveM(email, expenseVM.ExpenseId);
+            if (code == 1)
+            {
+                expenseRepository.NotifRejectM(email, expenseVM.ExpenseId);
+            } else if (code == 2)
+            {
+                expenseRepository.NotifApproveM(email, expenseVM.ExpenseId);
+            } else
             {
                 return Ok(result);
             }

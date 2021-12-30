@@ -116,6 +116,14 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+        [HttpPut("ApprovalF/{code}/")]
+        public JsonResult PutF(ExpenseVM expenseVM, string Email, int Code)
+        {
+            var sessionId = HttpContext.Session.GetString("EmployeeId");
+            var sessionEmail = HttpContext.Session.GetString("Email");
+            var result = expensesRepository.ApprovalFinance(expenseVM, Email, Code);
+            return Json(result);
+        }
 
 
         //<!----------------- Manager ------------------->
@@ -131,6 +139,15 @@ namespace ReimbursementSystemClient.Controllers
         public async Task<JsonResult> GetExpenseManagerReject()
         {
             var result = await expensesRepository.GetExpenseManagerReject();
+            return Json(result);
+        }
+
+        [HttpPut("Approval/{code}/")]
+        public JsonResult Put(ExpenseVM expenseVM, string Email, int Code)
+        {
+            var sessionId = HttpContext.Session.GetString("EmployeeId");
+            var sessionEmail = HttpContext.Session.GetString("Email");
+            var result = expensesRepository.ApprovalManager(expenseVM, Email, Code);
             return Json(result);
         }
 

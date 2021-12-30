@@ -101,6 +101,13 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
+        public HttpStatusCode ApprovalFinance(ExpenseVM entity, string email, int code)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "Approval/" + email + "/" + code, content).Result;
+            return result.StatusCode;
+        }
+
 
         //<!----------------- Manager ------------------->
 
@@ -127,6 +134,13 @@ namespace ReimbursementSystemClient.Repository.Data
 
             }
             return entitiesNew;
+        }
+
+        public HttpStatusCode ApprovalManager(ExpenseVM entity, string email, int code)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PutAsync(request + "Approval/" + email + "/" + code, content).Result;
+            return result.StatusCode;
         }
 
 

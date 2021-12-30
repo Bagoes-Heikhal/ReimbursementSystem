@@ -467,6 +467,46 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 3;
         }
 
+        public int Update(ExpenseVM expenseVM)
+        {
+            var data = (from a in context.Employees
+                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                        where b.ExpenseId == expenseVM.ExpenseId
+                        select new { expenses = b }).Single();
+
+            var expense = data.expenses;
+
+            expense.Approver = expenseVM.Approver;
+            expense.Purpose = expenseVM.Purpose;
+            expense.Description = expenseVM.Description;
+            expense.Total = expenseVM.Total;
+            switch (expenseVM.Status)
+            {
+                case 0:
+                    expense.Status = Status.Approved;
+                    break;
+                case 1:
+                    expense.Status = Status.Rejected;
+                    break;
+                case 2:
+                    expense.Status = Status.Canceled;
+                    break;
+                case 3:
+                    expense.Status = Status.Posted;
+                    break;
+                case 4:
+                    expense.Status = Status.Draft;
+                    break;
+                default:
+                    break;
+            }
+            expense.EmployeeId = expenseVM.EmployeeId;
+            var expensess = expense;
+            context.SaveChanges();
+            return 1;
+        }
+    
+
         public int NotifRejectM(string email, int expenseid)
         {
             var OlddPass = (from a in context.Employees
