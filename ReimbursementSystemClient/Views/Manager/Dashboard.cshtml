@@ -10,22 +10,54 @@
     <title>Manager Dashboard</title>
 </head>
 <body>
-    <div>
-        <table class="table table-striped" id="tabelExpense">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">EXPENSE MANAGER</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover dt-responsive table-striped nowarp" style="width:100%" id="tabelExpense">
 
-            <thead>
-                <tr class="bg-primary">
-                    <th scope="col" class="text-light text-center">ID Employee</th>
-                    <th scope="col" class="text-light text-center">Name</th>
-                    <th scope="col" class="text-light text-center">Date Request</th>
-                    <th scope="col" class="text-light text-center">Total</th>
-                    <th scope="col" class="text-light text-center">Purpose</th>
-                    <th scope="col" class="text-light text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody id="listExpense">
-            </tbody>
-        </table>
+                    <thead class="table-info head-table text-center">
+                        <tr class="bg-primary">
+                            <th scope="col" class="text-light text-center">ID Employee</th>
+                            <th scope="col" class="text-light text-center">Name</th>
+                            <th scope="col" class="text-light text-center">Date Request</th>
+                            <th scope="col" class="text-light text-center">Total</th>
+                            <th scope="col" class="text-light text-center">Purpose</th>
+                            <th scope="col" class="text-light text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listExpense">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detail Employee-->
+    <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Expense Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="table col data-employ">
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
