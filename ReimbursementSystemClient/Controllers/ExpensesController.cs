@@ -84,7 +84,8 @@ namespace ReimbursementSystemClient.Controllers
         public JsonResult Submit(ExpenseVM entity)
         {
             var sessionId = HttpContext.Session.GetString("EmployeeId");
-            var result = expensesRepository.Submit(entity, sessionId);
+            var sessionEmail = HttpContext.Session.GetString("Email");
+            var result = expensesRepository.Submit(entity, sessionId, sessionEmail);
             return Json(result);
         }
 

@@ -41,11 +41,12 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
-        [HttpPut("ExpenseUpdate")]
-        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM)
+        [HttpPut("ExpenseUpdate/{email}")]
+        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, string email)
         {
             var result = expenseRepository.ExpenseFormUpdate(expenseVM);
-            switch (result)
+            var notif = expenseRepository.NotifRequest(email, expenseVM.ExpenseId);
+            switch (notif)
             {
                 case 1:
                     return Ok();

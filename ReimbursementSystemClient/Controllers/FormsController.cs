@@ -7,7 +7,9 @@ using ReimbursementSystemClient.Base.Controllers;
 using ReimbursementSystemClient.Repository.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
@@ -54,8 +56,7 @@ namespace ReimbursementSystemClient.Controllers
         }
 
         public IActionResult NewForm()
-        {
-            
+        { 
             var sessionData = HttpContext.Session.GetString("FormID");
 
             if (sessionData != null)
@@ -96,5 +97,22 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+
+        public async Task<IActionResult> Update(FormVM entity)
+        {
+
+            HttpClient client = new HttpClient();
+            var putStudentUrl = @"url";
+            byte[] data;
+            using (var br = new BinaryReader(entity.Attachments.OpenReadStream()))
+            {
+                data = br.ReadBytes((int)entity.Attachments.OpenReadStream().Length);
+            }
+            ByteArrayContent bytes = new ByteArrayContent(data);
+            MultipartFormDataContent multiContent = new MultipartFormDataContent();
+            multiContent.Add(bytes, "Attachments", entity.Attachments.FileName);
+            var response = await client.PutAsync(putStudentUrl, multiContent);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

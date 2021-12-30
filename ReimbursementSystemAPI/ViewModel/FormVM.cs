@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,8 +17,10 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Payee { get; set; }
         public string Description { get; set; }
         public float? Total { get; set; }
-        public string Attachments { get; set; }
+        
         public int ExpenseId { get; set; }
+
+        public IFormFile Attachments { get; set; }
 
         //add destination
     }

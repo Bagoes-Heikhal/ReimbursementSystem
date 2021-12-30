@@ -11,6 +11,39 @@
 //    }
 //})
 
+function SaveExit() {
+
+    //var GetImages = $('[name="file"]');
+    //console.log(GetImages[0].files[0])
+    var data = {
+        Receipt_Date : $("#Receipt_Date").val(),
+        Start_Date: $("#Start_Date").val(),
+        End_Date: $("#End_Date").val(),
+        Category: $("#Category").val(),
+        Payee: $("#Payee").val(),
+        Description: $("#Description").val(),
+        Total: $("#Total").val(),
+        //Attachments : GetImages[0].files[0]
+    };
+
+    console.log(data)
+
+    $.ajax({
+        url: "/Forms/InsertForm",
+        type: "Post",
+        'data': data,
+        'dataType': 'json',
+        //processData: false,
+        success: function (result) {
+            window.location.href = "/Reimbusments/Expense"
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+    return false;
+}
+
 function Update() {
     $.ajax({
         url: "/Forms/FormCall",
@@ -45,33 +78,6 @@ function Update() {
     })
 }
 
-function SaveExit() {
-    var obj = new Object();
-    obj.Receipt_Date = $("#Receipt_Date").val();
-    obj.Start_Date = $("#Start_Date").val();
-    obj.End_Date = $("#End_Date").val();
-    obj.Category = $("#Category").val();
-    obj.Payee = $("#Payee").val();
-    obj.Description = $("#Description").val();
-    obj.Total = $("#Total").val();
-    obj.Attachments = $("#Attachments").val();
-    console.log(obj)
-
-    $.ajax({
-        url: "/Forms/InsertForm",
-        type: "Post",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {
-            window.location.href = "/Reimbusments/Expense"
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-    return false;
-}
-
 function AddAnother() {
     var obj = new Object();
     obj.Receipt_Date = $("#Receipt_Date").val();
@@ -89,6 +95,8 @@ function AddAnother() {
         type: "Post",
         'data': obj,
         'dataType': 'json',
+        processData: false,
+        contentType: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Form"
         },
@@ -136,18 +144,31 @@ $(document).ready(function () {
             console.log(error)
         }
     })
+
+    var readURL = function (input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('.profile-image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    //$(".file-upload").on('change click', function (e) {
+    //    e.stopPropagation();
+    //    readURL(this);
+    //});
+
+    //$(".upload-button").on('click', function () {
+    //    $(".file-upload").click();
+    //});
 });
 
 function Category(selected) {
    
     $("#Category option").each(function (i) {
         if (i-1 == selected) {
-            //console.log(this.selected)
-            //console.log(this.value)
-            //console.log(this.text)
-            //$("#Category option[value= 3 ]").attr('selected', 'selected');
-
-            // Or just...
             $("#Category").val(i - 1).attr('selected', 'selected');
         }
     });
@@ -159,22 +180,5 @@ function dateInputConversion(dates) {
     console.log(newDate)
     return newDate
 }
-
-//var $j = jQuery.noConflict();
-
-//function picker() {
-//    $j("#datepicker").datepicker({
-//        autoclose: true,
-//        todayHighlight: true
-//    }).datepicker('update', new Date());
-//    $("#datepicker1").datepicker({
-//        autoclose: true,
-//        todayHighlight: true
-//    }).datepicker('update', new Date());
-//    $("#datepicker2").datepicker({
-//        autoclose: true,
-//        todayHighlight: true
-//    }).datepicker('update', new Date());
-//};
 
 

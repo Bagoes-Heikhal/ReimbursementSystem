@@ -78,11 +78,11 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
-        public HttpStatusCode Submit(ExpenseVM entity, string employeeId)
+        public HttpStatusCode Submit(ExpenseVM entity, string employeeId, string email)
         {
             entity.EmployeeId = employeeId;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + "ExpenseUpdate", content).Result;
+            var result = httpClient.PutAsync(request + "ExpenseUpdate/" + email, content).Result;
             return result.StatusCode;
         }
 

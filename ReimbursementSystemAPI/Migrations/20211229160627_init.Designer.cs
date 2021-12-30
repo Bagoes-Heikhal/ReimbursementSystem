@@ -10,8 +10,8 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211228041700_newDB")]
-    partial class newDB
+    [Migration("20211229160627_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,13 +106,18 @@ namespace ReimbursementSystemAPI.Migrations
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee_Attachment", b =>
                 {
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("STNK")
+                    b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EmployeeId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("tb_t_EmployeeAttachment");
                 });
@@ -169,6 +174,9 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Destination")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("End_Date")

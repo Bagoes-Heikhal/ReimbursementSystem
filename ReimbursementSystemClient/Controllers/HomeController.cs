@@ -31,6 +31,10 @@ namespace ReimbursementSystemClient.Controllers
         {
             return View();
         }
+        public IActionResult Upload()
+        {
+            return View();
+        }
 
         public IActionResult Login()
         {

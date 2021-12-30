@@ -24,13 +24,12 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Department> Departements { get; set; }
-        public DbSet<Employee_Attachment> Employee_Attachment { get; set; }
+        public DbSet<Employee_Attachment> Employee_Attachments { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Religion> Religions { get; set; }
-
         public DbSet<CategoryTable> Categories1 { get; set; }
         public DbSet<Type> Types { get; set; }
 
