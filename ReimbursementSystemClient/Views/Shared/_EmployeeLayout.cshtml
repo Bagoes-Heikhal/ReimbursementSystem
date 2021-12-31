@@ -30,7 +30,8 @@
 </head>
 
 <body>
-
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -162,6 +163,9 @@
                 </nav>
             </div>
         </div>
+        @{
+            var a = @HttpContextAccessor.HttpContext.Session.GetString("Role");
+        }
 
         <div class="quixnav">
             <div class="quixnav-scroll">
@@ -169,9 +173,26 @@
 
                     <li>
                         <a href="/Reimbusments/Reimbusment" aria-expanded="false">
-                            <i class="icon icon-single-04"></i><span class="nav-text">Users</span>
+                            <i class="icon icon-single-04"></i><span class="nav-text">Reimbursment Request</span>
                         </a>
                     </li>
+                    @if (a == "Manager")
+                    {
+                        <li>
+                            <a href="/Manager/Dashboard" aria-expanded="false">
+                                <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Manager</span>
+                            </a>
+                        </li>
+                    }
+                    @if (a == "Finance")
+                    {
+
+                        <li>
+                            <a href="/Finances/FDashboard" aria-expanded="false">
+                                <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Finance</span>
+                            </a>
+                        </li>
+                    }
 
 
                     @*<li>
@@ -218,16 +239,7 @@
 
                     </li>*@
 
-                    <li>
-                        <a href="/Manager/Dashboard" aria-expanded="false">
-                            <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Manager</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Finances/FDashboard" aria-expanded="false">
-                            <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Finance</span>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
 

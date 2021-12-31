@@ -45,14 +45,6 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public async Task<JsonResult> GetID()
-        //{
-        //    var sessionEmail = HttpContext.Session.GetString("Email");
-        //    var result = await expensesRepository.GetID(sessionEmail);
-        //    HttpContext.Session.SetString("ExpenseID", result.ExpenseID.ToString());
-        //    return Json(result);
-        //}
 
         [HttpGet]
         public async Task<JsonResult> GetExpense()
@@ -79,8 +71,7 @@ namespace ReimbursementSystemClient.Controllers
         public JsonResult Submit(ExpenseVM entity, int code)
         {
             var sessionId = HttpContext.Session.GetString("EmployeeId");
-            var sessionEmail = HttpContext.Session.GetString("Email");
-            var result = expensesRepository.Submit(entity, sessionId, sessionEmail, code);
+            var result = expensesRepository.Submit(entity, sessionId, code);
             return Json(result);
         }
 
@@ -116,15 +107,6 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpPut("ApprovalF/{code}/")]
-        public JsonResult PutF(ExpenseVM expenseVM, string Email, int Code)
-        {
-            var sessionId = HttpContext.Session.GetString("EmployeeId");
-            var sessionEmail = HttpContext.Session.GetString("Email");
-            var result = expensesRepository.ApprovalFinance(expenseVM, Email, Code);
-            return Json(result);
-        }
-
 
         //<!----------------- Manager ------------------->
 
@@ -142,17 +124,6 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpPut("Approval/{code}/")]
-        public JsonResult Put(ExpenseVM expenseVM, string Email, int Code)
-        {
-            var sessionId = HttpContext.Session.GetString("EmployeeId");
-            var sessionEmail = HttpContext.Session.GetString("Email");
-            var result = expensesRepository.ApprovalManager(expenseVM, Email, Code);
-            return Json(result);
-        }
-
-
-
         //<!----------------- Manager & Finances -------------------> 
 
         [HttpGet]
@@ -162,10 +133,11 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpPut]
-        public JsonResult NonSessionSubmit(ExpenseVM entity)
+        [Route("~/Expenses/Approval/{code}")]
+        public JsonResult Put(ExpenseVM expenseVM, int Code)
         {
-            var result = expensesRepository.NonSessionSubmit(entity);
+            var sessionId = HttpContext.Session.GetString("EmployeeId");
+            var result = expensesRepository.Approval(expenseVM, Code);
             return Json(result);
         }
 

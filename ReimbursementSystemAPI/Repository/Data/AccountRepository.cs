@@ -34,7 +34,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 employee.Salary = registerVM.Salary;
                 employee.Phone = registerVM.Phone;
                 //employee.DepartmentId = 1;
-                //employee.JobId = 1;
+                employee.JobId = registerVM.JobId;
                 //employee.ReligionId = 1;
             }
 

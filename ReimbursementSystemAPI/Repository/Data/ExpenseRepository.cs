@@ -66,7 +66,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { expenses = b }).Single();
 
             var expense = data.expenses;
-
             expense.Approver = expenseVM.Approver;
             expense.Purpose = expenseVM.Purpose;
             expense.Description = expenseVM.Description;
@@ -87,6 +86,18 @@ namespace ReimbursementSystemAPI.Repository.Data
                     break;
                 case 4:
                     expense.Status = Status.Draft;
+                    break;
+                case 5:
+                    expense.Status = Status.ApprovedByManager;
+                    break;
+                case 6:
+                    expense.Status = Status.ApprovedByFinance;
+                    break;
+                case 7:
+                    expense.Status = Status.RejectedByManager;
+                    break;
+                case 8:
+                    expense.Status = Status.RejectedByFinance;
                     break;
                 default:
                     break;
@@ -119,11 +130,12 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         public IEnumerable<ExpenseVM> GetExpense(string employeeid)
         {
-            var register = from a in context.Employees
-                           where a.EmployeeId == employeeid
+            var register = from a in context.Employees where a.EmployeeId == employeeid
                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                           join c in context.Departements on a.DepartmentId equals c.DepartmentId
                            select new ExpenseVM()
                            {
+                               Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName ).Single().ToString(),
                                DateTime = DateTime.Now,
                                ExpenseId = b.ExpenseId,
                                Purpose = b.Purpose,
@@ -133,6 +145,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Total = b.Total,
                                Description = b.Description,
                            };
+            var data = register.ToList();
             return register.ToList();
         }
 
@@ -261,52 +274,14 @@ namespace ReimbursementSystemAPI.Repository.Data
                           };
             return expense.ToList();
         }
-        public int NonSessionSubmit(ExpenseVM expenseVM)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseVM.ExpenseId
-                        select new { expenses = b }).Single();
-
-            var expense = data.expenses;
-
-            expense.Approver = expenseVM.Approver;
-            expense.Purpose = expenseVM.Purpose;
-            expense.Description = expenseVM.Description;
-            expense.Total = expenseVM.Total;
-            switch (expenseVM.Status)
-            {
-                case 0:
-                    expense.Status = Status.Approved;
-                    break;
-                case 1:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 2:
-                    expense.Status = Status.Canceled;
-                    break;
-                case 3:
-                    expense.Status = Status.Posted;
-                    break;
-                case 4:
-                    expense.Status = Status.Draft;
-                    break;
-                default:
-                    break;
-            }
-            expense.EmployeeId = expenseVM.EmployeeId;
-            var expensess = expense;
-            context.SaveChanges();
-            return 1;
-        }
 
 
         //<!-------------------- Notif ------------------------> 
-        public int NotifRequest(string email, int expenseid)
+        public int NotifRequest(int expenseid)
         {
-            var OlddPass = (from a in context.Employees
+            var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where a.Email == email && b.ExpenseId == expenseid
+                            where b.ExpenseId == expenseid
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
@@ -314,13 +289,13 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} <h1>");
 
-            if (OlddPass != null)
+            if (data != null)
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(email);
+                    mail.To.Add(data.Employee.Email);
                     mail.Subject = $"Reimbursment {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;
@@ -344,11 +319,11 @@ namespace ReimbursementSystemAPI.Repository.Data
 
 
         //<!----------------- Notif Finances -------------------> 
-        public int NotifApproveF(string email, int expenseid)
+        public int NotifApproveF(int expenseid)
         {
-            var OlddPass = (from a in context.Employees
+            var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where a.Email == email && b.ExpenseId == expenseid
+                            where b.ExpenseId == expenseid
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
@@ -356,13 +331,13 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} approved  <h1>");
 
-            if (OlddPass != null)
+            if (data != null)
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(email);
+                    mail.To.Add(data.Employee.Email);
                     mail.Subject = $"Finances Approve {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;
@@ -384,11 +359,11 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 3;
         }
 
-        public int NotifRejectF(string email, int expenseid)
+        public int NotifRejectF(int expenseid)
         {
-            var OlddPass = (from a in context.Employees
+            var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where a.Email == email && b.ExpenseId == expenseid
+                            where b.ExpenseId == expenseid
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
@@ -396,13 +371,13 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} Rejected<h1>");
 
-            if (OlddPass != null)
+            if (data != null)
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(email);
+                    mail.To.Add(data.Employee.Email);
                     mail.Subject = $"Reject Finances {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;
@@ -427,11 +402,11 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         //<!----------------- Notif Manager -------------------> 
 
-        public int NotifApproveM(string email, int expenseid)
+        public int NotifApproveM(int expenseid)
         {
-            var OlddPass = (from a in context.Employees
+            var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where a.Email == email && b.ExpenseId == expenseid
+                            where b.ExpenseId == expenseid
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
@@ -439,13 +414,13 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} approved  <h1>");
 
-            if (OlddPass != null)
+            if (data != null)
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(email);
+                    mail.To.Add(data.Employee.Email);
                     mail.Subject = $"Manager Approve {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;
@@ -505,13 +480,12 @@ namespace ReimbursementSystemAPI.Repository.Data
             context.SaveChanges();
             return 1;
         }
-    
 
-        public int NotifRejectM(string email, int expenseid)
+        public int NotifRejectM(int expenseid)
         {
-            var OlddPass = (from a in context.Employees
+            var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where a.Email == email && b.ExpenseId == expenseid
+                            where b.ExpenseId == expenseid
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
@@ -519,13 +493,13 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} Rejected<h1>");
 
-            if (OlddPass != null)
+            if (data != null)
             {
                 try
                 {
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(email);
+                    mail.To.Add(data.Employee.Email);
                     mail.Subject = $"Manager Reject {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;

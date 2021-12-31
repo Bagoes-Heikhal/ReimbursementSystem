@@ -21,25 +21,6 @@ namespace ReimbursementSystemAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_m_Employee",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NIK = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Salary = table.Column<float>(type: "real", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_m_Employee", x => x.EmployeeId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "tb_t_Department",
                 columns: table => new
                 {
@@ -127,6 +108,32 @@ namespace ReimbursementSystemAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "tb_m_Employee",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    NIK = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Salary = table.Column<float>(type: "real", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    JobId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_Employee", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_tb_m_Employee_tb_t_Job_JobId",
+                        column: x => x.JobId,
+                        principalTable: "tb_t_Job",
+                        principalColumn: "JobId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tb_m_Account",
                 columns: table => new
                 {
@@ -200,6 +207,11 @@ namespace ReimbursementSystemAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_tb_m_Employee_JobId",
+                table: "tb_m_Employee",
+                column: "JobId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tb_m_Expense_EmployeeId",
                 table: "tb_m_Expense",
                 column: "EmployeeId");
@@ -233,9 +245,6 @@ namespace ReimbursementSystemAPI.Migrations
                 name: "tb_t_EmployeeAttachment");
 
             migrationBuilder.DropTable(
-                name: "tb_t_Job");
-
-            migrationBuilder.DropTable(
                 name: "tb_t_Religion");
 
             migrationBuilder.DropTable(
@@ -249,6 +258,9 @@ namespace ReimbursementSystemAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_m_Employee");
+
+            migrationBuilder.DropTable(
+                name: "tb_t_Job");
         }
     }
 }

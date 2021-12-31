@@ -28,7 +28,7 @@ namespace ReimbursementSystemAPI.Models
         [Required, Index(IsUnique = true)]
         public string Phone { get; set; }
         public DateTime BirthDate { get; set; }
-        public float Salary { get; set; }
+        public float? Salary { get; set; }
 
         [Required, Index(IsUnique = true)]
         public string Email { get; set; }
@@ -43,13 +43,13 @@ namespace ReimbursementSystemAPI.Models
         //[JsonIgnore]
         //public virtual Employee_Attachment Employee_Attachments { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Department Departments { get; set; }
-        //public int DepartmentId { get; set; }
+        [JsonIgnore]
+        public virtual Department Departments { get; set; }
+        public int? DepartmentId { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Job Jobs { get; set; }
-        //public int JobId { get; set; }
+        [JsonIgnore]
+        public virtual Job Jobs { get; set; }
+        public int? JobId { get; set; }
 
         //[JsonIgnore]
         //public virtual Religion Religions { get; set; }

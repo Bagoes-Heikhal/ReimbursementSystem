@@ -156,7 +156,6 @@ function Submit() {
                 'success',    
             ).then((result2) => {
                 if (result2) {
-                    //need to close expense session first
                     window.location.href = "/Reimbusments/Reimbusment"
                 }
             })

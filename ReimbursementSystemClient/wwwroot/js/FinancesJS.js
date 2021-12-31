@@ -80,6 +80,31 @@ function dateConversion(dates) {
     return newDate
 }
 
+function getData(id) {
+    $.ajax({
+        url: "/Expenses/Get/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `<tr>
+                <td> Total </td>
+                <td> : </td>
+                <td> ${result.total}</td>
+                </tr>
+                <tr>
+                    <td> Description </td>
+                    <td> : </td>
+                    <td>${result.description}</td>
+                </tr>`
+            $(".data-employ").html(text);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
 function Reject(expenseid) {
     Swal.fire({
         title: 'Are you sure?',
@@ -106,7 +131,7 @@ function Reject(expenseid) {
                     obj.status = 8;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Put",
+                        url: "/Expenses/Approval/" + 3,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -123,31 +148,6 @@ function Reject(expenseid) {
                     console.log(error)
                 }
             })
-        }
-    })
-}
-
-function getData(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
-        },
-        error: function (error) {
-            console.log(error)
         }
     })
 }
@@ -169,7 +169,7 @@ function Approve(expenseid) {
             obj.status = 6;
             console.log(obj)
             $.ajax({
-                url: "/Expenses/Put",
+                url: "/Expenses/Approval/" + 4,
                 type: "Put",
                 'data': obj,
                 'dataType': 'json',
@@ -221,10 +221,23 @@ function RejectTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,
@@ -275,10 +288,23 @@ function RequestTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,
@@ -342,10 +368,23 @@ function AllTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,

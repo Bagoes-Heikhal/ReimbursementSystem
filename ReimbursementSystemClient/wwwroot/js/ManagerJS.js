@@ -46,7 +46,7 @@ $(document).ready(function () {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Reject('${row['expenseId']}')" data-placement="top" title="Delete">
@@ -72,7 +72,7 @@ function dateConversion(dates) {
 
 function getData(id) {
     $.ajax({
-        url: "/Expenses/GetExpenseModified/" + id,
+        url: "/Expenses/Get/" + id,
         data: "",
         success: function (result) {
             var text = ""
@@ -132,7 +132,7 @@ function Reject(expenseid) {
                     obj.status = 7;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Put/" + 1,
+                        url: "/Expenses/Approval/" + 1,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -170,7 +170,7 @@ function Approve(expenseid) {
             obj.status = 5;
             console.log(obj)
             $.ajax({
-                url: "/Expenses/Put/" + 2,
+                url: "/Expenses/Approval/" + 2,
                 type: "Put",
                 'data': obj,
                 'dataType': 'json',
@@ -222,10 +222,23 @@ function RejectTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,
@@ -274,10 +287,23 @@ function RequestTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,
@@ -341,10 +367,23 @@ function AllTable() {
                 }
             },
             {
-                "data": "total"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
             },
             {
-                "data": "purpose"
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["description"] == null) {
+                        return "No purpose"
+                    }
+                    return row["purpose"];
+                }
+
             },
             {
                 "data": null,
