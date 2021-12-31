@@ -30,6 +30,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                 expense.Approver = expenseVM.Approver;
                 expense.Description = expenseVM.Description;
                 expense.Total = expenseVM.Total;
+                expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
+
                 switch (expenseVM.Status)
                 {
                     case 1:
@@ -69,6 +71,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             expense.Approver = expenseVM.Approver;
             expense.CommentManager = expenseVM.CommentManager;
             expense.CommentFinace = expenseVM.CommentFinace;
+            expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
             expense.Purpose = expenseVM.Purpose;
             expense.Description = expenseVM.Description;
             expense.Total = expenseVM.Total;
@@ -137,8 +140,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                            join c in context.Departements on a.DepartmentId equals c.DepartmentId
                            select new ExpenseVM()
                            {
-                               Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName ).Single().ToString(),
-                               DateTime = DateTime.Now,
+                               Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName).Single().ToString(),
+                               Submitted = b.Submitted,
                                ExpenseId = b.ExpenseId,
                                Purpose = b.Purpose,
                                CommentFinace = b.CommentFinace,
@@ -149,32 +152,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                            };
             var data = register.ToList();
             return register.ToList();
-        }
-
-        public IEnumerable<ExpenseManager> GetExpenseModified(string employeeid)
-        {
-            var expense = from a in context.Employees
-                       
-                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where a.EmployeeId == employeeid && b.Status == Status.Posted
-                          select new ExpenseManager()
-                           {
-                               //DateTime = DateTime.Now,
-                               //ExpenseId = b.ExpenseId,
-                               //Status = 5,
-                               //Total = b.Total,
-                               //Description = b.Description,
-
-                               EmployeeId = b.EmployeeId,
-                               FirstName = a.FirstName,
-                               DateTime = DateTime.Now,
-                               Total = b.Total,
-                               Description = b.Description,
-
-
-
-                           };
-            return expense.ToList();
         }
 
         //<!----------------- Finances -------------------> 
@@ -276,8 +253,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                           };
             return expense.ToList();
         }
-
-
 
 
         //<!-------------------- Notif ------------------------> 

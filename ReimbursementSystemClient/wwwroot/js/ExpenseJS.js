@@ -1,13 +1,35 @@
 ﻿function InsertForm() {
+    var obj = new Object();
+    obj.expenseId = parseInt($(".expense-title span").text());
+    obj.purpose = $("#Purpose").val();
+    obj.description = $("#Description").val();
+    obj.total = $("#Total").val();
+    obj.status = 4;
     $.ajax({
-        url: "/Forms/NewForm/",
+        url: "/Expenses/Submit/" + 2,
+        type: "Put",
+        'data': obj,
+        'dataType': 'json',
         success: function (result) {
-            window.location.href = result;
+            $.ajax({
+                url: "/Forms/NewForm/",
+                success: function (result) {
+                    window.location.href = result;
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
         },
         error: function (error) {
-            console.log(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Submit Fail!'
+            })
         }
-    });
+    })
+    
 }
 
 $(document).ready(function () {

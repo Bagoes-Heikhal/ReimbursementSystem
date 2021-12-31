@@ -59,8 +59,6 @@ $(document).ready(function () {
                             </button>`;
                 }
             }
-
-
         ]
     });
 });
@@ -106,7 +104,7 @@ function getData2(id) {
             var text = ""
             text =
                 `
-                <div class="row">
+
                     <div class="form-group col-xl-6 col-sm-6">
                         <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
                     </div>
@@ -114,7 +112,7 @@ function getData2(id) {
                     <div class="form-group col-xl-6 col-sm-6">
                         <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
                     </div>
-                </div>
+
                 `
             $(".reject-modal").html(text);
             console.log(result)
@@ -140,7 +138,7 @@ function Reject() {
     var managercomment = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',
-        icon: 'warning',
+        type: "warning",
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -188,7 +186,7 @@ function Approve(expenseid) {
     swal({
         title: "Do you want to approvee this ??",
         text: "You can't revert this!!",
-        type: "input",
+        type: "info",
         showCancelButton: true,
         closeOnConfirm: false,
         animation: "slide-from-top",
@@ -357,7 +355,8 @@ function RequestTable() {
                             onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Reject('${row['expenseId']}')" data-placement="top" title="Delete">
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="far fa-times-circle"></i>
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 

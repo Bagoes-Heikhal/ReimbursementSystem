@@ -15,6 +15,7 @@ namespace ReimbursementSystemAPI.Models
         [Key]
         public int ExpenseId { get; set; }
         public Status Status { get; set; }
+        public DateTime? Submitted { get; set; }
         public string Approver { get; set; }
         public string Description { get; set; }
         public string CommentManager { get; set; }
