@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ReimbursementSystemClient.Controllers
 {
+    [Authorize(Roles = "Manager")]
     public class ManagerController : Controller
     {
         // GET: /<controller>/

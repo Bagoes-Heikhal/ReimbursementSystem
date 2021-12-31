@@ -1,5 +1,5 @@
 ﻿$.ajax({
-    url: "/Expenses/Get/" + 1,
+    url: "/Expenses/GetExpense",
     type: "Get",
     success: function (result) {
         console.log(result)

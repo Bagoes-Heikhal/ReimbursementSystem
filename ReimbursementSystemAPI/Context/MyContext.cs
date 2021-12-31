@@ -29,7 +29,6 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
-        public DbSet<Religion> Religions { get; set; }
         public DbSet<CategoryTable> Categories1 { get; set; }
         public DbSet<Type> Types { get; set; }
 
@@ -64,14 +63,14 @@ namespace ReimbursementSystemAPI.Models
                 .WithOne(c => c.Expenses);
 
             ////One to many
-            //modelBuilder.Entity<Department>()
-            //    .HasMany(c => c.Employees)
-            //    .WithOne(c => c.Departments);
+            modelBuilder.Entity<Department>()
+                .HasMany(c => c.Employees)
+                .WithOne(c => c.Departments);
 
-            ////One to many
-            //modelBuilder.Entity<Job>()
-            //    .HasMany(c => c.Employees)
-            //    .WithOne(c => c.Jobs);
+            //One to many
+            modelBuilder.Entity<Job>()
+                .HasMany(c => c.Employees)
+                .WithOne(c => c.Jobs);
 
             ////One to many
             //modelBuilder.Entity<Religion>()

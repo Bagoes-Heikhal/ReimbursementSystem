@@ -12,28 +12,21 @@
 //})
 
 function SaveExit() {
-
-    //var GetImages = $('[name="file"]');
-    //console.log(GetImages[0].files[0])
-    var data = {
-        Receipt_Date : $("#Receipt_Date").val(),
-        Start_Date: $("#Start_Date").val(),
-        End_Date: $("#End_Date").val(),
-        Category: $("#Category").val(),
-        Payee: $("#Payee").val(),
-        Description: $("#Description").val(),
-        Total: $("#Total").val(),
-        //Attachments : GetImages[0].files[0]
-    };
-
-    console.log(data)
+    var obj = new Object();
+    obj.Receipt_Date = $("#Receipt_Date").val();
+    obj.Start_Date = $("#Start_Date").val();
+    obj.End_Date = $("#End_Date").val();
+    obj.Category = $("#Category").val();
+    obj.Payee = $("#Payee").val();
+    obj.Description = $("#Description").val();
+    obj.Total = $("#Total").val();
+    console.log(obj)
 
     $.ajax({
         url: "/Forms/InsertForm",
         type: "Post",
-        'data': data,
+        'data': obj,
         'dataType': 'json',
-        processData: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Expense"
         },
@@ -46,7 +39,7 @@ function SaveExit() {
 
 //function SaveExit() {
 //    var formData = new FormData();
-//    //formData.append("Total", $("#Total").val());
+//    formData.append("Total", $("#Total").val());
 //    formData.append("Attachments", $('[name="file"]')[0].files[0]);
 
 //    $.ajax({
@@ -196,6 +189,9 @@ function Category(selected) {
 }
 
 function dateInputConversion(dates) {
+    if (dates == null) {
+        return null
+    }
     var date = new Date(dates)
     var newDate = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()))
     console.log(newDate)

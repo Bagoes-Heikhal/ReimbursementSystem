@@ -42,18 +42,20 @@ namespace ReimbursementSystemAPI.Controllers
                     var getUserData = (from a in context.Employees
                                        where a.Email == loginVM.Email
                                        join b in context.Accounts on a.EmployeeId equals b.EmployeeId
-                                       //join c in context.Roles on b.RoleId equals c.RoleId
+                                       join c in context.Jobs on a.JobId equals c.JobId
                                        select new
                                        {
                                            Email = a.Email,
-                                           Id = a.EmployeeId
+                                           Id = a.EmployeeId,
+                                           Role = c.Name
                                        }).ToList();
 
                     var claims = new List<Claim>
                     {
                         new Claim(JwtRegisteredClaimNames.Email, getUserData[0].Email),
                         new Claim(JwtRegisteredClaimNames.NameId, getUserData[0].Id),
-                        //new Claim(ClaimTypes.Role, getUserData[0].Role)
+                        new Claim(JwtRegisteredClaimNames.UniqueName, getUserData[0].Role),
+                        new Claim(ClaimTypes.Role, getUserData[0].Role)
                     };
 
 
