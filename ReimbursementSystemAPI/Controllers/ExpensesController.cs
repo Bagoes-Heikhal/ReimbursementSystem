@@ -71,18 +71,6 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("ExpenseDataa/{employeeid}")]
-        public ActionResult GetExpenseModified(string employeeid)
-        {
-            var result = expenseRepository.GetExpenseModified(employeeid);
-
-            if (result.Count() != 0)
-            {
-                return Ok(result);
-            }
-            return NotFound(result);
-        }
-
         [HttpGet("GetID/{email}")]
         public ActionResult ExpesnseID(string email)
         {

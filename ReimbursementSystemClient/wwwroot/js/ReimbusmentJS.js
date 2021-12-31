@@ -31,6 +31,7 @@ function InsertExpense() {
 }
 
 $(document).ready(function () {
+
     table = $("#Expense-table").DataTable({
         "processing": true,
         "responsive": true,
@@ -45,7 +46,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["submitted"]);
                 }
             },
             {
@@ -75,45 +76,32 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    switch (row["status"]) {
-                        case 0:
-                            return "Approved";
-                        case 1:
-                            return "Rejected";
-                        case 2:
-                            return "Canceled";
-                        case 3:
-                            return "Posted";
-                        case 4:
-                            return "Draft";
-                        case 5:
-                            return "Approved By Manager";
-                        case 6:
-                            return "Approved By Finance";
-                        case 7:
-                            return "Rejected By Manager";
-                        case 8:
-                            return "Rejected By Finance";
-                        default:
-                            return "Draft";
-                            break;
-                    }
+                    return status(row["status"])
                 }
             },
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                    onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                    <i class="fas fa-info-circle"></i> 
-                    </button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
-                    <i class="fas fa-trash-alt"></i> 
-                    </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" 
-                    onclick="EditExpense('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
-                    <i class="fas fa-edit"></i>
-                    </button>`;
+                    var draft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            <i class="fas fa-info-circle"></i> 
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
+                            <i class="far fa-times-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            onclick="Approve('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
+                            <i class="far fa-check-circle"></i>
+                            </button>`
+                    var nondraft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            <i class="fas fa-info-circle"></i> `
+                    if (row["status"] != 4) {
+                        return nondraft
+                    } else {
+                        return draft
+                    }
                 }
             }
         ],
@@ -224,4 +212,30 @@ function EditExpense(expenseid) {
             console.log(error)
         }
     })
+}
+
+function status(stat) {
+    switch (stat) {
+        case 0:
+            return "Approved";
+        case 1:
+            return "Rejected";
+        case 2:
+            return "Canceled";
+        case 3:
+            return "Posted";
+        case 4:
+            return "Draft";
+        case 5:
+            return "Approved By Manager";
+        case 6:
+            return "Approved By Finance";
+        case 7:
+            return "Rejected By Manager";
+        case 8:
+            return "Rejected By Finance";
+        default:
+            return "Draft";
+            break;
+    }
 }

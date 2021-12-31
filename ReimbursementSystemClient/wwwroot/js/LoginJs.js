@@ -11,12 +11,12 @@ function Login() {
             dataType: 'json',
             data: obj,
             success: function (result) {
-                console.log(result)
                 window.location.href = result;
+ 
             },
             error: function (error) {
                 Swal.fire({
-                    icon: 'error',
+                    type: "error",
                     title: 'Oops...',
                     text: 'login Fail!'
                 })

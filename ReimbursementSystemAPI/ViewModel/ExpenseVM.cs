@@ -8,7 +8,7 @@ namespace ReimbursementSystemAPI.ViewModel
     public class ExpenseVM
     {
         public int ExpenseId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime? Submitted { get; set; }
         public int Status { get; set; }
         public string Approver { get; set; }
         public string Description { get; set; }
