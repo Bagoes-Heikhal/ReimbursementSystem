@@ -29,7 +29,6 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Role> Roles { get; set; }
         public DbSet<Form> Forms { get; set; }
         public DbSet<Job> Jobs { get; set; }
-        public DbSet<Religion> Religions { get; set; }
         public DbSet<CategoryTable> Categories1 { get; set; }
         public DbSet<Type> Types { get; set; }
 

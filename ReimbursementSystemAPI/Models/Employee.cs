@@ -51,9 +51,6 @@ namespace ReimbursementSystemAPI.Models
         public virtual Job Jobs { get; set; }
         public int? JobId { get; set; }
 
-        //[JsonIgnore]
-        //public virtual Religion Religions { get; set; }
-        //public int ReligionId { get; set; }
     }
 
     public enum Gender

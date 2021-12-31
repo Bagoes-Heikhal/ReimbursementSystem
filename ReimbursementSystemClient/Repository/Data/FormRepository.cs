@@ -48,8 +48,8 @@ namespace ReimbursementSystemClient.Repository.Data
         public HttpStatusCode InsertForm(FormVM entity, string expenseid)
         {
             entity.ExpenseId = Int32.Parse(expenseid);
-            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "multipart/form-data");
-            var result = httpClient.PostAsync(address.link + request + "FormInsert", content).Result;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+            var result = httpClient.PostAsync(address.link + request + "InsertForm", content).Result;
             return result.StatusCode;
         }
 

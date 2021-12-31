@@ -67,6 +67,8 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             var expense = data.expenses;
             expense.Approver = expenseVM.Approver;
+            expense.CommentManager = expenseVM.CommentManager;
+            expense.CommentFinace = expenseVM.CommentFinace;
             expense.Purpose = expenseVM.Purpose;
             expense.Description = expenseVM.Description;
             expense.Total = expenseVM.Total;
@@ -276,6 +278,8 @@ namespace ReimbursementSystemAPI.Repository.Data
         }
 
 
+
+
         //<!-------------------- Notif ------------------------> 
         public int NotifRequest(int expenseid)
         {
@@ -370,6 +374,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Reimbursment Have been rejected by Finances<p>");
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} Rejected<h1>");
+            sb.Append($"<p> # message : {data.Expense.CommentFinace} Rejected<p>");
 
             if (data != null)
             {
@@ -491,7 +496,8 @@ namespace ReimbursementSystemAPI.Repository.Data
             StringBuilder sb = new StringBuilder();
             sb.Append("<p> Your Reimbursment Have been rejected by Manager<p>");
             sb.Append("<p> Your Request Id is  <p>");
-            sb.Append($"<h1> # {expenseid} Rejected<h1>");
+            sb.Append($"<h1> # {expenseid} Rejected <h1>");
+            sb.Append($"<p> # message : {data.Expense.CommentManager} Rejected<p>");
 
             if (data != null)
             {

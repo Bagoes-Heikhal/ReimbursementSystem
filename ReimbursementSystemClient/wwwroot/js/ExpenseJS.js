@@ -17,6 +17,17 @@ $(document).ready(function () {
             console.log(result)
             $(".expense-title span").html(result);
 
+            $.ajax({
+                url: "/Expenses/GetExpense",
+                type: "Get",
+                success: function (result) {
+                    $("#Approver").html(result[0].approver)
+                },
+                error: function (error) {
+                    $("#Approver").html("Please Contact admin if you dont see approver name")
+                }
+            })
+
             table = $("#Formtable").DataTable({
                 responsive: true,
                 "ajax": {
@@ -50,15 +61,6 @@ $(document).ready(function () {
                                     return "~Empty~";
                                     break;
                             }
-                        }
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, row) {
-                            if (row["type"] == null) {
-                                return "~Empty~"
-                            }
-                            return row["type"];
                         }
                     },
                     {
@@ -112,6 +114,8 @@ $(document).ready(function () {
                 type: "Get",
                 data: "",
                 success: function (result) {
+                    console.log(result)
+                    $("#Status").html(status(result.status))
                     $("#Description").html(result.description)
                     $("#Purpose").attr("value", result.purpose)
                 },
@@ -292,3 +296,28 @@ function EditForm(formid) {
 ////    }
 ////})
 
+function status(stat) {
+    switch (stat) {
+        case 0:
+            return "Approved";
+        case 1:
+            return "Rejected";
+        case 2:
+            return "Canceled";
+        case 3:
+            return "Posted";
+        case 4:
+            return "Draft";
+        case 5:
+            return "Approved By Manager";
+        case 6:
+            return "Approved By Finance";
+        case 7:
+            return "Rejected By Manager";
+        case 8:
+            return "Rejected By Finance";
+        default:
+            return "Draft";
+            break;
+    }
+}

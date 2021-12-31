@@ -28,7 +28,7 @@ namespace ReimbursementSystemAPI.Controllers
             this.context = context;
         }
 
-        [HttpPost("FormInsert")]
+        [HttpPost("InsertForm")]
         public ActionResult NewForm(FormVM fromVM)
         {
             var result = formRepository.NewForm(fromVM);
@@ -77,7 +77,6 @@ namespace ReimbursementSystemAPI.Controllers
                     return BadRequest();
             }
         }
-
        
 
         //[HttpGet("GetFormID/{email}/{expenseid}")]

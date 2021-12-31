@@ -49,7 +49,8 @@ $(document).ready(function () {
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Reject('${row['expenseId']}')" data-placement="top" title="Delete">
+                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="far fa-times-circle"></i>
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 
@@ -96,6 +97,34 @@ function getData(id) {
     })
 }
 
+function getData2(id) {
+    $('textarea#managercomment').val('')
+    $.ajax({
+        url: "/Expenses/Get/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `
+                <div class="row">
+                    <div class="form-group col-xl-6 col-sm-6">
+                        <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
+                    </div>
+
+                    <div class="form-group col-xl-6 col-sm-6">
+                        <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                    </div>
+                </div>
+                `
+            $(".reject-modal").html(text);
+            console.log(result)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
 $.ajax({
     "url": "/Expenses/GetAll",
     success: function (result) {
@@ -106,7 +135,9 @@ $.ajax({
     }
 })
 
-function Reject(expenseid) {
+function Reject() {
+    var expenseid = parseInt($('#expenseId').text())
+    var managercomment = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',
         icon: 'warning',
@@ -123,7 +154,7 @@ function Reject(expenseid) {
                     var obj = new Object();
                     obj.expenseId = expenseid;
                     obj.approver = result2.approver;
-                    obj.commentManager = result2.commentManager;
+                    obj.commentManager = managercomment;
                     obj.commentFinace = result2.commentFinace;
                     obj.purpose = result2.purpose;
                     obj.description = result2.description;
@@ -133,6 +164,55 @@ function Reject(expenseid) {
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Approval/" + 1,
+                        type: "Put",
+                        'data': obj,
+                        'dataType': 'json',
+                        success: function (result2) {
+                            table.ajax.reload();
+                            $("#exampleModal").modal('hide');
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+    })
+}
+
+function Approve(expenseid) {
+    swal({
+        title: "Do you want to approvee this ??",
+        text: "You can't revert this!!",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Write something"
+    }).then((result) => {
+        console.log(result)
+        if (result.value) {
+            $.ajax({
+                url: "/Expenses/Get/" + expenseid,
+                type: "Get",
+                success: function (result) {
+                    var obj = new Object();
+                    obj.expenseId = expenseid;
+                    obj.approver = result.approver;
+                    obj.commentManager = result.commentManager;
+                    obj.commentFinace = result.commentFinace;
+                    obj.purpose = result.purpose;
+                    obj.description = result.description;
+                    obj.total = result.total;
+                    obj.employeeId = result.employeeId;
+                    obj.status = 5;
+                    console.log(obj)
+                    $.ajax({
+                        url: "/Expenses/Approval/" + 2,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -151,42 +231,7 @@ function Reject(expenseid) {
             })
         }
     })
-}
 
-function Approve(expenseid) {
-    $.ajax({
-        url: "/Expenses/Get/" + expenseid,
-        type: "Get",
-        success: function (result) {
-            var obj = new Object();
-            obj.expenseId = expenseid;
-            obj.approver = result.approver;
-            obj.commentManager = result.commentManager;
-            obj.commentFinace = result.commentFinace;
-            obj.purpose = result.purpose;
-            obj.description = result.description;
-            obj.total = result.total;
-            obj.employeeId = result.employeeId;
-            obj.status = 5;
-            console.log(obj)
-            $.ajax({
-                url: "/Expenses/Approval/" + 2,
-                type: "Put",
-                'data': obj,
-                'dataType': 'json',
-                success: function (result2) {
-                    table.ajax.reload();
-                    console.log(result2);
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
 }
 
 function RejectTable() {
