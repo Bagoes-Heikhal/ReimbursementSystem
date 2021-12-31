@@ -16,7 +16,7 @@ namespace ReimbursementSystemAPI.Models
 
         public string Name { get; set; }
 
-        //[JsonIgnore]
-        //public virtual ICollection<Employee> Employees { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

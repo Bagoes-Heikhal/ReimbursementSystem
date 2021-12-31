@@ -10,7 +10,7 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211230034530_init")]
+    [Migration("20211230233809_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,9 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -100,6 +103,8 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("JobId");
 
                     b.ToTable("tb_m_Employee");
                 });
@@ -286,6 +291,17 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Employee", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Job", "Jobs")
+                        .WithMany("Employees")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Jobs");
+                });
+
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
                 {
                     b.HasOne("ReimbursementSystemAPI.Models.Employee", "Employees")
@@ -325,6 +341,11 @@ namespace ReimbursementSystemAPI.Migrations
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
                 {
                     b.Navigation("Forms");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.Job", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

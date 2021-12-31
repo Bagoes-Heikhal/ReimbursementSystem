@@ -41,20 +41,21 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
-        [HttpPut("ExpenseUpdate/{email}/{code}")]
-        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, string email, int code)
+        [HttpPut("ExpenseUpdate/{code}")]
+        public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, int code)
         {
-            if (code == 1)
-            {
-                expenseRepository.NotifRequest(email, expenseVM.ExpenseId);
-            }  
             var result = expenseRepository.ExpenseFormUpdate(expenseVM);
-            switch (result)
+            if (result == 1)
             {
-                case 1:
-                    return Ok();
-                default:
-                    return BadRequest();
+                if (code == 1)
+                {
+                    expenseRepository.NotifRequest(expenseVM.ExpenseId);
+                }
+                return Ok(result);
+            }
+            else
+            {
+                return BadRequest(result);
             }
         }
 
@@ -121,23 +122,37 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpPut("ApprovalF/{Email}/{code}")]
-        public ActionResult ApprovalF(ExpenseVM expenseVM, string email, int code)
+        [HttpPut("Approval/{code}")]
+        public ActionResult Approval(ExpenseVM expenseVM, int code)
         {
-            var result = expenseRepository.NotifApproveF(email, expenseVM.ExpenseId);
-            if (code == 1)
+
+            var result = expenseRepository.ExpenseFormUpdate(expenseVM);
+            if(result == 1)
             {
-                expenseRepository.NotifRejectF(email, expenseVM.ExpenseId);
-            }
-            else if (code == 2)
-            {
-                expenseRepository.NotifApproveF(email, expenseVM.ExpenseId);
+                switch (code)
+                {
+                    case 1:
+                        expenseRepository.NotifRejectM(expenseVM.ExpenseId);
+                        break;
+                    case 2:
+                        expenseRepository.NotifApproveM(expenseVM.ExpenseId);
+                        break;
+                    case 3:
+                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        break;
+                    case 4:
+                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        break;
+                    default:
+                        break;
+                }
+                return Ok(result);
             }
             else
             {
-                return Ok(result);
+                return NotFound(result);
             }
-            return NotFound(result);
+            
         }
 
 
@@ -155,29 +170,12 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("ExpenseDataManagerReject")]
+        [HttpGet("GetExpenseManagerReject")]
         public ActionResult GetExpenseManagerReject()
         {
             var result = expenseRepository.GetExpenseManagerReject();
 
             if (result.Count() != 0)
-            {
-                return Ok(result);
-            }
-            return NotFound(result);
-        }
-
-        [HttpPut("Approval/{Email}/{code}")]
-        public ActionResult Approval(ExpenseVM expenseVM, string email, int code)
-        {
-            var result = expenseRepository.NotifApproveM(email, expenseVM.ExpenseId);
-            if (code == 1)
-            {
-                expenseRepository.NotifRejectM(email, expenseVM.ExpenseId);
-            } else if (code == 2)
-            {
-                expenseRepository.NotifApproveM(email, expenseVM.ExpenseId);
-            } else
             {
                 return Ok(result);
             }
@@ -199,17 +197,5 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpPut("ExpenseUpdateNonSession")]
-        public ActionResult NonSessionSubmit(ExpenseVM expenseVM)
-        {
-            var result = expenseRepository.NonSessionSubmit(expenseVM);
-            switch (result)
-            {
-                case 1:
-                    return Ok();
-                default:
-                    return BadRequest();
-            }
-        }
     }
 }

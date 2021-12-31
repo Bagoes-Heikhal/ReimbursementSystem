@@ -42,7 +42,6 @@ namespace ReimbursementSystemAPI
             services.AddScoped<ExpenseRepository>();
             services.AddScoped<FormRepository>();
             services.AddScoped<JobRepository>();
-            services.AddScoped<ReligionRepository>();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("APIContext")));
             services.AddSwaggerGen(c =>
             {

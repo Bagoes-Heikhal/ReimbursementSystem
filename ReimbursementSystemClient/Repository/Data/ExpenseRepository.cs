@@ -65,11 +65,11 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
-        public HttpStatusCode Submit(ExpenseVM entity, string employeeId, string email, int code)
+        public HttpStatusCode Submit(ExpenseVM entity, string employeeId, int code)
         {
             entity.EmployeeId = employeeId;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + "ExpenseUpdate/" + email + "/" + code, content).Result;
+            var result = httpClient.PutAsync(request + "ExpenseUpdate/" + code, content).Result;
             return result.StatusCode;
         }
 
@@ -127,7 +127,7 @@ namespace ReimbursementSystemClient.Repository.Data
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
 
-            using (var response = await httpClient.GetAsync(request + "ExpenseDataManagerReject/"))
+            using (var response = await httpClient.GetAsync(request + "GetExpenseManagerReject"))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
@@ -136,10 +136,10 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        public HttpStatusCode ApprovalManager(ExpenseVM entity, string email, int code)
+        public HttpStatusCode Approval(ExpenseVM entity, int code)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + "Approval/" + email + "/" + code, content).Result;
+            var result = httpClient.PutAsync(request + "Approval/" + code, content).Result;
             return result.StatusCode;
         }
 
@@ -159,11 +159,5 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        public HttpStatusCode NonSessionSubmit(ExpenseVM entity)
-        {
-            StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            var result = httpClient.PutAsync(request + "ExpenseUpdateNonSession", content).Result;
-            return result.StatusCode;
-        }
     }
 }
