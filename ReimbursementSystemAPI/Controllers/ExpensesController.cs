@@ -129,7 +129,7 @@ namespace ReimbursementSystemAPI.Controllers
                         expenseRepository.NotifRejectF(expenseVM.ExpenseId);
                         break;
                     case 4:
-                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
                         break;
                     default:
                         break;
