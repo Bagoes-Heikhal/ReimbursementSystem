@@ -6,13 +6,24 @@
             <th scope="col" class="text-light text-center status">Action</th>`
 }
 
+$.ajax({
+    "url": "/Expenses/GetExpenseSManager",
+    success: function (result) {
+        console.log(result)
+    },
+    error: function (error) {
+        console.log(error)
+    }
+})
+
+
 $(document).ready(function () {
-   
+
     table = $("#tabelExpense").DataTable({
         "processing": true,
         "responsive": true,
         "ajax": {
-            "url": "/Expenses/GetExpenseManager",
+            "url": "/Expenses/GetExpenseSManager",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -121,15 +132,7 @@ function getData2(id) {
     })
 }
 
-$.ajax({
-    "url": "/Expenses/GetAll",
-    success: function (result) {
-        console.log(result)
-    },
-    error: function (error) {
-        console.log(error)
-    }
-})
+
 
 function Reject() {
     var expenseid = parseInt($('#expenseId').text())
@@ -182,7 +185,7 @@ function Reject() {
             $.LoadingOverlay("hide");
         }, 3000);
     })
-    
+
 }
 
 function Approve(expenseid) {

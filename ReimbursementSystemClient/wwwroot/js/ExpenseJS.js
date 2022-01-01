@@ -194,6 +194,10 @@ function Submit() {
             })
         }
     })
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        $.LoadingOverlay("hide");
+    }, 3000);
 }
 
 function SaveExit() {

@@ -123,6 +123,30 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
+        public async Task<List<ExpenseManager>> GetExpenseSManager()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataSManager/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+            }
+            return entitiesNew;
+        }
+
+        public async Task<List<ExpenseManager>> GetExpenseDirector()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataDirector/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+            }
+            return entitiesNew;
+        }
+
         public async Task<List<ExpenseManager>> GetExpenseManagerReject()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
