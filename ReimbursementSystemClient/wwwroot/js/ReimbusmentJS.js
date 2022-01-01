@@ -86,17 +86,17 @@ $(document).ready(function () {
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
-                            <i class="far fa-times-circle"></i>
+                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" 
-                            onclick="Approve('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
-                            <i class="far fa-check-circle"></i>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Edit" >
+                            <i class="fas fa-edit"></i>
                             </button>`
                     var nondraft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> `
+                            <i class="fas fa-info-circle"></i>
+                            </button> `
                     if (row["status"] != 4) {
                         return nondraft
                     } else {
@@ -148,28 +148,6 @@ function Delete(id) {
                     alert("Delete Fail");
                 }
             });
-        }
-    })
-}
-
-function getDataUpdate(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        type: "Get",
-        success: function (result) {
-            console.log(result)
-            /*var data = result*/
-            //$("#updatenik").attr("value", data.nik)
-            //$("#updatefirstName").attr("value", data.firstName)
-            //$("#updatelastName").attr("value", data.lastName)
-            //$("#updateemail").attr("value", data.email)
-            //$("#updatephone").attr("value", data.phone)
-            //$("#updatesalary").attr("value", data.salary)
-            //$("#updatedateBirth").attr("value", data.birthDate)
-            //$("#updategender").attr("value", data.gender)
-        },
-        error: function (error) {
-            console.log(error)
         }
     })
 }

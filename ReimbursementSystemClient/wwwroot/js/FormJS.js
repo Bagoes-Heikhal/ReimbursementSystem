@@ -1,15 +1,23 @@
-﻿//$.ajax({
-//    url: "/Form/InsertForm",
-//    type: "Post",
-//    'data': obj,
-//    'dataType': 'json',
-//    success: function (result) {
-//        console.log(result)
-//    },
-//    error: function (error) {
-//        console.log(error)
-//    }
-//})
+﻿function ValidateEmployee(int) {
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            if (form.checkValidity() === true) {
+                if (int == 1) {
+                    SaveExit()
+                } else if (int == 2) {
+                    AddAnother()
+                }
+            }
+            else {
+                form.classList.add('was-validated');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        })
+}
 
 function SaveExit() {
     var obj = new Object();
@@ -109,8 +117,6 @@ function AddAnother() {
         type: "Post",
         'data': obj,
         'dataType': 'json',
-        processData: false,
-        contentType: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Form"
         },
