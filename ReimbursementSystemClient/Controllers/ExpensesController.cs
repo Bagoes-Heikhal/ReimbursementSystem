@@ -118,6 +118,20 @@ namespace ReimbursementSystemClient.Controllers
         }
 
         [HttpGet]
+        public async Task<JsonResult> GetExpenseSManager()
+        {
+            var result = await expensesRepository.GetExpenseSManager();
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseDirector()
+        {
+            var result = await expensesRepository.GetExpenseDirector();
+            return Json(result);
+        }
+
+        [HttpGet]
         public async Task<JsonResult> GetExpenseManagerReject()
         {
             var result = await expensesRepository.GetExpenseManagerReject();

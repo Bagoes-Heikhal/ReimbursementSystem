@@ -64,7 +64,7 @@ $(document).ready(function () {
                             <i class="far fa-times-circle"></i>
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 
-                            onclick="Approve('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
+                            onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="far fa-check-circle"></i>
                             </button>`;
                 }
@@ -115,11 +115,11 @@ function getData2(id) {
             var text = ""
             text =
                 `
-                    <div class="form-group col-xl-12">
+                    <div class="form-group col-xl-6 col-sm-6">
                         <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
                     </div>
 
-                    <div class="form-group col-xl-12">
+                    <div class="form-group col-xl-6 col-sm-6">
                         <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
                     </div>
                 `
@@ -131,7 +131,6 @@ function getData2(id) {
         }
     })
 }
-
 
 function Reject() {
     var expenseid = parseInt($('#expenseId').text())
@@ -178,12 +177,13 @@ function Reject() {
                     console.log(error)
                 }
             })
+            $.LoadingOverlay("show");
+            setTimeout(function () {
+                $.LoadingOverlay("hide");
+            }, 3000);
         }
     })
-    $.LoadingOverlay("show");
-    setTimeout(function () {
-        $.LoadingOverlay("hide");
-    }, 3000);
+   
 }
 
 function Approve(expenseid) {
@@ -232,12 +232,11 @@ function Approve(expenseid) {
                 }
             })
         }
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+        }, 3000);
     })
-
-    $.LoadingOverlay("show");
-    setTimeout(function () {
-        $.LoadingOverlay("hide");
-    }, 3000);
 }
 
 function RejectTable() {
@@ -370,7 +369,7 @@ function RequestTable() {
                             <i class="far fa-times-circle"></i>
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 
-                            onclick="Approve('${row['expenseId']}')" title="Edit" data-target="#UpdateModals">
+                            onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="far fa-check-circle"></i>
                             </button>`;
                 }

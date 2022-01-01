@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,SuperManager,Director")]
     public class ManagerController : Controller
     {
         // GET: /<controller>/
@@ -18,12 +18,12 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
-        public IActionResult Dashboard2()
+        public IActionResult DDashboard()
         {
             return View();
         }
 
-        public IActionResult Dashboard3()
+        public IActionResult SMDashboard()
         {
             return View();
         }

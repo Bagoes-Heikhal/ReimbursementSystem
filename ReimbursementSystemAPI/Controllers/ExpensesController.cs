@@ -158,6 +158,30 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet("ExpenseDataSManager")]
+        public ActionResult GetExpenseSManager()
+        {
+            var result = expenseRepository.GetExpenseSManager();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
+        [HttpGet("ExpenseDataDirector")]
+        public ActionResult GetExpenseDirector()
+        {
+            var result = expenseRepository.GetExpenseDirector();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
         [HttpGet("GetExpenseManagerReject")]
         public ActionResult GetExpenseManagerReject()
         {

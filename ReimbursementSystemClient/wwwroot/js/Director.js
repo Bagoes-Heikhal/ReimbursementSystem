@@ -7,12 +7,12 @@
 }
 
 $(document).ready(function () {
-   
+
     table = $("#tabelExpense").DataTable({
         "processing": true,
         "responsive": true,
         "ajax": {
-            "url": "/Expenses/GetExpenseManager",
+            "url": "/Expenses/GetExpenseDirector",
             "type": "GET",
             "datatype": "json",
             dataSrc: ""
@@ -182,7 +182,7 @@ function Reject() {
             $.LoadingOverlay("hide");
         }, 3000);
     })
-    
+
 }
 
 function Approve(expenseid) {

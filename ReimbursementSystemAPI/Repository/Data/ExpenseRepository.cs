@@ -213,6 +213,45 @@ namespace ReimbursementSystemAPI.Repository.Data
                           };
             return expense.ToList();
         }
+
+        public IEnumerable<ExpenseManager> GetExpenseSManager()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.OnManager2
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+
+        public IEnumerable<ExpenseManager> GetExpenseDirector()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.OnManager3
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              DateTime = DateTime.Now,
+                              Total = b.Total,
+                              Description = b.Description,
+                              Purpose = b.Purpose
+                          };
+            return expense.ToList();
+        }
+
         public IEnumerable<ExpenseManager> GetExpenseManagerReject()
         {
             var expense = from a in context.Employees
