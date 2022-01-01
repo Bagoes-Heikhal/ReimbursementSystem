@@ -208,6 +208,12 @@ function Approve(expenseid) {
                     obj.total = result.total;
                     obj.employeeId = result.employeeId;
                     obj.status = 5;
+                    if (result.total > 5000000) {
+                        obj.status = 9;
+                    } else if (result.total > 1000000) {
+
+                    }
+                    
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Approval/" + 2,
