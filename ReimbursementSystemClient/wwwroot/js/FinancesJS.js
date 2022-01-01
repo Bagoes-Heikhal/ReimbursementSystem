@@ -180,6 +180,10 @@ function Reject() {
             })
         }
     })
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        $.LoadingOverlay("hide");
+    }, 3000);
 }
 
 function Approve(expenseid) {
@@ -229,7 +233,11 @@ function Approve(expenseid) {
             })
         }
     })
-    
+
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        $.LoadingOverlay("hide");
+    }, 3000);
 }
 
 function RejectTable() {
