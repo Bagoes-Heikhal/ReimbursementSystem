@@ -4,7 +4,8 @@ function Login() {
     var obj = new Object();
         obj.email = $("#email").val(),
         obj.password = $("#password").val(),
-        console.log(obj),
+            console.log(obj),
+      
         $.ajax({
             type: "POST",
             url: "/Accounts/Auth",
@@ -21,7 +22,17 @@ function Login() {
                     text: 'login Fail!'
                 })
             }
+             
         })
+    $.LoadingOverlay("show");
+    setTimeout(function () {
+        $.LoadingOverlay("hide");
+    }, 3000);
 }
 
+// Show full page LoadingOverlay
+
+
+
+// Hide it after 3 seconds
 
