@@ -1,12 +1,4 @@
-﻿function column() {
-    return `<th scope="col" class="text-light text-center">Name</th>
-            <th scope="col" class="text-light text-center">Date Request</th>
-            <th scope="col" class="text-light text-center">Total</th>
-            <th scope="col" class="text-light text-center">Purpose</th>
-            <th scope="col" class="text-light text-center status">Action</th>`
-}
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
    
     table = $("#tabelExpense").DataTable({
         "processing": true,
@@ -63,12 +55,6 @@ $(document).ready(function () {
     });
 });
 
-function dateConversion(dates) {
-    var date = new Date(dates)
-    var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
-    return newDate
-}
-
 function getData(id) {
     $.ajax({
         url: "/Expenses/Get/" + id,
@@ -120,16 +106,6 @@ function getData2(id) {
         }
     })
 }
-
-$.ajax({
-    "url": "/Expenses/GetAll",
-    success: function (result) {
-        console.log(result)
-    },
-    error: function (error) {
-        console.log(error)
-    }
-})
 
 function Reject() {
     var expenseid = parseInt($('#expenseId').text())
@@ -213,10 +189,7 @@ function Approve(expenseid) {
                     obj.status = 5;
                     if (result.total > 5000000) {
                         obj.status = 9;
-                    } else if (result.total > 1000000) {
-
-                    }
-                    
+                    } 
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Approval/" + 2,
@@ -459,39 +432,4 @@ function AllTable() {
 
         ]
     });
-}
-
-function remove(str) {
-    // Get target th with the name you want to remove.
-    var target = $('table').find('th[data-name="' + str + '"]');
-    // Find its index among other ths 
-    var index = (target).index();
-    // For each tr, remove all th and td that match the index.
-    $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
-}
-
-function status(stat) {
-    switch (stat) {
-        case 0:
-            return "Approved";
-        case 1:
-            return "Rejected";
-        case 2:
-            return "Canceled";
-        case 3:
-            return "Posted";
-        case 4:
-            return "Draft";
-        case 5:
-            return "Approved By Manager";
-        case 6:
-            return "Approved By Finance";
-        case 7:
-            return "Rejected By Manager";
-        case 8:
-            return "Rejected By Finance";
-        default:
-            return "Draft";
-            break;
-    }
 }

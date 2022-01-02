@@ -30,6 +30,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Receipt_Date = fromVM.Receipt_Date;
                 form.Start_Date = fromVM.Start_Date;
                 form.End_Date = fromVM.End_Date;
+                form.Attachments = fromVM.Attachments;
 
                 switch (fromVM.Category)
                 {
@@ -54,26 +55,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.ExpenseId = fromVM.ExpenseId;
             }
             context.Forms.Add(form);
-
             context.SaveChanges();
-            var image = fromVM.Attachments;
-            if (image != null)
-            {
-                Employee_Attachment atc = new Employee_Attachment();
-                var filePath = Path.Combine("C:/Users/Gigabyte/source/repos/ReimbursementSystem/ReimbursementSystemAPI/Images/", image.FileName);
-
-                if (image.Length > 0)
-                {
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        image.CopyTo(fileStream);
-                    }
-                }
-                atc.FilePath = filePath;
-                context.Employee_Attachments.Add(atc);
-                context.SaveChanges();
-
-            }
+           
             return 1;
         }
 

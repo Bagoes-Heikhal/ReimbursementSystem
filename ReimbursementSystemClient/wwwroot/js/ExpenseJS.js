@@ -311,39 +311,3 @@ function EditForm(formid) {
         }
     })
 }
-
-////$.ajax({
-////    url: "/Expenses/GetID/" ,
-////    success: function (result) {
-////        $(".expense-title span").html(result.expenseID)
-////    },
-////    error: function (error) {
-////        console.log(error)
-////    }
-////})
-
-function status(stat) {
-    switch (stat) {
-        case 0:
-            return "Approved";
-        case 1:
-            return "Rejected";
-        case 2:
-            return "Canceled";
-        case 3:
-            return "Posted";
-        case 4:
-            return "Draft";
-        case 5:
-            return "Approved By Manager";
-        case 6:
-            return "Approved By Finance";
-        case 7:
-            return "Rejected By Manager";
-        case 8:
-            return "Rejected By Finance";
-        default:
-            return "Draft";
-            break;
-    }
-}

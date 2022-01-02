@@ -31,7 +31,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 expense.Description = expenseVM.Description;
                 expense.Total = expenseVM.Total;
                 expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
-
                 switch (expenseVM.Status)
                 {
                     case 1:
@@ -48,6 +47,27 @@ namespace ReimbursementSystemAPI.Repository.Data
                         break;
                     case 5:
                         expense.Status = Status.Posted;
+                        break;
+                    case 6:
+                        expense.Status = Status.ApprovedByFinance;
+                        break;
+                    case 7:
+                        expense.Status = Status.RejectedByManager;
+                        break;
+                    case 8:
+                        expense.Status = Status.RejectedByFinance;
+                        break;
+                    case 9:
+                        expense.Status = Status.OnManager2;
+                        break;
+                    case 10:
+                        expense.Status = Status.ApprovedByManager2;
+                        break;
+                    case 11:
+                        expense.Status = Status.OnManager3;
+                        break;
+                    case 12:
+                        expense.Status = Status.ApprovedByManager3;
                         break;
                     default:
                         break;
@@ -104,6 +124,18 @@ namespace ReimbursementSystemAPI.Repository.Data
                 case 8:
                     expense.Status = Status.RejectedByFinance;
                     break;
+                case 9:
+                    expense.Status = Status.OnManager2;
+                    break;
+                case 10:
+                    expense.Status = Status.ApprovedByManager2;
+                    break;
+                case 11:
+                    expense.Status = Status.OnManager3;
+                    break;
+                case 12:
+                    expense.Status = Status.ApprovedByManager3;
+                    break;
                 default:
                     break;
             }
@@ -159,14 +191,14 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             var expense = from a in context.Employees
                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where b.Status == Status.ApprovedByManager
+                          where b.Status == Status.ApprovedByManager || b.Status == Status.ApprovedByManager2 || b.Status == Status.ApprovedByManager3
                           select new ExpenseManager()
                           {
                               Status = (int)b.Status,
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -184,7 +216,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -206,7 +238,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -225,7 +257,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -244,7 +276,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -263,7 +295,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
@@ -285,13 +317,14 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = DateTime.Now,
+                              DateTime = b.Submitted,
                               Total = b.Total,
                               Description = b.Description,
                               Purpose = b.Purpose
                           };
             return expense.ToList();
         }
+
 
 
         //<!-------------------- Notif ------------------------> 
@@ -508,7 +541,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("<p> Your Reimbursment Have been rejected by Manager<p>");
+            sb.Append("<p> Your Reimbursment Have been rejected at Phase 1<p>");
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} Rejected <h1>");
             sb.Append($"<p> # message : {data.Expense.CommentManager} Rejected<p>");
@@ -520,7 +553,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                     MailMessage mail = new MailMessage();
                     mail.From = new MailAddress("testemailbagoes@gmail.com");
                     mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"Manager Reject {DateTime.Now}";
+                    mail.Subject = $"Reimbursment Reject {DateTime.Now}";
                     mail.Body = sb.ToString();
                     mail.IsBodyHtml = true;
 
