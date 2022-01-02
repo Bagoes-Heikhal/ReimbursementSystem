@@ -140,12 +140,20 @@ $(document).ready(function () {
                     $("#Status").html(status(result.status))
                     $("#Description").html(result.description)
                     $("#Purpose").attr("value", result.purpose)
+                    if (result.status != 4) {
+                        $("#Description").prop('disabled', true);
+                        $("#Purpose").prop('disabled', true);
+                        $(".btn-primary").hide();
+                    } else {
+                        $("#Description").removeAttr('disabled');
+                        $("#Purpose").removeAttr('disabled');
+                        $(".btn-primary").show();
+                    }
                 },
                 error: function (error) {
                     console.log(error)
                 }
             })
-
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",

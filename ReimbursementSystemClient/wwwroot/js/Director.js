@@ -59,39 +59,6 @@
     });
 });
 
-function getData(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
-                </div>
-
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Id : <span id="expenseId"> ${status(result.status)} </span>  </label>
-                </div>
-
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
-                </div>
-
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Total : <span id="total"> ${result.description} </span>  </label>
-                </div>
-                `
-            $(".data-employ").html(text);
-            console.log(result)
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
 function getData2(id) {
     $('textarea#managercomment').val('')
     $.ajax({
@@ -290,7 +257,6 @@ function RejectTable() {
 }
 
 function RequestTable() {
-
     $('.status').html("Action");
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();

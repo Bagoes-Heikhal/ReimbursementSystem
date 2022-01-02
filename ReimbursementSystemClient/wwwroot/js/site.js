@@ -69,3 +69,77 @@ function EditExpense(expenseid) {
         }
     })
 }
+
+function getData(id) {
+    $.ajax({
+        url: "/Expenses/Get/" + id,
+        data: "",
+        success: function (result) {
+            console.log(result)
+            var text = ""
+            text =
+                `
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Status : <span id="stat"> ${status(result.status)} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
+                </div>`
+            $("#info").html(text);
+            $("#desc").html(result.description)
+
+            tableformdetail(result.expenseId)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+function tableformdetail(expenseid) {
+    $.ajax({
+        url: "/forms/getform/" + expenseid,
+        data: "",
+        success: function (result2) {
+            console.log(result2)
+            var text = ""
+            for (var i = 0; i < result2.length; i++) {
+                text +=
+                    `<tr>
+                    <td>${dateConversion(result2[0].receipt_Date)}</td>
+                    <td>${cata(result2[0].category)}</td>
+                    <td>${result2[0].total}</td>
+                    <td><a href="${result2[0].attachments}" >attachments</a></td>
+                    </tr>`
+            }
+            $("#datail").html(text);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+function cata(cat) {
+    switch (cat) {
+        case 0:
+            return "Transportation";
+        case 1:
+            return "Parking";
+        case 2:
+            return "Medical";
+        case 3:
+            return "Lodging";
+        default:
+            return "~Empty~";
+            break;
+    }
+}

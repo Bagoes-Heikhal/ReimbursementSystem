@@ -54,6 +54,12 @@ namespace ReimbursementSystemClient.Controllers
             return RedirectToAction("Login", "Home");
         }
 
+        [HttpGet]
+        public JsonResult GetRole()
+        {
+            var sessionRole = HttpContext.Session.GetString("Role");
+            return Json(sessionRole);
+        }
 
     }
 }

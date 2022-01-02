@@ -33,20 +33,23 @@ namespace ReimbursementSystemAPI.Repository.Data
                 expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
                 switch (expenseVM.Status)
                 {
-                    case 1:
+                    case 0:
                         expense.Status = Status.Approved;
                         break;
-                    case 2:
+                    case 1:
                         expense.Status = Status.Rejected;
                         break;
-                    case 3:
+                    case 2:
                         expense.Status = Status.Canceled;
                         break;
-                    case 4:
+                    case 3:
                         expense.Status = Status.Posted;
                         break;
+                    case 4:
+                        expense.Status = Status.Draft;
+                        break;
                     case 5:
-                        expense.Status = Status.Posted;
+                        expense.Status = Status.ApprovedByManager;
                         break;
                     case 6:
                         expense.Status = Status.ApprovedByFinance;

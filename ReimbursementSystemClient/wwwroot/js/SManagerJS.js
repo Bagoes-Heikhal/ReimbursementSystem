@@ -69,32 +69,6 @@ $(document).ready(function () {
     });
 });
 
-function getData(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
-            console.log(result)
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
 function getData2(id) {
     $('textarea#managercomment').val('')
     $.ajax({
