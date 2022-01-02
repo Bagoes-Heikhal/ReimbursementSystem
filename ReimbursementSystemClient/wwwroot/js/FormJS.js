@@ -1,6 +1,5 @@
 ﻿function ValidateEmployee(int) {
     var forms = document.querySelectorAll('.needs-validation')
-
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
         .forEach(function (form) {
@@ -110,6 +109,7 @@ function AddAnother() {
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
     obj.Attachments = $("#Attachments").val();
+
     console.log(obj)
 
     $.ajax({
@@ -154,6 +154,7 @@ $(document).ready(function () {
                     $("#Description").html(result.description)
                     $("#Total").attr("value", result.total)
                     $("#Attachments").attr("value", result.attachments)
+                    $("#images").attr("src", convertimage($("#Attachments").val()))
                 },
                 error: function (error) {
                     console.log(error)
@@ -204,4 +205,13 @@ function dateInputConversion(dates) {
     return newDate
 }
 
+function convertimage(image) {
+    var text = image
+    var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
+    return result
+}
 
+$("#Attachments").keyup(function () {
+    console.log("keyup");
+    $("#images").attr("src", convertimage($("#Attachments").val()))
+})

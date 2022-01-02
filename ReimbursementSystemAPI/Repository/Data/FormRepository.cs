@@ -73,7 +73,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Type = b.Type,
                                Category = (int)b.Category,
                                Description = b.Description,
-                           };
+                               Attachments = b.Attachments
+        };
 
             return register.ToList();
         }
@@ -89,7 +90,6 @@ namespace ReimbursementSystemAPI.Repository.Data
             total.Total = sum;
             return total;
         }
-
 
         public int FormUpdate(FormVM fromVM)
         {
@@ -119,14 +119,11 @@ namespace ReimbursementSystemAPI.Repository.Data
             form.Payee = fromVM.Payee;
             form.Description = fromVM.Description;
             form.Total = fromVM.Total;
-            //form.Attachments = fromVM.Attachments;
+            form.Attachments = fromVM.Attachments;
             //form.ExpenseId = fromVM.ExpenseId;
 
             context.SaveChanges();
             return 1;
-        }
-
-
-        
+        } 
     }
 }

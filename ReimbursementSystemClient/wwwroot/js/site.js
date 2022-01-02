@@ -55,8 +55,17 @@ function dateConversion(dates) {
     return newDate
 };
 
-var text = "https://drive.google.com/file/d/10hVtdezjrXeADHuZho5VCIMlRoTEk2wd"
-var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
+function EditExpense(expenseid) {
+    console.log(expenseid)
+    $.ajax({
+        url: "/Expenses/EditExpense/" + expenseid,
+        success: function (result) {
+            console.log(result)
+            window.location.href = "/Reimbusments/Expense";
 
-console.log(result);
-$('#images').attr("src", result)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}

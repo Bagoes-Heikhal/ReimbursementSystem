@@ -31,8 +31,7 @@ function InsertExpense() {
 }
 
 $(document).ready(function () {
-
-    table = $("#Expense-table").DataTable({
+    $("#Expense-table").DataTable({
         "processing": true,
         "responsive": true,
         "ajax": {
@@ -159,17 +158,25 @@ function getData(id) {
         success: function (result) {
             var text = ""
             text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
+                `
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">ExpenseId : <span id="expenseId"> ${result.expenseId} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Status : <span id="expenseId"> ${status(result.status)} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Submited : <span id="total"> ${dateConversion(result.submitted)} </span>  </label>
+                </div>`
+            $(".infoo").html(text);
+            $("#desc").html(result.description)
+
+            tableformdetail(result.expenseId)
         },
         error: function (error) {
             console.log(error)
@@ -191,3 +198,44 @@ function EditExpense(expenseid) {
         }
     })
 }
+
+function tableformdetail(expenseid) {
+    $.ajax({
+        url: "/forms/getform/" + expenseid,
+        data: "",
+        success: function (result2) {
+            console.log(result2)
+            var text = ""
+            for (var i = 0; i < result2.length; i++) {
+                text +=
+                    `<tr>
+                    <td>${dateConversion(result2[0].receipt_Date)}</td>
+                    <td>${cata(result2[0].category)}</td>
+                    <td>${result2[0].total}</td>
+                    <td><a href="${result2[0].attachments}" >attachments</a></td>
+                    </tr>`
+            }
+            $("#datail").html(text);
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+
+function cata(cat) {
+    switch (cat) {
+        case 0:
+            return "Transportation";
+        case 1:
+            return "Parking";
+        case 2:
+            return "Medical";
+        case 3:
+            return "Lodging";
+        default:
+            return "~Empty~";
+            break;
+    }
+}
+

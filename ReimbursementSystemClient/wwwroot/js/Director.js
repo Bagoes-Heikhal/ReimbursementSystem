@@ -41,6 +41,10 @@
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-edit"></i>
+                            </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="far fa-times-circle"></i>
@@ -62,16 +66,23 @@ function getData(id) {
         success: function (result) {
             var text = ""
             text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
+                `
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Id : <span id="expenseId"> ${status(result.status)} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.description} </span>  </label>
+                </div>
+                `
             $(".data-employ").html(text);
             console.log(result)
         },
@@ -335,6 +346,10 @@ function RequestTable() {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
+                            </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-edit"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
