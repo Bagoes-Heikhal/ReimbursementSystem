@@ -42,7 +42,7 @@
                             </button>
                             <button type="button" class="btn btn-info"
                             onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
@@ -326,7 +326,7 @@ function RequestTable() {
                             </button>
                             <button type="button" class="btn btn-info"
                             onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
