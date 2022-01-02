@@ -116,7 +116,7 @@ $(document).ready(function () {
                         "data": null,
                         "render": function (data, type, row) {
                             return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getDataForm('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
@@ -242,12 +242,6 @@ function SaveExit() {
     })
 }
 
-function dateConversion(dates) {
-    var date = new Date(dates)
-    var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
-    return newDate
-}
-
 function Delete(id) {
     console.log(id)
     Swal.fire({
@@ -280,24 +274,31 @@ function Delete(id) {
     })
 }
 
-function getData(id) {
+function getDataForm(id) {
     $.ajax({
         url: "/Forms/Get/" + id,
         data: "",
         success: function (result) {
+            console.log(result)
             var text = ""
             text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
+                `
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Receipt Date : <span id="date"> ${dateConversion(result.receipt_Date)} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Category : <span id="cat"> ${cata(result.category)} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Payee : <span id="total"> ${result.payee} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                `
+            $("#info").html(text);
+            $("#desc").html(result.description)
+            $("#attc").attr("src", convertimage(result.attachments))
         },
         error: function (error) {
             console.log(error)

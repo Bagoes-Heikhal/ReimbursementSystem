@@ -9,7 +9,7 @@
 <body>
     <div class="container-fluid">
         <!-- row -->
-        <div class="card"> 
+        <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Request</h4>
             </div>
@@ -18,7 +18,7 @@
                     <div class="row date-input">
                         <div class="form-group col-xl-6">
                             <label>Receipt Date <span class="text-danger">*</span></label>
-                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date"  placeholder="Receipt Date" required>
+                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date" required>
                         </div>
                         <div class="form-group col-xl-3">
                             <div class="example">
@@ -38,7 +38,7 @@
                         <div class="form-group col-xl-6">
                             <label for="Category">Category <span class="text-danger">*</span> </label>
                             <select id="Category" class="form-control form-control" required>
-                                <option disabled selected="selected"  value="">Choose...</option>
+                                <option disabled selected="selected" value="">Choose...</option>
                                 <option value="0">Transportation</option>
                                 <option value="1">Parking</option>
                                 <option value="2">Medical</option>
@@ -71,7 +71,7 @@
                         <div class="basic-form form-group col-xl-12">
                             <label for="inputState">Description</label>
                             <div class="form-group">
-                                <textarea class="form-control" rows="4" id="Description" >
+                                <textarea class="form-control" rows="4" id="Description">
                                 </textarea>
                             </div>
                         </div>
@@ -106,5 +106,6 @@
 
 @section Scripts
     {
+    <script src="~/js/site.js"></script>
     <script src="~/js/FormJS.js"></script>
 }

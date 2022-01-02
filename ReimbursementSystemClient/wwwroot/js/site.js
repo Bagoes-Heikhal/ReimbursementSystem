@@ -105,27 +105,89 @@ function getData(id) {
 }
 
 function tableformdetail(expenseid) {
-    $.ajax({
-        url: "/forms/getform/" + expenseid,
-        data: "",
-        success: function (result2) {
-            console.log(result2)
-            var text = ""
-            for (var i = 0; i < result2.length; i++) {
-                text +=
-                    `<tr>
-                    <td>${dateConversion(result2[0].receipt_Date)}</td>
-                    <td>${cata(result2[0].category)}</td>
-                    <td>${result2[0].total}</td>
-                    <td><a href="${result2[0].attachments}" >attachments</a></td>
-                    </tr>`
-            }
-            $("#datail").html(text);
+    if ($.fn.DataTable.isDataTable('#dataTableForm')) {
+        $('#dataTableForm').DataTable().destroy();
+    }
+    $('#tabelExpense tbody').empty();
+
+
+    $("#dataTableForm").DataTable({
+        responsive: true,
+        "ajax": {
+            url: "/forms/getform/" + expenseid,
+            type: "Get",
+            dataSrc: ""
         },
-        error: function (error) {
-            console.log(error)
-        }
-    })
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        "columns": [
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return dateConversion(row["receipt_Date"])
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    switch (row["category"]) {
+                        case 0:
+                            return "Transportation";
+                        case 1:
+                            return "Parking";
+                        case 2:
+                            return "Medical";
+                        case 3:
+                            return "Lodging";
+                        default:
+                            return "~Empty~";
+                            break;
+                    }
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["payee"] == null) {
+                        return "~Empty~"
+                    }
+                    return row["payee"];
+                }
+            },  
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="showimage('${row['attachments']}')" data-placement="top"
+                            title="Detail">
+                            <i class="fas fa-info-circle"></i></button>`;
+                }
+            }
+        ]
+    });
+}
+
+function convertimage(image) {
+    var text = image
+    var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
+    return result
+}
+
+
+function showimage(link) {
+    console.log(link)
+    $('#DetailModalimage').modal('show');
+    $("#images").attr("src", convertimage(link));
 }
 
 function cata(cat) {

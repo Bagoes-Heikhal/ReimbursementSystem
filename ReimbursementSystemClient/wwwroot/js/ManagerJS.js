@@ -59,7 +59,6 @@
     });
 });
 
-
 function getData2(id) {
     $('textarea#managercomment').val('')
     $.ajax({

@@ -160,6 +160,7 @@ $(document).ready(function () {
                     console.log(error)
                 }
             })
+
         },
         error: function (error) {
             console.log(error)
@@ -175,15 +176,6 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-    //$(".file-upload").on('change click', function (e) {
-    //    e.stopPropagation();
-    //    readURL(this);
-    //});
-
-    //$(".upload-button").on('click', function () {
-    //    $(".file-upload").click();
-    //});
 });
 
 function Category(selected) {
@@ -203,12 +195,6 @@ function dateInputConversion(dates) {
     var newDate = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate()))
     console.log(newDate)
     return newDate
-}
-
-function convertimage(image) {
-    var text = image
-    var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
-    return result
 }
 
 $("#Attachments").keyup(function () {

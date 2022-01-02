@@ -84,6 +84,7 @@ function getData2(id) {
         }
     })
 }
+
 function Reject() {
     var expenseid = parseInt($('#expenseId').text())
     var managercomment = $('textarea#managercomment').val();
@@ -258,6 +259,7 @@ function RejectTable() {
 
 function RequestTable() {
     $('.status').html("Action");
+
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();
     }
@@ -327,8 +329,6 @@ function RequestTable() {
                             </button>`;
                 }
             }
-
-
         ]
     });
 }

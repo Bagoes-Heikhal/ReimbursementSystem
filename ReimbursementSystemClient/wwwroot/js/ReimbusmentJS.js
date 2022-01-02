@@ -113,7 +113,6 @@ $(document).ready(function () {
     });
 });
    
-
 function Delete(id) {
     console.log(id)
     Swal.fire({
