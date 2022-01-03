@@ -9,9 +9,11 @@
 function remove(str) {
     // Get target th with the name you want to remove.
     var target = $('table').find('th[data-name="' + str + '"]');
-    // Find its index among other ths 
+    // Find its index among other ths
+
     var index = (target).index();
     // For each tr, remove all th and td that match the index.
+
     $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
 }
 
