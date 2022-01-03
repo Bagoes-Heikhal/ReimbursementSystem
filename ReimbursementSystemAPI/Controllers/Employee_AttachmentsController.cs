@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/demo")]
     [ApiController]
     public class Employee_AttachmentsController : BaseController<Employee_Attachment, Employee_AttachmentRepository, string>
     {
@@ -33,6 +33,25 @@ namespace ReimbursementSystemAPI.Controllers
                     return Ok(result);
                 default:
                     return Ok(result);
+            }
+        }
+
+        [HttpPost("singleupload")]
+        public ActionResult SingleUpload(IFormFile file)
+        {
+            try
+            {
+                var filePath = Path.Combine("C:/Users/Gigabyte/source/repos/ReimbursementSystem/ReimbursementSystemAPI/Images/", file.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest();
             }
         }
     }

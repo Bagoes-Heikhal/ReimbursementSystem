@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using ReimbursementSystemClient.Base.Urls;
 using ReimbursementSystemClient.Repository.Data;
+using ReimbursementSystemClient.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace ReimbursementSystemClient
             services.AddScoped<FormRepository>();
             services.AddScoped<ExpenseRepository>();
             services.AddScoped<Address>();
+            services.AddScoped<UploadFileServiceImpl>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

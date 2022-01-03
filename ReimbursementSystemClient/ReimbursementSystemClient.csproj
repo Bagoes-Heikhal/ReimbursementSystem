@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\Controllers\" />
-    <Folder Include="Repository\Interface\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReimbursementSystemAPI\ReimbursementSystemAPI.csproj" />
