@@ -4,7 +4,7 @@ namespace ReimbursementSystemAPI.ViewModel
     public class ExpenseManager
     {
         public int ExpenseId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
         public float? Total { get; set; }
         public int Status { get; set; }
         public string Description { get; set; }

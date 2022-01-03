@@ -1,23 +1,4 @@
-﻿function column() {
-    return `<th scope="col" class="text-light text-center">Name</th>
-            <th scope="col" class="text-light text-center">Date Request</th>
-            <th scope="col" class="text-light text-center">Total</th>
-            <th scope="col" class="text-light text-center">Purpose</th>
-            <th scope="col" class="text-light text-center status">Action</th>`
-}
-
-$.ajax({
-    url: "/Expenses/GetExpenseFinance",
-    type: "GET",
-    success: function (result) {
-        console.log(result)
-    },
-    error: function (error) {
-        console.log(error)
-    }
-});
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
     table = $("#tabelExpense").DataTable({
         responsive: true,
@@ -59,6 +40,10 @@ $(document).ready(function () {
                             onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-edit"></i>
+                            </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="far fa-times-circle"></i>
@@ -71,7 +56,42 @@ $(document).ready(function () {
             }
 
 
+        ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+
         ]
+
     });
 });
 
@@ -79,31 +99,6 @@ function dateConversion(dates) {
     var date = new Date(dates)
     var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
     return newDate
-}
-
-function getData(id) {
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
 }
 
 function getData2(id) {
@@ -364,6 +359,10 @@ function RequestTable() {
                             onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-edit"></i>
+                            </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="far fa-times-circle"></i>
@@ -374,8 +373,6 @@ function RequestTable() {
                             </button>`;
                 }
             }
-
-
         ]
     });
 }
@@ -458,37 +455,5 @@ function AllTable() {
     });
 }
 
-function remove(str) {
-        // Get target th with the name you want to remove.
-        var target = $('table').find('th[data-name="' + str + '"]');
-        // Find its index among other ths 
-        var index = (target).index();
-        // For each tr, remove all th and td that match the index.
-        $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
-}
 
-function status(stat) {
-    switch (stat) {
-        case 0:
-            return "Approved";
-        case 1:
-            return "Rejected";
-        case 2:
-            return "Canceled";
-        case 3:
-            return "Posted";
-        case 4:
-            return "Draft";
-        case 5:
-            return "Approved By Manager";
-        case 6:
-            return "Approved By Finance";
-        case 7:
-            return "Rejected By Manager";
-        case 8:
-            return "Rejected By Finance";
-        default:
-            return "Draft";
-            break;
-    }
-}
+

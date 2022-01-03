@@ -50,8 +50,36 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="table col data-employ">
+                        <div class="container-fluid">
+                            <div class="row" id="info">
 
+                            </div>
+                            <div class="row">
+                                <div class="basic-form form-group col-xl-12">
+                                    <label for="inputState">Description</label>
+                                    <textarea class="form-control" rows="2" id="desc" name="message" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <div class="table-responsive">
+                                    <table class="table header-border table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Recipt Date</th>
+                                                <th>Category</th>
+                                                <th>Total</th>
+                                                <th>Attachments</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="datail">
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
                         </div>
 
                     </div>
@@ -97,12 +125,13 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-
+    </div>
 </body>
+
 </html>
 
 @section Scripts
     {
+    <script src="~/js/site.js"></script>
     <script src="~/js/ManagerJS.js"></script>
 }

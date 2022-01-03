@@ -1,15 +1,22 @@
-﻿//$.ajax({
-//    url: "/Form/InsertForm",
-//    type: "Post",
-//    'data': obj,
-//    'dataType': 'json',
-//    success: function (result) {
-//        console.log(result)
-//    },
-//    error: function (error) {
-//        console.log(error)
-//    }
-//})
+﻿function ValidateEmployee(int) {
+    var forms = document.querySelectorAll('.needs-validation')
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            if (form.checkValidity() === true) {
+                if (int == 1) {
+                    SaveExit()
+                } else if (int == 2) {
+                    AddAnother()
+                }
+            }
+            else {
+                form.classList.add('was-validated');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        })
+}
 
 function SaveExit() {
     var obj = new Object();
@@ -102,6 +109,7 @@ function AddAnother() {
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
     obj.Attachments = $("#Attachments").val();
+
     console.log(obj)
 
     $.ajax({
@@ -109,8 +117,6 @@ function AddAnother() {
         type: "Post",
         'data': obj,
         'dataType': 'json',
-        processData: false,
-        contentType: false,
         success: function (result) {
             window.location.href = "/Reimbusments/Form"
         },
@@ -148,11 +154,13 @@ $(document).ready(function () {
                     $("#Description").html(result.description)
                     $("#Total").attr("value", result.total)
                     $("#Attachments").attr("value", result.attachments)
+                    $("#images").attr("src", convertimage($("#Attachments").val()))
                 },
                 error: function (error) {
                     console.log(error)
                 }
             })
+
         },
         error: function (error) {
             console.log(error)
@@ -168,15 +176,6 @@ $(document).ready(function () {
             reader.readAsDataURL(input.files[0]);
         }
     }
-
-    //$(".file-upload").on('change click', function (e) {
-    //    e.stopPropagation();
-    //    readURL(this);
-    //});
-
-    //$(".upload-button").on('click', function () {
-    //    $(".file-upload").click();
-    //});
 });
 
 function Category(selected) {
@@ -198,4 +197,7 @@ function dateInputConversion(dates) {
     return newDate
 }
 
-
+$("#Attachments").keyup(function () {
+    console.log("keyup");
+    $("#images").attr("src", convertimage($("#Attachments").val()))
+})

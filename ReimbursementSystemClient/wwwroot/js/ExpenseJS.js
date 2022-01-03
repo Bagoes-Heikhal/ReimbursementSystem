@@ -116,7 +116,7 @@ $(document).ready(function () {
                         "data": null,
                         "render": function (data, type, row) {
                             return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getDataForm('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
@@ -140,12 +140,20 @@ $(document).ready(function () {
                     $("#Status").html(status(result.status))
                     $("#Description").html(result.description)
                     $("#Purpose").attr("value", result.purpose)
+                    if (result.status != 4) {
+                        $("#Description").prop('disabled', true);
+                        $("#Purpose").prop('disabled', true);
+                        $(".btn-primary").hide();
+                    } else {
+                        $("#Description").removeAttr('disabled');
+                        $("#Purpose").removeAttr('disabled');
+                        $(".btn-primary").show();
+                    }
                 },
                 error: function (error) {
                     console.log(error)
                 }
             })
-
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
@@ -234,12 +242,6 @@ function SaveExit() {
     })
 }
 
-function dateConversion(dates) {
-    var date = new Date(dates)
-    var newDate = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
-    return newDate
-}
-
 function Delete(id) {
     console.log(id)
     Swal.fire({
@@ -272,24 +274,31 @@ function Delete(id) {
     })
 }
 
-function getData(id) {
+function getDataForm(id) {
     $.ajax({
         url: "/Forms/Get/" + id,
         data: "",
         success: function (result) {
+            console.log(result)
             var text = ""
             text =
-                `<tr>
-                <td> Total </td>
-                <td> : </td>
-                <td> ${result.total}</td>
-                </tr>
-                <tr>
-                    <td> Description </td>
-                    <td> : </td>
-                    <td>${result.description}</td>
-                </tr>`
-            $(".data-employ").html(text);
+                `
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Receipt Date : <span id="date"> ${dateConversion(result.receipt_Date)} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Category : <span id="cat"> ${cata(result.category)} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Payee : <span id="total"> ${result.payee} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                `
+            $("#info").html(text);
+            $("#desc").html(result.description)
+            $("#attc").attr("src", convertimage(result.attachments))
         },
         error: function (error) {
             console.log(error)
@@ -310,40 +319,4 @@ function EditForm(formid) {
             console.log(error)
         }
     })
-}
-
-////$.ajax({
-////    url: "/Expenses/GetID/" ,
-////    success: function (result) {
-////        $(".expense-title span").html(result.expenseID)
-////    },
-////    error: function (error) {
-////        console.log(error)
-////    }
-////})
-
-function status(stat) {
-    switch (stat) {
-        case 0:
-            return "Approved";
-        case 1:
-            return "Rejected";
-        case 2:
-            return "Canceled";
-        case 3:
-            return "Posted";
-        case 4:
-            return "Draft";
-        case 5:
-            return "Approved By Manager";
-        case 6:
-            return "Approved By Finance";
-        case 7:
-            return "Rejected By Manager";
-        case 8:
-            return "Rejected By Finance";
-        default:
-            return "Draft";
-            break;
-    }
 }

@@ -95,24 +95,5 @@ namespace ReimbursementSystemClient.Controllers
             var result = formRepository.PutEditFrom(entity, formSession);
             return Json(result);
         }
-
-        public async Task<IActionResult> Update(FormVM entity)
-        {
-
-            HttpClient client = new HttpClient();
-            var putStudentUrl = @"url";
-            byte[] data;
-            using (var br = new BinaryReader(entity.Attachments.OpenReadStream()))
-            {
-                data = br.ReadBytes((int)entity.Attachments.OpenReadStream().Length);
-            }
-            ByteArrayContent bytes = new ByteArrayContent(data);
-            MultipartFormDataContent multiContent = new MultipartFormDataContent();
-            multiContent.Add(bytes, "Attachments", entity.Attachments.FileName);
-            var response = await client.PutAsync(putStudentUrl, multiContent);
-            return RedirectToAction("Index", "Home");
-        }
-
-
     }
 }

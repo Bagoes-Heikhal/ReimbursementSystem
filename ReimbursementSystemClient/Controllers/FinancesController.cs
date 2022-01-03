@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    [Authorize(Roles = "Finance")]
+    [Authorize(Roles = "Finance,Director")]
     public class FinancesController : Controller
     {
         public IActionResult FDashboard()

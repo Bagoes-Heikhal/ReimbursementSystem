@@ -9,55 +9,51 @@
 <body>
     <div class="container-fluid">
         <!-- row -->
-        <div class="card"> 
+        <div class="card">
             <div class="card-header">
                 <h4 class="card-title">Request</h4>
             </div>
             <div class="card-body">
-                <form class="needs-validation" enctype="multipart/form-data"  novalidate>
+                <form class="needs-validation" enctype="multipart/form-data" novalidate>
                     <div class="row date-input">
                         <div class="form-group col-xl-6">
-                            <label>Receipt Date</label>
-                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date">
+                            <label>Receipt Date <span class="text-danger">*</span></label>
+                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date" required>
                         </div>
-
                         <div class="form-group col-xl-3">
                             <div class="example">
-                                <p class="mb-1">From </p>
-                                <input type="date" name="datepicker1" class="form-control" id="Start_Date" placeholder="Date From">
+                                <p class="mb-1">From <span class="text-danger">*</span> </p>
+                                <input type="date" name="datepicker1" class="form-control" id="Start_Date" placeholder="Date From" required>
                             </div>
                         </div>
                         <div class="form-group col-xl-3">
                             <div class="example">
-                                <p class="mb-1">To</p>
-                                <input type="date" name="datepicker2" class="form-control" id="End_Date" placeholder="Date To">
+                                <p class="mb-1">To <span class="text-danger">*</span> </p>
+                                <input type="date" name="datepicker2" class="form-control" id="End_Date" placeholder="Date To" required>
                             </div>
                         </div>
                     </div>
 
                     <div class="row category-total-input">
                         <div class="form-group col-xl-6">
-                            <label for="Category">Category</label>
-                            <select id="Category" class="form-control">
-                                <option disabled selected="selected">Choose...</option>
+                            <label for="Category">Category <span class="text-danger">*</span> </label>
+                            <select id="Category" class="form-control form-control" required>
+                                <option disabled selected="selected" value="">Choose...</option>
                                 <option value="0">Transportation</option>
                                 <option value="1">Parking</option>
                                 <option value="2">Medical</option>
                                 <option value="3">Lodging</option>
                             </select>
                         </div>
-
                         <div class="form-group col-xl-6">
-                            <label for="Category">Money Spent</label>
+                            <label for="Category">Money Spent <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Total Amount</span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Total Amount Rp.</span>
                                 </div>
-                                <input id="Total" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01">
+                                <input id="Total" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" required>
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="row payee-travel-input">
@@ -66,8 +62,8 @@
                             <input type="text" class="form-control input-default " placeholder="Travel destination State" id="Destination">
                         </div>
                         <div class="form-group col-xl-6">
-                            <label for="Payee">Payee</label>
-                            <input type="text" class="form-control input-default " placeholder="Who recive the payment" id="Payee">
+                            <label for="Payee">Payee <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control input-default " placeholder="Who recive the payment" id="Payee" required>
                         </div>
                     </div>
 
@@ -75,42 +71,41 @@
                         <div class="basic-form form-group col-xl-12">
                             <label for="inputState">Description</label>
                             <div class="form-group">
-                                <textarea class="form-control" rows="4" id="Description" >
-    
+                                <textarea class="form-control" rows="4" id="Description">
                                 </textarea>
                             </div>
                         </div>
                     </div>
 
                     <div class="row attachment-input">
-
                         <div class="form-group col-xl-6">
                             <div class="custom-file">
-                                @*<label class="custom-file-label" for="customFile">Choose file</label>*@
-                                @*<input type="file" id="Attachments" name="MyImage" class="form-control" accept="image/jpeg,image/jpg,image/png">*@
-                                @*<input type="file" class="custom-file-input" id="Attachments" accept=".pdf">*@
-                                @*<img class="profile-image" src="demo.png" alt="Profile Image">*@
-
-                                <input class="file-upload" type="file" name="file" size="40" accept=".png, .jpg, .jpeg, .gif">
+                                <label for="">Attachment</label>
+                                <input type="text" class="form-control input-default " placeholder="Google drive shared picture " id="Attachments" required>
                             </div>
+                            <div class="mt-4">
+                                <button class="btn btn-primary Save-Exit" type="button" onclick="return ValidateEmployee(1)">Save and Exit</button>
+                                <button class="btn btn-primary" type="button" onclick="return ValidateEmployee(2)">Add Another</button>
+                                <button class="btn btn-primary" type="button" onclick="return Cancel()">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="form-group col-xl-6">
+                            <label for=""> Your image will show here if entered correctly</label>
+                            <br>
+                            <img id="images" src="" width="180" legth="180">
                         </div>
                     </div>
 
-                    <button class="btn btn-primary Save-Exit" type="button" onclick="return SaveExit()">Save and Exit</button>
-                    <button class="btn btn-primary" type="button" onclick="return AddAnother()">Add Another</button>
-                    <button class="btn btn-primary" type="button" onclick="return Cancel()">Cancel</button>
                 </form>
-
             </div>
         </div>
     </div>
 </body>
-
 </html>
-
 
 
 @section Scripts
     {
+    <script src="~/js/site.js"></script>
     <script src="~/js/FormJS.js"></script>
 }
