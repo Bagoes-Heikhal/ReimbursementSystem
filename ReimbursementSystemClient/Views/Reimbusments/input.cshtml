@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_EmployeeLayout";
+}
+
+<h3>Single Upload</h3>
+<form method="post" enctype="multipart/form-data">
+    File <input type="file" name="file" />
+    <br />
+    <input type="button" value="Upload" onclick="return SaveExit()" />
+</form>
+
+@section Scripts
+    {
+    <script src="~/js/FileJS.js"></script>
+}

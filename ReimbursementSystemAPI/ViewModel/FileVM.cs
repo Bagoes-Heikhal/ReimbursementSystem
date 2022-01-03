@@ -9,7 +9,6 @@ namespace ReimbursementSystemAPI.ViewModel
 {
     public class FileVM
     {
-        public string Name { get; set; }
-        public IFormFile FilePath { get; set; }
+        public IFormFile Attachments { get; set; }
     }
 }
