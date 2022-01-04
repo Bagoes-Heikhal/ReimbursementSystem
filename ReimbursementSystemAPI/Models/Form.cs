@@ -23,7 +23,7 @@ namespace ReimbursementSystemAPI.Models
         public string Type { get; set; }
         public string Description { get; set; }
         public float? Total { get; set; }
-        public string Attachments { get; set; }
+        public int Attachments { get; set; }
 
         [JsonIgnore]
         public virtual Expense Expenses { get; set; }

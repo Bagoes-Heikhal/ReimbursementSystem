@@ -1,49 +1,17 @@
-﻿function InsertForm() {
-    var obj = new Object();
-    obj.expenseId = parseInt($(".expense-title span").text());
-    obj.purpose = $("#Purpose").val();
-    obj.description = $("#Description").val();
-    obj.total = $("#Total").val();
-    obj.status = 4;
-    $.ajax({
-        url: "/Expenses/Submit/" + 2,
-        type: "Put",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {
-            $.ajax({
-                url: "/Forms/NewForm/",
-                success: function (result) {
-                    window.location.href = result;
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            });
-        },
-        error: function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Submit Fail!'
-            })
-        }
-    })
-    
-}
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $.ajax({
         url: "/Expenses/ExpenseCall",
         success: function (result) {
-            console.log(result)
             $(".expense-title span").html(result);
 
             $.ajax({
                 url: "/Expenses/GetExpense",
                 type: "Get",
                 success: function (result) {
-                    $("#Approver").html(result[0].approver)
+                    console.log(result);
+                    if (result.length != 0 ) {
+                        $("#Approver").html(result[0].approver)
+                    }    
                 },
                 error: function (error) {
                     $("#Approver").html("~~")
@@ -127,33 +95,40 @@ $(document).ready(function () {
                             <i class="fas fa-edit"></i>
                             </button>`;
                         }
-                    }
-                ]
+                    }  
+                ],
+                initComplete: function () {
+                    $.ajax({
+                        url: "/Expenses/Get/" + result,
+                        type: "Get",       
+                        data: "",
+                        success: function (result) {
+                            console.log(result)
+                            $("#Status").html(status(result.status))
+                            if ($("#Approver").text() == "") {
+                                $("#Approver").html(result.approver)
+                            }
+                            $("#Description").html(result.description)
+                            $("#Purpose").attr("value", result.purpose)
+                            if (result.status != 4) {
+                                $("#Description").prop('disabled', true);
+                                $("#Purpose").prop('disabled', true);
+                                $(".hide-btn").hide();
+                            } else {
+                                $("#Description").removeAttr('disabled');
+                                $("#Purpose").removeAttr('disabled');
+                                $(".hide-btn").show();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                }
             });
 
-            $.ajax({
-                url: "/Expenses/Get/" + result,
-                type: "Get",
-                data: "",
-                success: function (result) {
-                    console.log(result)
-                    $("#Status").html(status(result.status))
-                    $("#Description").html(result.description)
-                    $("#Purpose").attr("value", result.purpose)
-                    if (result.status != 4) {
-                        $("#Description").prop('disabled', true);
-                        $("#Purpose").prop('disabled', true);
-                        $(".hide-btn").hide();
-                    } else {
-                        $("#Description").removeAttr('disabled');
-                        $("#Purpose").removeAttr('disabled');
-                        $(".hide-btn").show();
-                    }
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
+           
+
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
@@ -173,6 +148,7 @@ $(document).ready(function () {
 
 function Submit() {
     var obj = new Object();
+    obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
@@ -210,6 +186,7 @@ function Submit() {
 
 function SaveExit() {
     var obj = new Object();
+    obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
@@ -298,12 +275,60 @@ function getDataForm(id) {
                 `
             $("#info").html(text);
             $("#desc").html(result.description)
-            $("#attc").attr("src", convertimage(result.attachments))
+            $.ajax({
+                url: "/Forms/Getatc/" + result.attachments,
+                type: "GET",
+                data: "",
+                success: function (result2) {
+                    console.log(result2)
+                    $("#attc").attr("src", convertimagefileshow(result2.name))
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         },
         error: function (error) {
             console.log(error)
         }
     })
+
+
+}
+
+function InsertForm() {
+    var obj = new Object();
+    obj.approver = $("#Approver").text();
+    obj.expenseId = parseInt($(".expense-title span").text());
+    obj.purpose = $("#Purpose").val();
+    obj.description = $("#Description").val();
+    obj.total = $("#Total").val();
+    obj.status = 4;
+    $.ajax({
+        url: "/Expenses/Submit/" + 2,
+        type: "Put",
+        'data': obj,
+        'dataType': 'json',
+        success: function (result) {
+            $.ajax({
+                url: "/Forms/NewForm/",
+                success: function (result) {
+                    window.location.href = result;
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        },
+        error: function (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Submit Fail!'
+            })
+        }
+    })
+
 }
 
 function EditForm(formid) {

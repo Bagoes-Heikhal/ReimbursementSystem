@@ -9,6 +9,5 @@ namespace ReimbursementSystemAPI.ViewModel
     public class AttachmentsVM
     {
         public string Name { get; set; }
-        public IFormFile Image { get; set; }
     }
 }

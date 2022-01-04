@@ -31,7 +31,7 @@ function InsertExpense() {
 }
 
 $(document).ready(function () {
-    $("#Expense-table").DataTable({
+    table = $("#Expense-table").DataTable({
         "processing": true,
         "responsive": true,
         "ajax": {
@@ -85,7 +85,7 @@ $(document).ready(function () {
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
-                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
                             <i class="fas fa-trash-alt"></i>
                             </button>
                             <button type="button" class="btn btn-info"
@@ -95,6 +95,10 @@ $(document).ready(function () {
                     var nondraft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-search-plus"></i>
                             </button> `
                     if (row["status"] != 4) {
                         return nondraft
@@ -129,13 +133,12 @@ function Delete(id) {
                 url: "/Expenses/Delete/" + id,
                 type: "Delete",
                 success: function (result) {
-                    console.log(result)
+                    table.ajax.reload()
                     Swal.fire(
                         'Deleted!',
                         'Your file has been deleted.',
                         'success'
                     )
-                    table.ajax.reload()
                 },
                 error: function (error) {
                     alert("Delete Fail");

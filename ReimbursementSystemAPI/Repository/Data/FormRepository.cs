@@ -25,12 +25,18 @@ namespace ReimbursementSystemAPI.Repository.Data
 
         public int NewForm(FormVM fromVM)
         {
+            Employee_Attachment atc = new Employee_Attachment();
+            {
+                atc.FilePath = fromVM.Attachments;
+            }
+            context.Employee_Attachments.Add(atc);
+            context.SaveChanges();
             Form form = new Form();
             {
                 form.Receipt_Date = fromVM.Receipt_Date;
                 form.Start_Date = fromVM.Start_Date;
                 form.End_Date = fromVM.End_Date;
-                form.Attachments = fromVM.Attachments;
+                form.Attachments = atc.Id;
 
                 switch (fromVM.Category)
                 {
@@ -54,7 +60,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Total = fromVM.Total;
                 form.ExpenseId = fromVM.ExpenseId;
             }
+
             context.Forms.Add(form);
+
             context.SaveChanges();
            
             return 1;
@@ -64,6 +72,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             var register = from a in context.Expenses where a.ExpenseId == expenseid
                            join b in context.Forms on a.ExpenseId equals b.ExpenseId
+                           join c in context.Employee_Attachments on b.Attachments equals c.Id
                            select new FormVM()
                            {
                                FormId = b.FormId,
@@ -73,7 +82,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Type = b.Type,
                                Category = (int)b.Category,
                                Description = b.Description,
-                               Attachments = b.Attachments
+                               Attachments = c.FilePath
         };
 
             return register.ToList();
@@ -119,11 +128,22 @@ namespace ReimbursementSystemAPI.Repository.Data
             form.Payee = fromVM.Payee;
             form.Description = fromVM.Description;
             form.Total = fromVM.Total;
-            form.Attachments = fromVM.Attachments;
-            //form.ExpenseId = fromVM.ExpenseId;
+            //form.Attachments = fromVM.Attachments;
+            ////form.ExpenseId = fromVM.ExpenseId;
 
             context.SaveChanges();
             return 1;
-        } 
+        }
+
+
+        public AttachmentsVM Getatc(int imgid)
+        {
+            var imgPath = (from a in context.Employee_Attachments where a.Id == imgid select a.FilePath).ToList();
+
+            
+            AttachmentsVM path = new AttachmentsVM();
+            path.Name = imgPath[0].ToString();
+            return path;
+        }
     }
 }

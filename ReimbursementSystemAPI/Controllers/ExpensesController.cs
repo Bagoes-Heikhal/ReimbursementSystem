@@ -84,28 +84,6 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-
-        [HttpPost("singleupload")]
-        public ActionResult SingleUpload(IFormFile file)
-        {
-            try
-            {
-                var filePath = Path.Combine("C:/Users/Gigabyte/source/repos/ReimbursementSystem/ReimbursementSystemAPI/Images/", file.FileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-                return Ok();
-            }
-            catch (Exception)
-            {
-
-                return BadRequest();
-            }
-        }
-
-
-
         //<!----------------- Finances ------------------->
 
         [HttpGet("ExpenseDataFinances")]

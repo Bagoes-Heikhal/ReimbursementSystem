@@ -81,18 +81,18 @@ function getData(id) {
             var text = ""
             text =
                 `
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
                 </div>
 
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Status : <span id="stat"> ${status(result.status)} </span>  </label>
                 </div>
 
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
                 </div>
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
                 </div>`
             $("#info").html(text);
@@ -190,17 +190,16 @@ function tableformdetail(expenseid) {
 
 }
 
-function convertimage(image) {
-    var text = image
-    var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
+function convertimagefileshow(image) {
+    var result = "https://localhost:44350/Images/" + image;
     return result
 }
 
-
 function showimage(link) {
     console.log(link)
+    console.log(convertimagefileshow(link))
     $('#DetailModalimage').modal('show');
-    $("#images").attr("src", convertimage(link));
+    $("#images").attr("src", convertimagefileshow(link));
 }
 
 function cata(cat) {
@@ -217,4 +216,11 @@ function cata(cat) {
             return "~Empty~";
             break;
     }
+}
+
+function convertimagefile(image) {
+    var text = image
+    var result = text.toString().replace("C:\\fakepath\\", "").replace(" ", "_").replace(" ", "_").replace(" ", "_").replace(" ", "_").replace(" ", "_");
+    console.log(result.toString())
+    return result
 }
