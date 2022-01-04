@@ -95,6 +95,10 @@ $(document).ready(function () {
                     var nondraft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn btn-info"
+                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
+                            <i class="fas fa-search-plus"></i>
                             </button> `
                     if (row["status"] != 4) {
                         return nondraft

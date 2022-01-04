@@ -39,7 +39,7 @@
 
     <!-- Modal Detail Employee-->
     <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Expense Detail</h5>
@@ -55,28 +55,29 @@
                             </div>
                             <div class="row">
                                 <div class="basic-form form-group col-xl-12">
-                                    <label for="inputState">Description</label>
-                                    <textarea class="form-control" rows="2" id="desc" name="message" disabled></textarea>
+                                    <label class="text-dark" for="inputState">Description</label>
+                                    <textarea class="form-control text-dark" rows="2" id="desc" name="message" disabled></textarea>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table header-border table-responsive-sm" id="dataTableForm">
-                                        <thead>
-                                            <tr>
-                                                <th>Recipt Date</th>
-                                                <th>Category</th>
-                                                <th>Total</th>
-                                                <th>Attachments</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="datail">
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <div class="table-responsive">
+                                        <table class="table header-border table-responsive-sm " id="dataTableForm" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Recipt Date</th>
+                                                    <th>Category</th>
+                                                    <th>Total</th>
+                                                    <th>Payee</th>
+                                                    <th>Attachments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-dark" id="datail">
+                                            </tbody>
+                                        </table>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
 
@@ -91,7 +92,7 @@
 
     <!-- Modal Gambar-->
     <div class="modal fade" id="DetailModalimage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Attachment</h5>
@@ -104,7 +105,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col text-center col-xl-12">
-                                <img id="images" src="" width="180" legth="180">
+                                <img id="images" src="" width="480">
                             </div>
 
                         </div>

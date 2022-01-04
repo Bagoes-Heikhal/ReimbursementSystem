@@ -1,6 +1,4 @@
-﻿
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $.ajax({
         url: "/Expenses/ExpenseCall",
         success: function (result) {
@@ -10,7 +8,10 @@ $(document).ready(function () {
                 url: "/Expenses/GetExpense",
                 type: "Get",
                 success: function (result) {
-                    $("#Approver").html(result[0].approver)
+                    console.log(result);
+                    if (result.length != 0 ) {
+                        $("#Approver").html(result[0].approver)
+                    }    
                 },
                 error: function (error) {
                     $("#Approver").html("~~")
@@ -94,32 +95,40 @@ $(document).ready(function () {
                             <i class="fas fa-edit"></i>
                             </button>`;
                         }
-                    }
-                ]
+                    }  
+                ],
+                initComplete: function () {
+                    $.ajax({
+                        url: "/Expenses/Get/" + result,
+                        type: "Get",       
+                        data: "",
+                        success: function (result) {
+                            console.log(result)
+                            $("#Status").html(status(result.status))
+                            if ($("#Approver").text() == "") {
+                                $("#Approver").html(result.approver)
+                            }
+                            $("#Description").html(result.description)
+                            $("#Purpose").attr("value", result.purpose)
+                            if (result.status != 4) {
+                                $("#Description").prop('disabled', true);
+                                $("#Purpose").prop('disabled', true);
+                                $(".hide-btn").hide();
+                            } else {
+                                $("#Description").removeAttr('disabled');
+                                $("#Purpose").removeAttr('disabled');
+                                $(".hide-btn").show();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                }
             });
 
-            $.ajax({
-                url: "/Expenses/Get/" + result,
-                type: "Get",
-                data: "",
-                success: function (result) {
-                    $("#Status").html(status(result.status))
-                    $("#Description").html(result.description)
-                    $("#Purpose").attr("value", result.purpose)
-                    if (result.status != 4) {
-                        $("#Description").prop('disabled', true);
-                        $("#Purpose").prop('disabled', true);
-                        $(".hide-btn").hide();
-                    } else {
-                        $("#Description").removeAttr('disabled');
-                        $("#Purpose").removeAttr('disabled');
-                        $(".hide-btn").show();
-                    }
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
+           
+
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
@@ -139,6 +148,7 @@ $(document).ready(function () {
 
 function Submit() {
     var obj = new Object();
+    obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
@@ -176,6 +186,7 @@ function Submit() {
 
 function SaveExit() {
     var obj = new Object();
+    obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
@@ -287,6 +298,7 @@ function getDataForm(id) {
 
 function InsertForm() {
     var obj = new Object();
+    obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();

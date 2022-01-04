@@ -81,18 +81,18 @@ function getData(id) {
             var text = ""
             text =
                 `
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
                 </div>
 
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Status : <span id="stat"> ${status(result.status)} </span>  </label>
                 </div>
 
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
                 </div>
-                <div class="form-group col-xl-6 col-sm-6">
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
                 </div>`
             $("#info").html(text);
@@ -194,7 +194,6 @@ function convertimagefileshow(image) {
     var result = "https://localhost:44350/Images/" + image;
     return result
 }
-
 
 function showimage(link) {
     console.log(link)
