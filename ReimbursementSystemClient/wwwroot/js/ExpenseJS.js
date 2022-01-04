@@ -1,42 +1,9 @@
-﻿function InsertForm() {
-    var obj = new Object();
-    obj.expenseId = parseInt($(".expense-title span").text());
-    obj.purpose = $("#Purpose").val();
-    obj.description = $("#Description").val();
-    obj.total = $("#Total").val();
-    obj.status = 4;
-    $.ajax({
-        url: "/Expenses/Submit/" + 2,
-        type: "Put",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {
-            $.ajax({
-                url: "/Forms/NewForm/",
-                success: function (result) {
-                    window.location.href = result;
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            });
-        },
-        error: function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Submit Fail!'
-            })
-        }
-    })
-    
-}
+﻿
 
 $(document).ready(function () {
     $.ajax({
         url: "/Expenses/ExpenseCall",
         success: function (result) {
-            console.log(result)
             $(".expense-title span").html(result);
 
             $.ajax({
@@ -136,7 +103,6 @@ $(document).ready(function () {
                 type: "Get",
                 data: "",
                 success: function (result) {
-                    console.log(result)
                     $("#Status").html(status(result.status))
                     $("#Description").html(result.description)
                     $("#Purpose").attr("value", result.purpose)
@@ -298,12 +264,59 @@ function getDataForm(id) {
                 `
             $("#info").html(text);
             $("#desc").html(result.description)
-            $("#attc").attr("src", convertimage(result.attachments))
+            $.ajax({
+                url: "/Forms/Getatc/" + result.attachments,
+                type: "GET",
+                data: "",
+                success: function (result2) {
+                    console.log(result2)
+                    $("#attc").attr("src", convertimagefileshow(result2.name))
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
         },
         error: function (error) {
             console.log(error)
         }
     })
+
+
+}
+
+function InsertForm() {
+    var obj = new Object();
+    obj.expenseId = parseInt($(".expense-title span").text());
+    obj.purpose = $("#Purpose").val();
+    obj.description = $("#Description").val();
+    obj.total = $("#Total").val();
+    obj.status = 4;
+    $.ajax({
+        url: "/Expenses/Submit/" + 2,
+        type: "Put",
+        'data': obj,
+        'dataType': 'json',
+        success: function (result) {
+            $.ajax({
+                url: "/Forms/NewForm/",
+                success: function (result) {
+                    window.location.href = result;
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        },
+        error: function (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Submit Fail!'
+            })
+        }
+    })
+
 }
 
 function EditForm(formid) {

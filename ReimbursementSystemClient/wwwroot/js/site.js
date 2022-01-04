@@ -190,17 +190,17 @@ function tableformdetail(expenseid) {
 
 }
 
-function convertimage(image) {
-    var text = image
-    var result = text.replace("file\/d\/", "uc?id=").replace("/view?usp=sharing", "");
+function convertimagefileshow(image) {
+    var result = "https://localhost:44350/Images/" + image;
     return result
 }
 
 
 function showimage(link) {
     console.log(link)
+    console.log(convertimagefileshow(link))
     $('#DetailModalimage').modal('show');
-    $("#images").attr("src", convertimage(link));
+    $("#images").attr("src", convertimagefileshow(link));
 }
 
 function cata(cat) {
@@ -217,4 +217,11 @@ function cata(cat) {
             return "~Empty~";
             break;
     }
+}
+
+function convertimagefile(image) {
+    var text = image
+    var result = text.toString().replace("C:\\fakepath\\", "").replace(" ", "_").replace(" ", "_").replace(" ", "_").replace(" ", "_").replace(" ", "_");
+    console.log(result.toString())
+    return result
 }

@@ -95,5 +95,25 @@ namespace ReimbursementSystemClient.Controllers
             var result = formRepository.PutEditFrom(entity, formSession);
             return Json(result);
         }
+
+        [HttpPost]
+        public JsonResult SingleUpload(FileVM files)
+        {
+            var file = files.Attachments;
+            var bytes = new byte[file.OpenReadStream().Length + 1];
+            file.OpenReadStream().Read(bytes, 0, bytes.Length);
+
+            var result = formRepository.SingleUpload(file.FileName, bytes);
+            return Json(result);
+        }
+
+        [HttpGet]
+        [Route("/Forms/Getatc/{imgid}")]
+        public async Task<JsonResult> Getatc(int imgid)
+        {
+            var result = await formRepository.Getatc(imgid);
+            return Json(result);
+        }
+
     }
 }

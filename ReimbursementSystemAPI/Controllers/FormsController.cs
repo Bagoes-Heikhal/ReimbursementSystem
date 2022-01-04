@@ -77,19 +77,18 @@ namespace ReimbursementSystemAPI.Controllers
                     return BadRequest();
             }
         }
-       
 
-        //[HttpGet("GetFormID/{email}/{expenseid}")]
-        //public ActionResult FormID(string email, int expenseid)
-        //{
-        //    var result = formRepository.FormID(email, expenseid);
+        [HttpGet("Getatc/{imgid}")]
+        public ActionResult Getatc(int imgid)
+        {
+            var result = formRepository.Getatc(imgid);
 
-        //    if (result != null)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return NotFound(result);
-        //}
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return Ok(result);
+        }
     }
 
 }

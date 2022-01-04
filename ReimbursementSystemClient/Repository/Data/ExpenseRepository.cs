@@ -183,13 +183,6 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        public HttpStatusCode SingleUpload(string fileName, byte[] bytes)
-        {
-            var multipartFormDataContent = new MultipartFormDataContent();
-            var fileContent = new ByteArrayContent(bytes);
-            multipartFormDataContent.Add(fileContent, "file", fileName);
-            var result = httpClient.PostAsync(request + "singleupload/", multipartFormDataContent).Result;
-            return result.StatusCode;
-        }
+
     }
 }

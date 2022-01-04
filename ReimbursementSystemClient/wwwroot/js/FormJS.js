@@ -19,6 +19,10 @@
 }
 
 function SaveExit() {
+    var formData = new FormData();
+    var data = $('#Attachments')[0].files[0]
+    formData.append("Attachments", $('#Attachments')[0].files[0]);
+
     var obj = new Object();
     obj.Receipt_Date = $("#Receipt_Date").val();
     obj.Start_Date = $("#Start_Date").val();
@@ -27,7 +31,22 @@ function SaveExit() {
     obj.Payee = $("#Payee").val();
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
+    obj.Attachments = convertimagefile($("#Attachments").val())
     console.log(obj)
+
+    $.ajax({
+        url: "/Forms/SingleUpload",
+        type: "Post",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (result) {
+            console.log(result)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 
     $.ajax({
         url: "/Forms/InsertForm",
@@ -41,34 +60,19 @@ function SaveExit() {
             console.log(error)
         }
     })
+
     return false;
 }
-
-//function SaveExit() {
-//    var formData = new FormData();
-//    formData.append("Total", $("#Total").val());
-//    formData.append("Attachments", $('[name="file"]')[0].files[0]);
-
-//    $.ajax({
-//        url: "/Forms/InsertForm",
-//        type: "Post",
-//        data: formData,
-//        processData: false,
-//        contentType: false,
-//        success: function (result) {
-//            window.location.href = "/Reimbusments/Expense"
-//        },
-//        error: function (error) {
-//            console.log(error)
-//        }
-//    })
-//    return false;
-//}
 
 function Update() {
     $.ajax({
         url: "/Forms/FormCall",
         success: function (result) {
+            var formData = new FormData();
+            var data = $('#Attachments')[0].files[0]
+            formData.append("Attachments", $('#Attachments')[0].files[0]);
+
+
             var obj = new Object();
             obj.fromId = result;
             obj.Receipt_Date = $("#Receipt_Date").val();
@@ -78,7 +82,7 @@ function Update() {
             obj.Payee = $("#Payee").val();
             obj.Description = $("#Description").val();
             obj.Total = $("#Total").val();
-            obj.Attachments = $("#Attachments").val();
+            obj.Attachments = convertimagefile($("#Attachments").val());
             console.log(obj)
             $.ajax({
                 url: "/Forms/PutEditFrom",
@@ -101,6 +105,10 @@ function Update() {
 
 function AddAnother() {
     var obj = new Object();
+    var formData = new FormData();
+    var data = $('#Attachments')[0].files[0]
+    formData.append("Attachments", $('#Attachments')[0].files[0]);
+
     obj.Receipt_Date = $("#Receipt_Date").val();
     obj.Start_Date = $("#Start_Date").val();
     obj.End_Date = $("#End_Date").val();
@@ -108,7 +116,7 @@ function AddAnother() {
     obj.Payee = $("#Payee").val();
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
-    obj.Attachments = $("#Attachments").val();
+    obj.Attachments = convertimagefile($("#Attachments").val());
 
     console.log(obj)
 
@@ -153,8 +161,6 @@ $(document).ready(function () {
                     $("#Payee").attr("value", result.payee)
                     $("#Description").html(result.description)
                     $("#Total").attr("value", result.total)
-                    $("#Attachments").attr("value", result.attachments)
-                    $("#images").attr("src", convertimage($("#Attachments").val()))
                 },
                 error: function (error) {
                     console.log(error)
@@ -197,7 +203,3 @@ function dateInputConversion(dates) {
     return newDate
 }
 
-$("#Attachments").keyup(function () {
-    console.log("keyup");
-    $("#images").attr("src", convertimage($("#Attachments").val()))
-})
