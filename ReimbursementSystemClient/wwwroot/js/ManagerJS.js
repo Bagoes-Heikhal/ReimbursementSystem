@@ -59,31 +59,7 @@
     });
 });
 
-function getData2(id) {
-    $('textarea#managercomment').val('')
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            var text = ""
-            text =
-                `
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
-                </div>
 
-                <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
-                </div>
-                `
-            $(".reject-modal").html(text);
-            console.log(result)
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
 
 function Reject() {
     var expenseid = parseInt($('#expenseId').text())
@@ -250,7 +226,7 @@ function RejectTable() {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>`;
                 }
@@ -315,7 +291,7 @@ function RequestTable() {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-info"
@@ -406,7 +382,7 @@ function AllTable() {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> `;
                 }
 

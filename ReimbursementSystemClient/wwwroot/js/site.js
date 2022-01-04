@@ -106,6 +106,31 @@ function getData(id) {
     })
 }
 
+function getData2(id) {
+    $('textarea#managercomment').val('')
+    $.ajax({
+        url: "/Expenses/Get/" + id,
+        data: "",
+        success: function (result) {
+            var text = ""
+            text =
+                `
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
+                    <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
+                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                `
+            $(".reject-modal").html(text);
+            console.log(result)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
 function tableformdetail(expenseid) {
     if ($.fn.DataTable.isDataTable('#dataTableForm')) {
         $('#dataTableForm').DataTable().destroy();
