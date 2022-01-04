@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
 
     table = $("#tabelExpense").DataTable({
+
         responsive: true,
         "ajax": {
             "url": "/Expenses/GetExpenseFinance",
@@ -8,6 +9,28 @@
             "datatype": "json",
             dataSrc: ""
         },
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+
+        ],
         "columnDefs": [
             { "className": "dt-center", "targets": "_all" }
         ],
@@ -42,7 +65,7 @@
                             </button>
                             <button type="button" class="btn btn-info"
                             onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
@@ -54,44 +77,12 @@
                             </button>`;
                 }
             }
-
-
         ],
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'copyHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
-            },
-            {
-                extend: 'csv',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
-            },
-            {
-                extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
-            }
-
-        ]
-
+        initComplete: function () {
+            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
+            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
+            $('.buttons-print').html('<i class="fa fa-print" />')
+        }
     });
 });
 
@@ -245,6 +236,28 @@ function RejectTable() {
     $(".column-tab").html(column());
 
     $("#tabelExpense").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+
+        ],
         responsive: true,
         "ajax": {
             "url": "/Expenses/GetExpenseFinanceReject",
@@ -294,7 +307,12 @@ function RejectTable() {
                             </button>`;
                 }
             }
-        ]
+        ],
+        initComplete: function () {
+            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
+            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
+            $('.buttons-print').html('<i class="fa fa-print" />')
+        }
     });
     
 }
@@ -309,9 +327,29 @@ function RequestTable() {
 
     $(".column-tab").html(column());
 
-
-
     $("#tabelExpense").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3]
+                }
+            }
+
+        ],
         responsive: true,
         "ajax": {
             "url": "/Expenses/GetExpenseFinance",
@@ -361,7 +399,7 @@ function RequestTable() {
                             </button>
                             <button type="button" class="btn btn-info"
                             onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-edit"></i>
+                            <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
@@ -373,8 +411,14 @@ function RequestTable() {
                             </button>`;
                 }
             }
-        ]
+        ],
+        initComplete: function () {
+            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
+            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
+            $('.buttons-print').html('<i class="fa fa-print" />')
+        }
     });
+    
 }
 
 function AllTable() {
@@ -395,6 +439,28 @@ function AllTable() {
     $('.status').html("Status");
 
     $("#tabelExpense").DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+
+        ],
         responsive: true,
         "ajax": {
             "url": "/Expenses/GetExpensePosted/",
@@ -451,7 +517,12 @@ function AllTable() {
 
             }
 
-        ]
+        ],
+        initComplete: function () {
+            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
+            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
+            $('.buttons-print').html('<i class="fa fa-print" />')
+        }
     });
 }
 

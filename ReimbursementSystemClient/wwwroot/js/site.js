@@ -110,10 +110,15 @@ function tableformdetail(expenseid) {
     if ($.fn.DataTable.isDataTable('#dataTableForm')) {
         $('#dataTableForm').DataTable().destroy();
     }
-    $('#tabelExpense tbody').empty();
-
+    $('#dataTableForm tbody').empty();
 
     $("#dataTableForm").DataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bInfo": false,
+        "searching": false,
+        "bAutoWidth": false,
         responsive: true,
         "ajax": {
             url: "/forms/getform/" + expenseid,
@@ -121,7 +126,12 @@ function tableformdetail(expenseid) {
             dataSrc: ""
         },
         "columnDefs": [
-            { "className": "dt-center", "targets": "_all" }
+            { "className": "dt-center", "targets": "_all" },
+            {
+                "targets": [3, 4],
+                "orderable": false
+            }
+
         ],
         "columns": [
             {
@@ -171,12 +181,13 @@ function tableformdetail(expenseid) {
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="showimage('${row['attachments']}')" data-placement="top"
-                            title="Detail">
-                            <i class="fas fa-info-circle"></i></button>`;
+                            title="Attachments">
+                            <i class="fas fa-images"></i></button>`;
                 }
             }
         ]
     });
+
 }
 
 function convertimage(image) {

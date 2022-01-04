@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using ReimbursementSystemClient.Base.Urls;
 using ReimbursementSystemClient.Repository.Data;
+using ReimbursementSystemClient.Repository.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

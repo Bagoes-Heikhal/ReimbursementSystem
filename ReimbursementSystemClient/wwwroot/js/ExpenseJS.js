@@ -46,7 +46,7 @@ $(document).ready(function () {
                     $("#Approver").html(result[0].approver)
                 },
                 error: function (error) {
-                    $("#Approver").html("Please Contact admin if you dont see approver name")
+                    $("#Approver").html("~~")
                 }
             })
 
@@ -115,14 +115,14 @@ $(document).ready(function () {
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            return `<button type="button" class="btn btn-primary " data-toggle="modal" 
                             onclick="getDataForm('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fas fa-info-circle"></i> 
                             </button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
+                            <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
                             <i class="fas fa-trash-alt"></i> 
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            <button type="button" class="btn btn-info hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
                             <i class="fas fa-edit"></i>
                             </button>`;
@@ -143,11 +143,11 @@ $(document).ready(function () {
                     if (result.status != 4) {
                         $("#Description").prop('disabled', true);
                         $("#Purpose").prop('disabled', true);
-                        $(".btn-primary").hide();
+                        $(".hide-btn").hide();
                     } else {
                         $("#Description").removeAttr('disabled');
                         $("#Purpose").removeAttr('disabled');
-                        $(".btn-primary").show();
+                        $(".hide-btn").show();
                     }
                 },
                 error: function (error) {

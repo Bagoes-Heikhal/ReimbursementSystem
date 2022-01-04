@@ -45,6 +45,17 @@ namespace ReimbursementSystemClient.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult SingleUpload(FileVM files)
+        {
+            var file = files.Attachments;
+            var bytes = new byte[file.OpenReadStream().Length + 1];
+            file.OpenReadStream().Read(bytes, 0, bytes.Length);
+
+            var result = expensesRepository.SingleUpload(file.FileName, bytes);
+
+            return Json(result);
+        }
 
         [HttpGet]
         public async Task<JsonResult> GetExpense()
@@ -137,6 +148,7 @@ namespace ReimbursementSystemClient.Controllers
             var result = await expensesRepository.GetExpenseManagerReject();
             return Json(result);
         }
+
 
         //<!----------------- Manager & Finances -------------------> 
 
