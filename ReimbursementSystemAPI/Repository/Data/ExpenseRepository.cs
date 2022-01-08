@@ -77,14 +77,70 @@ namespace ReimbursementSystemAPI.Repository.Data
                 }
                 expense.EmployeeId = expenseVM.EmployeeId;
             }
+            context.Expenses.Add(expense);
+            context.SaveChanges();
+            DateTime aDate = DateTime.Now;
+            ExpenseHistory expenseHistory = new ExpenseHistory();
+            {
+                expenseHistory.Date = DateTime.Now;
+                expenseHistory.Message = "Created " + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                expenseHistory.ExpenseId = expense.ExpenseId;
+            }
 
-            context.Expenses.Add(expense);    
+            context.ExpenseHistories.Add(expenseHistory);
             context.SaveChanges();
             return 1;
         }
 
-        public int ExpenseFormUpdate(ExpenseVM expenseVM)
+        public int ExpenseFormUpdate(ExpenseVM expenseVM, int code)
         {
+            var history = "";
+            switch (code)
+            {
+                case 1:
+                    history = "Expense Submitted ";
+                    break;
+                case 2:
+                    history = "Draft Saved ";
+                    break;
+                case 3:
+                    history = "Rejected by your Manager ";
+                    break;
+                case 4:
+                    history = "Accepted by your Manager ";
+                    break;
+                case 5:
+                    history = "Rejected by Finance ";
+                    break;
+                case 6:
+                    history = "Accepted by Finance ";
+                    break;
+                case 7:
+                    history = "Rejected by Senior Manager ";
+                    break;
+                case 8:
+                    history = "Accepted by Senior Manager ";
+                    break;
+                case 9:
+                    history = "Rejected by Director ";
+                    break;
+                case 10:
+                    history = "Accepted by Director ";
+                    break;
+                default:
+                    break;
+            }
+            DateTime aDate = DateTime.Now;
+            
+            ExpenseHistory expenseHistory = new ExpenseHistory();
+            {
+                expenseHistory.Date = DateTime.Now;
+                expenseHistory.Message = history + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                expenseHistory.ExpenseId = expenseVM.ExpenseId;
+            }
+            context.ExpenseHistories.Add(expenseHistory);
+            context.SaveChanges();
+
             var data = (from a in context.Employees 
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
                             where b.ExpenseId == expenseVM.ExpenseId
@@ -175,7 +231,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                            join c in context.Departements on a.DepartmentId equals c.DepartmentId
                            select new ExpenseVM()
                            {
-                               Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName).Single().ToString(),
+                               //Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName).Single().ToString(),
                                Submitted = b.Submitted,
                                ExpenseId = b.ExpenseId,
                                Purpose = b.Purpose,
@@ -385,6 +441,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             sb.Append("<p> Your Request Id is  <p>");
             sb.Append($"<h1> # {expenseid} approved  <h1>");
 
+            
             if (data != null)
             {
                 try

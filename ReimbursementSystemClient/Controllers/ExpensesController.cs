@@ -47,7 +47,6 @@ namespace ReimbursementSystemClient.Controllers
         }
 
 
-
         [HttpGet]
         public async Task<JsonResult> GetExpense()
         {
@@ -92,7 +91,12 @@ namespace ReimbursementSystemClient.Controllers
             return Json(expenseSession);
         }
 
-
+        [Route("~/Expenses/GetHistory/{expenseid}")]
+        public async Task<JsonResult> GetHistory(int expenseid)
+        {
+            var result = await expensesRepository.GetHistory(expenseid);
+            return Json(result);
+        }
 
         //<!----------------- Finances ------------------->
 

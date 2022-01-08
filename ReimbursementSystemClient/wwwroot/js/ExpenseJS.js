@@ -127,13 +127,27 @@
                 }
             });
 
-           
-
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
                 success: function (result) {
                     $("#Total").val(result.total)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+
+            $.ajax({
+                url: "/Expenses/GetHistory/" + result,
+                type: "Get",
+                success: function (result) {
+                    console.log(result)
+                    var text = ``;
+                    for (var i = 0; i < result.length; i++) {
+                        text += `${result[i].message}\n`
+                    }
+                    $("#History").html(text)
                 },
                 error: function (error) {
                     console.log(error)
@@ -169,6 +183,7 @@ function Submit() {
                     window.location.href = "/Reimbusments/Reimbusment"
                 }
             })
+
         },
         error: function (error) {
             Swal.fire({
@@ -197,7 +212,7 @@ function SaveExit() {
         type: "Put",
         'data': obj,
         'dataType': 'json',
-        success: function (result) {
+        success: function (result) {    
             Swal.fire(
                 'Good job!',
                 'Your data has been saved!',

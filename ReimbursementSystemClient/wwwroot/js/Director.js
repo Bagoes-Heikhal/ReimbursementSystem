@@ -87,7 +87,7 @@ function Reject() {
                     obj.status = 7;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Approval/" + 1,
+                        url: "/Expenses/Approval/" + 9,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -141,7 +141,7 @@ function Approve(expenseid) {
                     obj.status = 12;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Approval/" + 2,
+                        url: "/Expenses/Approval/" + 10,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',

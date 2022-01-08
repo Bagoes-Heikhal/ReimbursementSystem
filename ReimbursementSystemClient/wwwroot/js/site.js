@@ -131,6 +131,7 @@ function getData2(id) {
         }
     })
 }
+
 function tableformdetail(expenseid) {
     if ($.fn.DataTable.isDataTable('#dataTableForm')) {
         $('#dataTableForm').DataTable().destroy();

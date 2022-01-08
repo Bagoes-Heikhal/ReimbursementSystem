@@ -45,7 +45,7 @@ namespace ReimbursementSystemAPI.Controllers
         [HttpPut("ExpenseUpdate/{code}")]
         public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, int code)
         {
-            var result = expenseRepository.ExpenseFormUpdate(expenseVM);
+            var result = expenseRepository.ExpenseFormUpdate(expenseVM, code);
             if (result == 1)
             {
                 if (code == 1)
@@ -114,21 +114,33 @@ namespace ReimbursementSystemAPI.Controllers
         public ActionResult Approval(ExpenseVM expenseVM, int code)
         {
 
-            var result = expenseRepository.ExpenseFormUpdate(expenseVM);
+            var result = expenseRepository.ExpenseFormUpdate(expenseVM, code);
             if(result == 1)
             {
                 switch (code)
                 {
-                    case 1:
+                    case 3:
                         expenseRepository.NotifRejectM(expenseVM.ExpenseId);
                         break;
-                    case 2:
+                    case 4:
                         expenseRepository.NotifApproveM(expenseVM.ExpenseId);
                         break;
-                    case 3:
+                    case 5:
                         expenseRepository.NotifRejectF(expenseVM.ExpenseId);
                         break;
-                    case 4:
+                    case 6:
+                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
+                        break;
+                    case 7:
+                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        break;
+                    case 8:
+                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
+                        break;
+                    case 9:
+                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        break;
+                    case 10:
                         expenseRepository.NotifApproveF(expenseVM.ExpenseId);
                         break;
                     default:
