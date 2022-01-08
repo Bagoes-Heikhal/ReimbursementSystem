@@ -3,6 +3,7 @@
     table = $("#tabelExpense").DataTable({
         "processing": true,
         "responsive": true,
+        
         "ajax": {
             "url": "/Expenses/GetExpenseManager",
             "type": "GET",

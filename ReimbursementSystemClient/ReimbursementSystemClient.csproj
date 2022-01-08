@@ -24,6 +24,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
     <None Remove="Views\Manager\" />
     <None Remove="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    <Content Remove="wwwroot\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
@@ -46,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Base\Controllers\" />
+    <Folder Include="wwwroot\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReimbursementSystemAPI\ReimbursementSystemAPI.csproj" />
