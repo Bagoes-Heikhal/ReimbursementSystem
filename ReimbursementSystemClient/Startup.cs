@@ -39,6 +39,7 @@ namespace ReimbursementSystemClient
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<FormRepository>();
+            services.AddScoped<ExpenseHistoryRepository>();
             services.AddScoped<ExpenseRepository>();
             services.AddScoped<Address>();
             services.AddControllers().AddNewtonsoftJson(options =>

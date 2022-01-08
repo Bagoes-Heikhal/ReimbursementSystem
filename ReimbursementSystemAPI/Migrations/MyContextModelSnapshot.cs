@@ -55,9 +55,6 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ManagerId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -93,6 +90,9 @@ namespace ReimbursementSystemAPI.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIK")
@@ -169,6 +169,29 @@ namespace ReimbursementSystemAPI.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("tb_m_Expense");
+                });
+
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.ExpenseHistory", b =>
+                {
+                    b.Property<int>("HistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HistoryId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.ToTable("tb_t_ExpenseHistory");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
@@ -306,6 +329,15 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Navigation("Employees");
                 });
 
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.ExpenseHistory", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
+                        .WithMany("ExpenseHistories")
+                        .HasForeignKey("ExpenseId");
+
+                    b.Navigation("Expenses");
+                });
+
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
                 {
                     b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
@@ -340,6 +372,8 @@ namespace ReimbursementSystemAPI.Migrations
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
                 {
+                    b.Navigation("ExpenseHistories");
+
                     b.Navigation("Forms");
                 });
 

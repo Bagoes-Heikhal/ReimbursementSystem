@@ -29,15 +29,18 @@ namespace ReimbursementSystemAPI.Models
 
         [JsonIgnore]
         public virtual ICollection<Form> Forms { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<ExpenseHistory> ExpenseHistories { get; set; }
     }
 
     public enum Status
     {
+        Draft,
+        Posted,
         Approved,
         Rejected,
         Canceled,
-        Posted,
-        Draft,
         ApprovedByManager,
         ApprovedByFinance,
         RejectedByManager,

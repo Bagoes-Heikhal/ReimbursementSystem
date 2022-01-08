@@ -38,6 +38,7 @@ namespace ReimbursementSystemAPI
             services.AddScoped<EmployeeRepository>();
             services.AddScoped<RoleRepository>();
             services.AddScoped<DepartmentRepository>();
+            services.AddScoped<ExpenseHistoryRepository>();
             services.AddScoped<Employee_AttachmentRepository>();
             services.AddScoped<ExpenseRepository>();
             services.AddScoped<FormRepository>();

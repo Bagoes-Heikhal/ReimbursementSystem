@@ -110,7 +110,7 @@
                             }
                             $("#Description").html(result.description)
                             $("#Purpose").attr("value", result.purpose)
-                            if (result.status != 4) {
+                            if (result.status != 0) {
                                 $("#Description").prop('disabled', true);
                                 $("#Purpose").prop('disabled', true);
                                 $(".hide-btn").hide();
@@ -127,13 +127,27 @@
                 }
             });
 
-           
-
             $.ajax({
                 url: "/forms/TotalExpenseForm/" + result,
                 type: "Get",
                 success: function (result) {
                     $("#Total").val(result.total)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+
+            $.ajax({
+                url: "/Expenses/GetHistory/" + result,
+                type: "Get",
+                success: function (result) {
+                    console.log(result)
+                    var text = ``;
+                    for (var i = 0; i < result.length; i++) {
+                        text += `${result[i].message}\n`
+                    }
+                    $("#History").html(text)
                 },
                 error: function (error) {
                     console.log(error)
@@ -153,7 +167,7 @@ function Submit() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 3;
+    obj.status = 1;
     $.ajax({
         url: "/Expenses/Submit/" + 1,
         type: "Put",
@@ -169,6 +183,7 @@ function Submit() {
                     window.location.href = "/Reimbusments/Reimbusment"
                 }
             })
+
         },
         error: function (error) {
             Swal.fire({
@@ -191,13 +206,13 @@ function SaveExit() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 4;
+    obj.status = 0;
     $.ajax({
         url: "/Expenses/Submit/" + 2,
         type: "Put",
         'data': obj,
         'dataType': 'json',
-        success: function (result) {
+        success: function (result) {    
             Swal.fire(
                 'Good job!',
                 'Your data has been saved!',
@@ -303,7 +318,7 @@ function InsertForm() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 4;
+    obj.status = 0;
     $.ajax({
         url: "/Expenses/Submit/" + 2,
         type: "Put",

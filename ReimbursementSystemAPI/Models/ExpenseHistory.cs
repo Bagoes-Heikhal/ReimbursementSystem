@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Models
 {
-    [Table("tb_t_Department")]
-    public class Department
+    [Table("tb_t_ExpenseHistory")]
+    public class ExpenseHistory
     {
         [Key]
-        public int DepartmentId { get; set; }
-
-        public string Name { get; set; }
+        public int HistoryId { get; set; }
+        public DateTime Date { get; set; }
+        public string Message { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual Expense Expenses { get; set; }
+        public int ExpenseId { get; set; }
     }
 }

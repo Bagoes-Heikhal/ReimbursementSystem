@@ -31,6 +31,7 @@ namespace ReimbursementSystemAPI.Models
         public DbSet<Job> Jobs { get; set; }
         public DbSet<CategoryTable> Categories1 { get; set; }
         public DbSet<Type> Types { get; set; }
+        public DbSet<ExpenseHistory> ExpenseHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,22 +41,15 @@ namespace ReimbursementSystemAPI.Models
                 .WithOne(b => b.Employee)
                 .HasForeignKey<Account>(b => b.EmployeeId);
 
-            ////One to One
-            //modelBuilder.Entity<Employee>()
-            //    .HasOne(a => a.Employee_Attachments)
-            //    .WithOne(b => b.Employees)
-            //    .HasForeignKey<Employee_Attachment>(b => b.EmployeeId);
-
-            ////One to One
-            //modelBuilder.Entity<Role>()
-            //    .HasOne(a => a.Accounts)
-            //    .WithOne(b => b.Roles)
-            //    .HasForeignKey<Account>(b => b.RoleId);
-
             ////One to many
             modelBuilder.Entity<Employee>()
                 .HasMany(c => c.Expenses)
                 .WithOne(c => c.Employees);
+
+            ////One to many
+            modelBuilder.Entity<Expense>()
+                .HasMany(c => c.ExpenseHistories)
+                .WithOne(c => c.Expenses);
 
             //One to many
             modelBuilder.Entity<Expense>()
@@ -71,19 +65,7 @@ namespace ReimbursementSystemAPI.Models
             modelBuilder.Entity<Job>()
                 .HasMany(c => c.Employees)
                 .WithOne(c => c.Jobs);
-
-            ////One to many
-            //modelBuilder.Entity<Religion>()
-            //    .HasMany(c => c.Employees)
-            //    .WithOne(c => c.Religions);
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseLazyLoadingProxies();
-        //    base.OnConfiguring(optionsBuilder);
-        //}
-
     }
 
     class CustomResolver : DefaultContractResolver

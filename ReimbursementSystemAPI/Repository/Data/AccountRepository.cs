@@ -33,16 +33,15 @@ namespace ReimbursementSystemAPI.Repository.Data
                 employee.Email = registerVM.Email;
                 employee.Salary = registerVM.Salary;
                 employee.Phone = registerVM.Phone;
-                //employee.DepartmentId = 1;
+                employee.ManagerId = registerVM.ManagerId;
+                employee.DepartmentId = employee.DepartmentId;
                 employee.JobId = registerVM.JobId;
-                //employee.ReligionId = 1;
             }
 
             Account account = new Account();
             {
                 account.EmployeeId = registerVM.EmployeeId;
                 account.Password = Hashing.HashPassword(registerVM.Password);
-                //account.RoleId = 1;
             }
 
             context.Employees.Add(employee);

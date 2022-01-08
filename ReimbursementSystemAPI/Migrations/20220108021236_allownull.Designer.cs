@@ -10,8 +10,8 @@ using ReimbursementSystemAPI.Models;
 namespace ReimbursementSystemAPI.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211231012114_department")]
-    partial class department
+    [Migration("20220108021236_allownull")]
+    partial class allownull
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,6 +94,9 @@ namespace ReimbursementSystemAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ManagerId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NIK")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,9 +125,6 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -160,6 +160,9 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Submitted")
+                        .HasColumnType("datetime2");
+
                     b.Property<float?>("Total")
                         .HasColumnType("real");
 
@@ -170,6 +173,29 @@ namespace ReimbursementSystemAPI.Migrations
                     b.ToTable("tb_m_Expense");
                 });
 
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.ExpenseHistory", b =>
+                {
+                    b.Property<int>("HistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HistoryId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.ToTable("tb_t_ExpenseHistory");
+                });
+
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
                 {
                     b.Property<int>("FormId")
@@ -177,8 +203,8 @@ namespace ReimbursementSystemAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Attachments")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Attachments")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Category")
                         .HasColumnType("int");
@@ -230,21 +256,6 @@ namespace ReimbursementSystemAPI.Migrations
                     b.HasKey("JobId");
 
                     b.ToTable("tb_t_Job");
-                });
-
-            modelBuilder.Entity("ReimbursementSystemAPI.Models.Religion", b =>
-                {
-                    b.Property<int>("ReligionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReligionId");
-
-                    b.ToTable("tb_t_Religion");
                 });
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Role", b =>
@@ -320,6 +331,15 @@ namespace ReimbursementSystemAPI.Migrations
                     b.Navigation("Employees");
                 });
 
+            modelBuilder.Entity("ReimbursementSystemAPI.Models.ExpenseHistory", b =>
+                {
+                    b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
+                        .WithMany("ExpenseHistories")
+                        .HasForeignKey("ExpenseId");
+
+                    b.Navigation("Expenses");
+                });
+
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Form", b =>
                 {
                     b.HasOne("ReimbursementSystemAPI.Models.Expense", "Expenses")
@@ -354,6 +374,8 @@ namespace ReimbursementSystemAPI.Migrations
 
             modelBuilder.Entity("ReimbursementSystemAPI.Models.Expense", b =>
                 {
+                    b.Navigation("ExpenseHistories");
+
                     b.Navigation("Forms");
                 });
 
