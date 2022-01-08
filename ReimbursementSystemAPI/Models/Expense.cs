@@ -36,11 +36,11 @@ namespace ReimbursementSystemAPI.Models
 
     public enum Status
     {
+        Draft,
+        Posted,
         Approved,
         Rejected,
         Canceled,
-        Posted,
-        Draft,
         ApprovedByManager,
         ApprovedByFinance,
         RejectedByManager,

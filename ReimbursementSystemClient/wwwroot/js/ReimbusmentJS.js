@@ -11,7 +11,7 @@
 
 function InsertExpense() {
     var obj = new Object();
-    obj.Status = 4;
+    obj.Status = 0;
     console.log(obj)
 
     $.ajax({
@@ -51,7 +51,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return "#" + row["expenseId"];
+                    return row["expenseId"];
                 }
             },
             {
@@ -100,7 +100,7 @@ $(document).ready(function () {
                             onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
                             <i class="fas fa-search-plus"></i>
                             </button> `
-                    if (row["status"] != 4) {
+                    if (row["status"] != 0) {
                         return nondraft
                     } else {
                         return draft

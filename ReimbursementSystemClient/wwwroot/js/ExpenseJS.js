@@ -110,7 +110,7 @@
                             }
                             $("#Description").html(result.description)
                             $("#Purpose").attr("value", result.purpose)
-                            if (result.status != 4) {
+                            if (result.status != 0) {
                                 $("#Description").prop('disabled', true);
                                 $("#Purpose").prop('disabled', true);
                                 $(".hide-btn").hide();
@@ -167,7 +167,7 @@ function Submit() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 3;
+    obj.status = 1;
     $.ajax({
         url: "/Expenses/Submit/" + 1,
         type: "Put",
@@ -206,7 +206,7 @@ function SaveExit() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 4;
+    obj.status = 0;
     $.ajax({
         url: "/Expenses/Submit/" + 2,
         type: "Put",
@@ -318,7 +318,7 @@ function InsertForm() {
     obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
-    obj.status = 4;
+    obj.status = 0;
     $.ajax({
         url: "/Expenses/Submit/" + 2,
         type: "Put",

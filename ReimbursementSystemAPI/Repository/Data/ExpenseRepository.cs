@@ -34,19 +34,19 @@ namespace ReimbursementSystemAPI.Repository.Data
                 switch (expenseVM.Status)
                 {
                     case 0:
-                        expense.Status = Status.Approved;
+                        expense.Status = Status.Draft;
                         break;
                     case 1:
-                        expense.Status = Status.Rejected;
-                        break;
-                    case 2:
-                        expense.Status = Status.Canceled;
-                        break;
-                    case 3:
                         expense.Status = Status.Posted;
                         break;
+                    case 2:
+                        expense.Status = Status.Approved;
+                        break;
+                    case 3:
+                        expense.Status = Status.Rejected;
+                        break;
                     case 4:
-                        expense.Status = Status.Draft;
+                        expense.Status = Status.Canceled;
                         break;
                     case 5:
                         expense.Status = Status.ApprovedByManager;
@@ -157,19 +157,19 @@ namespace ReimbursementSystemAPI.Repository.Data
             switch (expenseVM.Status)
             {
                 case 0:
-                    expense.Status = Status.Approved;
+                    expense.Status = Status.Draft;
                     break;
                 case 1:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 2:
-                    expense.Status = Status.Canceled;
-                    break;
-                case 3:
                     expense.Status = Status.Posted;
                     break;
+                case 2:
+                    expense.Status = Status.Approved;
+                    break;
+                case 3:
+                    expense.Status = Status.Rejected;
+                    break;
                 case 4:
-                    expense.Status = Status.Draft;
+                    expense.Status = Status.Canceled;
                     break;
                 case 5:
                     expense.Status = Status.ApprovedByManager;
@@ -241,8 +241,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Total = b.Total,
                                Description = b.Description,
                            };
-            var data = register.ToList();
-            return register.ToList();
+            var data = register.ToList().OrderBy(issue => ( issue.Status, true)); ;
+            return data;
         }
 
         //<!----------------- Finances -------------------> 
