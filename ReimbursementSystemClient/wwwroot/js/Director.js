@@ -341,6 +341,7 @@ function AllTable() {
             },
             {
                 //ganti submited date
+
                 "data": null,
                 "render": function (data, type, row) {
                     return dateConversion(row["dateTime"]);
