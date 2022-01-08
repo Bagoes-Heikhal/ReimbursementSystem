@@ -20,15 +20,15 @@ function remove(str) {
 function status(stat) {
     switch (stat) {
         case 0:
-            return "Approved";
-        case 1:
-            return "Rejected";
-        case 2:
-            return "Canceled";
-        case 3:
-            return "Posted";
-        case 4:
             return "Draft";
+        case 1:
+            return "Posted";
+        case 2:
+            return "Approved";
+        case 3:
+            return "Rejected";
+        case 4:
+            return "Canceled";
         case 5:
             return "Approved By Manager <br> Waiting for Finance Approval";
         case 6:
@@ -131,6 +131,7 @@ function getData2(id) {
         }
     })
 }
+
 function tableformdetail(expenseid) {
     if ($.fn.DataTable.isDataTable('#dataTableForm')) {
         $('#dataTableForm').DataTable().destroy();

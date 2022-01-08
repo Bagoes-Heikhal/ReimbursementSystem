@@ -30,6 +30,8 @@ namespace ReimbursementSystemAPI.Models
         public DateTime BirthDate { get; set; }
         public float? Salary { get; set; }
 
+        public string ManagerId { get; set; }
+
         [Required, Index(IsUnique = true)]
         public string Email { get; set; }
         public Gender Gender { get; set; }

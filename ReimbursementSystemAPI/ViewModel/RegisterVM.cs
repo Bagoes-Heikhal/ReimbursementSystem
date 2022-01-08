@@ -17,6 +17,7 @@ namespace ReimbursementSystemAPI.ViewModel
         public float Salary { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string ManagerId { get; set; }
         public string Degree { get; set; }
         public int DepartmentId { get; set; }
         public int JobId { get; set; }

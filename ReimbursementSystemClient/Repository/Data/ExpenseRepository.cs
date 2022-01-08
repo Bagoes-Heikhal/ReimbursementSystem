@@ -73,6 +73,18 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
+        public async Task<List<ExpenseHistory>> GetHistory(int expenseId)
+        {
+            List<ExpenseHistory> entitiesNew = new List<ExpenseHistory>();
+
+            using (var response = await httpClient.GetAsync("expenseHistories/" + "History/" + expenseId))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseHistory>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
 
         //<!----------------- Finances ------------------->
         public async Task<List<ExpenseManager>> GetExpenseFinance()
