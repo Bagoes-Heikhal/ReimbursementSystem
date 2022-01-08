@@ -132,16 +132,16 @@ namespace ReimbursementSystemAPI.Controllers
                         expenseRepository.NotifApproveF(expenseVM.ExpenseId);
                         break;
                     case 7:
-                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        expenseRepository.NotifRejectSM(expenseVM.ExpenseId);
                         break;
                     case 8:
-                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
+                        expenseRepository.NotifApproveSM(expenseVM.ExpenseId);
                         break;
                     case 9:
-                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
+                        expenseRepository.NotifRejectD(expenseVM.ExpenseId);
                         break;
                     case 10:
-                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
+                        expenseRepository.NotifApproveD(expenseVM.ExpenseId);
                         break;
                     default:
                         break;
