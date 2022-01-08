@@ -118,7 +118,6 @@ $(document).ready(function () {
 });
    
 function Delete(id) {
-    console.log(id)
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -128,23 +127,35 @@ function Delete(id) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-        if (result.value) {
-            $.ajax({
-                url: "/Expenses/Delete/" + id,
-                type: "Delete",
-                success: function (result) {
-                    table.ajax.reload()
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                },
-                error: function (error) {
-                    alert("Delete Fail");
-                }
-            });
-        }
+        var obj = new Object();
+        obj.approver = $("#Approver").text();
+        obj.expenseId = parseInt($(".expense-title span").text());
+        obj.purpose = $("#Purpose").val();
+        obj.description = $("#Description").val();
+        obj.total = $("#Total").val();
+        obj.expenseId = id;
+        obj.status = 4;
+        $.ajax({
+            url: "/Expenses/Submit/" + 12,
+            type: "Put",
+            'data': obj,
+            'dataType': 'json',
+            success: function (result) {
+                table.ajax.reload()
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            },
+            error: function (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Delete Fail!'
+                })
+            }
+        })
     })
 }
 

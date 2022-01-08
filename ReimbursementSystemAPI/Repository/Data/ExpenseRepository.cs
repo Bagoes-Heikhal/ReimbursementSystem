@@ -127,19 +127,27 @@ namespace ReimbursementSystemAPI.Repository.Data
                 case 10:
                     history = "Accepted by Director ";
                     break;
+                case 12:
+                    history = "Deleted ";
+                    break;
                 default:
                     break;
             }
-            DateTime aDate = DateTime.Now;
-            
-            ExpenseHistory expenseHistory = new ExpenseHistory();
+
+            if (code != 11)
             {
-                expenseHistory.Date = DateTime.Now;
-                expenseHistory.Message = history + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
-                expenseHistory.ExpenseId = expenseVM.ExpenseId;
+                DateTime aDate = DateTime.Now;
+
+                ExpenseHistory expenseHistory = new ExpenseHistory();
+                {
+                    expenseHistory.Date = DateTime.Now;
+                    expenseHistory.Message = history + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                    expenseHistory.ExpenseId = expenseVM.ExpenseId;
+                }
+                context.ExpenseHistories.Add(expenseHistory);
+                context.SaveChanges();
             }
-            context.ExpenseHistories.Add(expenseHistory);
-            context.SaveChanges();
+            
 
             var data = (from a in context.Employees 
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -228,10 +236,10 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             var register = from a in context.Employees where a.EmployeeId == employeeid
                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                           join c in context.Departements on a.DepartmentId equals c.DepartmentId
+                           where b.Status != Status.Canceled
                            select new ExpenseVM()
                            {
-                               //Approver = (from a in context.Employees where a.EmployeeId == c.ManagerId select a.FirstName + " " + a.LastName).Single().ToString(),
+                               Approver = (from c in context.Employees where c.EmployeeId == a.ManagerId select c.FirstName + " " + c.LastName).Single().ToString(),
                                Submitted = b.Submitted,
                                ExpenseId = b.ExpenseId,
                                Purpose = b.Purpose,
@@ -387,7 +395,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         
 
         //<!-------------------- Notif ------------------------> 
-            public int NotifRequest(int expenseid)
+        public int NotifRequest(int expenseid)
         {
             var data = (from a in context.Employees
                             join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -577,45 +585,6 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 3;
         }
 
-        public int Update(ExpenseVM expenseVM)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseVM.ExpenseId
-                        select new { expenses = b }).Single();
-
-            var expense = data.expenses;
-
-            expense.Approver = expenseVM.Approver;
-            expense.Purpose = expenseVM.Purpose;
-            expense.Description = expenseVM.Description;
-            expense.Total = expenseVM.Total;
-            switch (expenseVM.Status)
-            {
-                case 0:
-                    expense.Status = Status.Approved;
-                    break;
-                case 1:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 2:
-                    expense.Status = Status.Canceled;
-                    break;
-                case 3:
-                    expense.Status = Status.Posted;
-                    break;
-                case 4:
-                    expense.Status = Status.Draft;
-                    break;
-                default:
-                    break;
-            }
-            expense.EmployeeId = expenseVM.EmployeeId;
-            var expensess = expense;
-            context.SaveChanges();
-            return 1;
-        }
-
         public int NotifRejectM(int expenseid)
         {
             var data = (from a in context.Employees
@@ -708,45 +677,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
-
-        public int UpdateSM(ExpenseVM expenseVM)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseVM.ExpenseId
-                        select new { expenses = b }).Single();
-
-            var expense = data.expenses;
-
-            expense.Approver = expenseVM.Approver;
-            expense.Purpose = expenseVM.Purpose;
-            expense.Description = expenseVM.Description;
-            expense.Total = expenseVM.Total;
-            switch (expenseVM.Status)
-            {
-                case 0:
-                    expense.Status = Status.Approved;
-                    break;
-                case 1:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 2:
-                    expense.Status = Status.Canceled;
-                    break;
-                case 3:
-                    expense.Status = Status.Posted;
-                    break;
-                case 4:
-                    expense.Status = Status.Draft;
-                    break;
-                default:
-                    break;
-            }
-            expense.EmployeeId = expenseVM.EmployeeId;
-            var expensess = expense;
-            context.SaveChanges();
-            return 1;
         }
 
         public int NotifRejectSM(int expenseid)
@@ -842,45 +772,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
-
-        public int UpdateD(ExpenseVM expenseVM)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseVM.ExpenseId
-                        select new { expenses = b }).Single();
-
-            var expense = data.expenses;
-
-            expense.Approver = expenseVM.Approver;
-            expense.Purpose = expenseVM.Purpose;
-            expense.Description = expenseVM.Description;
-            expense.Total = expenseVM.Total;
-            switch (expenseVM.Status)
-            {
-                case 0:
-                    expense.Status = Status.Approved;
-                    break;
-                case 1:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 2:
-                    expense.Status = Status.Canceled;
-                    break;
-                case 3:
-                    expense.Status = Status.Posted;
-                    break;
-                case 4:
-                    expense.Status = Status.Draft;
-                    break;
-                default:
-                    break;
-            }
-            expense.EmployeeId = expenseVM.EmployeeId;
-            var expensess = expense;
-            context.SaveChanges();
-            return 1;
         }
 
         public int NotifRejectD(int expenseid)
