@@ -36,6 +36,9 @@
         ],
         "columns": [
             {
+                "data": "expenseId"
+            },
+            {
                 "data": "name"
             },
             {
@@ -120,7 +123,7 @@ function Reject() {
                     obj.status = 8;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Approval/" + 3,
+                        url: "/Expenses/Approval/" + 5,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -174,7 +177,7 @@ function Approve(expenseid) {
                     obj.status = 6;
                     console.log(obj)
                     $.ajax({
-                        url: "/Expenses/Approval/" + 4,
+                        url: "/Expenses/Approval/" + 6,
                         type: "Put",
                         'data': obj,
                         'dataType': 'json',
@@ -243,6 +246,9 @@ function RejectTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },
@@ -335,6 +341,9 @@ function RequestTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },
