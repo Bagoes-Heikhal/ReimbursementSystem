@@ -1,5 +1,6 @@
 ﻿function column() {
-    return `<th scope="col" class="text-light text-center">Name</th>
+    return `<th scope="col" class="text-light text-center">Id</th>
+            <th scope="col" class="text-light text-center">Name</th>
             <th scope="col" class="text-light text-center">Date Request</th>
             <th scope="col" class="text-light text-center">Total</th>
             <th scope="col" class="text-light text-center">Purpose</th>
@@ -38,11 +39,11 @@ function status(stat) {
         case 8:
             return "Rejected By Finance";
         case 9:
-            return "Approved By Manager <br> Waiting for Super Manager Approval";
+            return "Approved By Manager <br> Waiting for Senior Manager Approval";
         case 10:
-            return "Approved By Super Manager <br> Waiting for Finance Approval";
+            return "Approved By Senior Manager <br> Waiting for Finance Approval";
         case 11:
-            return "Approved By Super Manager <br> Waiting for Director Approval ";
+            return "Approved By Senior Manager <br> Waiting for Director Approval ";
         case 12:
             return "Approved By Director <br> Waiting for Finance Approval";
         default:
@@ -112,15 +113,23 @@ function getData2(id) {
         url: "/Expenses/Get/" + id,
         data: "",
         success: function (result) {
+            console.log(result)
             var text = ""
             text =
                 `
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Id : <span id="expenseId"> ${result.expenseId} </span>  </label>
+                    <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
+                </div>
+
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
+                    <label for="inputState">Status : <span id="stat"> ${status(result.status)} </span>  </label>
                 </div>
 
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
                     <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                </div>
+                <div class="form-group col-xl-6 col-sm-6 text-dark">
+                    <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
                 </div>
                 `
             $(".reject-modal").html(text);
@@ -280,6 +289,9 @@ function AllTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },

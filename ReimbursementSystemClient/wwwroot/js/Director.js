@@ -14,6 +14,9 @@
         ],
         "columns": [
             {
+                "data": "expenseId"
+            },
+            {
                 "data": "name"
             },
             {
@@ -189,6 +192,9 @@ function RejectTable() {
         ],
         "columns": [
             {
+                "data": "expenseId"
+            },
+            {
                 "data": "name"
             },
             {
@@ -253,6 +259,9 @@ function RequestTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },

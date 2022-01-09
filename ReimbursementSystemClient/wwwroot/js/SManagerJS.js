@@ -24,6 +24,9 @@ $(document).ready(function () {
         ],
         "columns": [
             {
+                "data": "expenseId"
+            },
+            {
                 "data": "name"
             },
             {
@@ -96,31 +99,31 @@ function Reject() {
                     obj.employeeId = result2.employeeId;
                     obj.status = 7;
                     console.log(obj)
-                    $.ajax({
-                        url: "/Expenses/Approval/" + 7,
-                        type: "Put",
-                        'data': obj,
-                        'dataType': 'json',
-                        success: function (result2) {
-                            table.ajax.reload();
-                            $("#exampleModal").modal('hide');
-                        },
-                        error: function (error) {
-                            console.log(error)
-                        }
-                    })
+
+                    $.LoadingOverlay("show");
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/Expenses/Approval/" + 7,
+                            type: "Put",
+                            'data': obj,
+                            'dataType': 'json',
+                            success: function (result2) {
+                                $.LoadingOverlay("hide");
+                                table.ajax.reload();
+                                $("#exampleModal").modal('hide');
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    });
                 },
                 error: function (error) {
                     console.log(error)
                 }
             })
         }
-        $.LoadingOverlay("show");
-        setTimeout(function () {
-            $.LoadingOverlay("hide");
-        }, 3000);
     })
-
 }
 
 function Approve(expenseid) {
@@ -134,48 +137,48 @@ function Approve(expenseid) {
         inputPlaceholder: "Write something"
     }).then((result) => {
         console.log(result)
-        if (result.value) {
-            $.ajax({
-                url: "/Expenses/Get/" + expenseid,
-                type: "Get",
-                success: function (result) {
-                    var obj = new Object();
-                    obj.expenseId = expenseid;
-                    obj.approver = result.approver;
-                    obj.commentManager = result.commentManager;
-                    obj.commentFinace = result.commentFinace;
-                    obj.purpose = result.purpose;
-                    obj.description = result.description;
-                    obj.total = result.total;
-                    obj.employeeId = result.employeeId;
-                    obj.status = 10;
-                    if (result.total > 10000000) {
-                        obj.status = 11;
-                    }
-                    console.log(obj)
-                    $.ajax({
-                        url: "/Expenses/Approval/" + 8,
-                        type: "Put",
-                        'data': obj,
-                        'dataType': 'json',
-                        success: function (result2) {
-                            table.ajax.reload();
-                            console.log(result2);
-                        },
-                        error: function (error) {
-                            console.log(error)
-                        }
-                    })
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
-        }
-        $.LoadingOverlay("show");
         setTimeout(function () {
-            $.LoadingOverlay("hide");
-        }, 3000);
+            if (result.value) {
+                $.LoadingOverlay("show");
+                $.ajax({
+                    url: "/Expenses/Get/" + expenseid,
+                    type: "Get",
+                    success: function (result) {
+                        var obj = new Object();
+                        obj.expenseId = expenseid;
+                        obj.approver = result.approver;
+                        obj.commentManager = result.commentManager;
+                        obj.commentFinace = result.commentFinace;
+                        obj.purpose = result.purpose;
+                        obj.description = result.description;
+                        obj.total = result.total;
+                        obj.employeeId = result.employeeId;
+                        obj.status = 10;
+                        if (result.total > 10000000) {
+                            obj.status = 11;
+                        }
+                        console.log(obj)
+                        $.ajax({
+                            url: "/Expenses/Approval/" + 8,
+                            type: "Put",
+                            'data': obj,
+                            'dataType': 'json',
+                            success: function (result2) {
+                                $.LoadingOverlay("hide");
+                                table.ajax.reload();
+                                console.log(result2);
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+        });
     })
 }
 
@@ -201,6 +204,9 @@ function RejectTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },
@@ -266,6 +272,9 @@ function RequestTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },

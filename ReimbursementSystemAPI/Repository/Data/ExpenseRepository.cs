@@ -452,15 +452,13 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>accepted<b> by Finances <p>");
-            sb.Append("<div>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Finance Department <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Finances ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Finance Department <p/>");
 
-            
+
             if (data != null)
             {
                 try
@@ -497,16 +495,15 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
-           
 
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>rejected<b> by Finance <p>");
-            sb.Append("<div>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentFinace} Rejected<p>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Finance Department <h4>");
+
+
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Finance");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
+            sb.Append($"<br/> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Finance Department <p/>");
 
             if (data != null)
             {
@@ -548,14 +545,11 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             StringBuilder sb = new StringBuilder();
       
-
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>accepted<b> by Manager <p>");
-            sb.Append("<div>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Manager <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Manager ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Manager <p/>");
 
             if (data != null)
             {
@@ -593,15 +587,13 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { Employee = a, Expense = b }).Single();
 
             StringBuilder sb = new StringBuilder();
-    
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>rejected<b> at phase 1 <p>");
-            sb.Append("<div>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager} Rejected<p>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Manager <h4>");
+
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Manager ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
+            sb.Append($"<br/> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Manager<p/>");
 
             if (data != null)
             {
@@ -643,13 +635,11 @@ namespace ReimbursementSystemAPI.Repository.Data
             StringBuilder sb = new StringBuilder();
 
 
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>accepted<b> by Senior Manager <p>");
-            sb.Append("<div>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Senior Manager <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Senior Manager ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Senior Manager <p/>");
 
             if (data != null)
             {
@@ -688,14 +678,12 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>rejected<b> by Senior Manager <p>");
-            sb.Append("<div>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager} Rejected<p>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Senior Manager <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Senior Manager ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
+            sb.Append($"<br/> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Senior Manager <p/>");
 
             if (data != null)
             {
@@ -737,14 +725,11 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             StringBuilder sb = new StringBuilder();
 
-
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>accepted<b> by Director <p>");
-            sb.Append("<div>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Director <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Director ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Director <p/>");
 
             if (data != null)
             {
@@ -783,14 +768,12 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Have been <b>rejected<b> by Director <p>");
-            sb.Append("<div>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager} Rejected<p>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> DIrector <h4>");
+            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Director ");
+            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
+            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
+            sb.Append($"<br/> Please check your Account for more detail <p/>");
+            sb.Append("<p> Best Regards,");
+            sb.Append("<br/> Director <p/>");
 
             if (data != null)
             {
