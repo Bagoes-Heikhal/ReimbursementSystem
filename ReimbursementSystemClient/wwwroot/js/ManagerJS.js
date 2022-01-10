@@ -15,6 +15,9 @@
         ],
         "columns": [
             {
+                "data": "expenseId"
+            },
+            {
                 "data": "name"
             },
             {
@@ -89,29 +92,30 @@ function Reject() {
                     obj.employeeId = result2.employeeId;
                     obj.status = 7;
                     console.log(obj)
-                    $.ajax({
-                        url: "/Expenses/Approval/" + 3,
-                        type: "Put",
-                        'data': obj,
-                        'dataType': 'json',
-                        success: function (result2) {
-                            table.ajax.reload();
-                            $("#exampleModal").modal('hide');
-                        },
-                        error: function (error) {
-                            console.log(error)
-                        }
-                    })
+                    $.LoadingOverlay("show");
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/Expenses/Approval/" + 3,
+                            type: "Put",
+                            'data': obj,
+                            'dataType': 'json',
+                            success: function (result2) {
+                                $.LoadingOverlay("hide");
+                                table.ajax.reload();
+                                $("#exampleModal").modal('hide');
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    });
                 },
                 error: function (error) {
                     console.log(error)
                 }
             })
         }
-        $.LoadingOverlay("show");
-        setTimeout(function () {
-            $.LoadingOverlay("hide");
-        }, 3000);
+
     })
     
 }
@@ -146,19 +150,25 @@ function Approve(expenseid) {
                         obj.status = 9;
                     } 
                     console.log(obj)
-                    $.ajax({
-                        url: "/Expenses/Approval/" + 4,
-                        type: "Put",
-                        'data': obj,
-                        'dataType': 'json',
-                        success: function (result2) {
-                            table.ajax.reload();
-                            console.log(result2);
-                        },
-                        error: function (error) {
-                            console.log(error)
-                        }
-                    })
+
+                    $.LoadingOverlay("show");
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/Expenses/Approval/" + 4,
+                            type: "Put",
+                            'data': obj,
+                            'dataType': 'json',
+                            success: function (result2) {
+                                $.LoadingOverlay("hide");
+                                table.ajax.reload();
+                                console.log(result2);
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    });
+                    
                 },
                 error: function (error) {
                     console.log(error)
@@ -167,10 +177,7 @@ function Approve(expenseid) {
 
 
         }
-        $.LoadingOverlay("show");
-        setTimeout(function () {
-            $.LoadingOverlay("hide");
-        }, 3000);
+
     })
 }
 
@@ -196,6 +203,9 @@ function RejectTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },
@@ -261,6 +271,9 @@ function RequestTable() {
             { "className": "dt-center", "targets": "_all" }
         ],
         "columns": [
+            {
+                "data": "expenseId"
+            },
             {
                 "data": "name"
             },

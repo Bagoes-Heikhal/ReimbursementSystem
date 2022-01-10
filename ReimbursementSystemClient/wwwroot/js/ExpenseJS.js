@@ -320,7 +320,7 @@ function InsertForm() {
     obj.total = $("#Total").val();
     obj.status = 0;
     $.ajax({
-        url: "/Expenses/Submit/" + 2,
+        url: "/Expenses/Submit/" + 11,
         type: "Put",
         'data': obj,
         'dataType': 'json',
@@ -343,7 +343,6 @@ function InsertForm() {
             })
         }
     })
-
 }
 
 function EditForm(formid) {
